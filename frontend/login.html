@@ -52,36 +52,79 @@
 
     <!-- Login Card -->
     <div class="w-full max-w-md px-6 z-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
-        <div class="text-center mb-8">
-            <div class="inline-block p-4 mb-4 rounded-full border border-gold-500 gold-glow">
-                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-gold-500">
-                    <path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path>
-                </svg>
+        <div class="bg-[var(--surface)] dark:glass p-10 rounded-3xl gold-border shadow-2xl shadow-gold-500/10 space-y-8 relative overflow-hidden">
+            
+            <!-- Header -->
+            <div class="text-center relative z-10">
+                <div class="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gold-500/10 border border-gold-500/30 gold-glow text-gold-500">
+                    <i class="ph ph-church text-3xl"></i>
+                </div>
+                <h1 class="text-2xl font-serif text-[var(--text-primary)] tracking-tight mb-2">EJP — Espace Membres</h1>
+                <p class="text-sm text-[var(--text-secondary)]" data-i18n="login.subtitle">Connectez-vous à votre espace personnel</p>
             </div>
-            <h1 class="text-4xl font-serif gold-gradient-text tracking-tight mb-2">EJP</h1>
-            <p class="text-sm font-medium text-gold-500 tracking-widest uppercase" data-i18n="login.title">CHURCH MEMBERS</p>
+
+            <!-- Form -->
+            <div class="space-y-6 relative z-10">
+                <!-- Username/Email -->
+                <div class="space-y-2">
+                    <label class="block text-[11px] uppercase font-bold tracking-[0.15em] text-gold-500" data-i18n="login.username">Identifiant ou E-mail</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gold-500/50">
+                            <i class="ph ph-user text-lg"></i>
+                        </div>
+                        <input type="text" placeholder="Entrez votre identifiant" class="w-full bg-[var(--surface-elevated)] border border-[var(--border-gold)] rounded-xl py-3.5 pl-11 pr-4 text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-gold)] focus:ring-1 focus:ring-[var(--accent-gold)] transition-all placeholder-[var(--text-secondary)]">
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div class="space-y-2">
+                    <label class="block text-[11px] uppercase font-bold tracking-[0.15em] text-gold-500" data-i18n="login.password">Mot de passe</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gold-500/50">
+                            <i class="ph ph-lock-key text-lg"></i>
+                        </div>
+                        <input type="password" id="password-input" placeholder="••••••••" class="w-full bg-[var(--surface-elevated)] border border-[var(--border-gold)] rounded-xl py-3.5 pl-11 pr-12 text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-gold)] focus:ring-1 focus:ring-[var(--accent-gold)] transition-all placeholder-[var(--text-secondary)]">
+                        <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 pr-4 flex items-center text-gold-500/50 hover:text-gold-500 transition-colors">
+                            <i id="toggle-icon" class="ph ph-eye text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <button onclick="window.location.href='/frontend/dashboard.html'" class="w-full btn-gold py-4 rounded-xl shimmer transform text-sm tracking-widest mt-2" data-i18n="btn.login">
+                    Se connecter
+                </button>
+                
+                <div class="text-center pt-2">
+                    <a href="#" class="text-xs text-[var(--text-secondary)] hover:text-gold-500 transition-colors border-b border-transparent hover:border-gold-500" data-i18n="login.forgot">Mot de passe oublié ? Contactez votre Chef</a>
+                </div>
+            </div>
+            
+            <!-- Subtle gradient overlay on card bottom -->
+            <div class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-[var(--bg-primary)] to-transparent pointer-events-none opacity-20"></div>
         </div>
-
-        <div class="glass p-8 rounded-2xl gold-border shadow-2xl shadow-black/50 space-y-6">
-            <div>
-                <label class="block text-[10px] uppercase font-bold tracking-[0.2em] mb-2 opacity-50" data-i18n="login.forgot">Identifiant</label>
-                <input type="text" placeholder="Email ou Nom d'utilisateur" class="w-full bg-black/10 dark:bg-transparent border border-gold-100/30 rounded-lg py-3 px-4 focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder:text-zinc-500">
-            </div>
-            <div>
-                <label class="block text-[10px] uppercase font-bold tracking-[0.2em] mb-2 opacity-50">Mot de passe</label>
-                <input type="password" placeholder="••••••••" class="w-full bg-black/10 dark:bg-transparent border border-gold-100/30 rounded-lg py-3 px-4 focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder:text-zinc-500">
-            </div>
-
-            <button onclick="window.location.href='/frontend/dashboard.html'" class="w-full btn-gold py-4 rounded-xl shimmer transform" data-i18n="btn.login">
-                Se Connecter
-            </button>
-
-            <div class="text-center pt-4">
-                <a href="#" class="text-xs text-gold-400 hover:text-gold-500 transition-colors" data-i18n="login.forgot">Mot de passe oublié ?</a>
-                <p class="mt-4 text-xs opacity-60" data-i18n="login.subtitle">Première connexion ? Contactez votre Chef</p>
-            </div>
+        
+        <!-- Footer Note -->
+        <div class="mt-8 text-center z-10">
+            <p class="text-[10px] text-[var(--text-secondary)] tracking-widest uppercase opacity-70" data-i18n="login.footer_note">Accès réservé aux membres enregistrés de l'EJP</p>
         </div>
     </div>
+
+    <script>
+        function togglePassword() {
+            const input = document.getElementById('password-input');
+            const icon = document.getElementById('toggle-icon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('ph-eye');
+                icon.classList.add('ph-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('ph-eye-slash');
+                icon.classList.add('ph-eye');
+            }
+        }
+    </script>
 
     <!-- Scripts -->
     <script src="assets/js/theme.js"></script>
