@@ -1,11 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion Chef | EJP</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../frontend/assets/css/index.css">
+        <link rel="stylesheet" href="../frontend/assets/css/index.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -22,14 +21,23 @@
                         }
                     },
                     fontFamily: {
-                        serif: ['Playfair Display', 'serif'],
-                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Futura Std', 'Century Gothic', 'sans-serif'],
+                        sans: ['Futura Std', 'Century Gothic', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style id="futura-fonts">
+        @font-face { font-family: 'Futura Std'; src: url('fonts/FuturaStdLight.otf') format('opentype'); font-weight: 300; font-style: normal; }
+        @font-face { font-family: 'Futura Std'; src: url('fonts/FuturaStdBook.otf') format('opentype'); font-weight: 400; font-style: normal; }
+        @font-face { font-family: 'Futura Std'; src: url('fonts/FuturaStdMedium.otf') format('opentype'); font-weight: 500; font-style: normal; }
+        @font-face { font-family: 'Futura Std'; src: url('fonts/FuturaStdBold.otf') format('opentype'); font-weight: 700; font-style: normal; }
+        @font-face { font-family: 'Futura Std'; src: url('fonts/FuturaStdHeavy.otf') format('opentype'); font-weight: 800; font-style: normal; }
+        @font-face { font-family: 'Futura Std'; src: url('fonts/FuturaStdExtraBold.otf') format('opentype'); font-weight: 900; font-style: normal; }
+            body { font-family: 'Futura Std', 'Century Gothic', sans-serif; letter-spacing: 0.01em; }
+    </style>
 </head>
 <body class="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center p-6 relative overflow-hidden grain-texture">
     
