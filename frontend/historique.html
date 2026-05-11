@@ -12,8 +12,19 @@
             darkMode: 'selector',
             theme: {
                 extend: {
-                    colors: { gold: { 50: '#F7F3E9', 100: '#E8D9A0', 400: '#C9A84C', 500: '#D4AF37', 600: '#F5E27A' } },
-                    fontFamily: { serif: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] }
+                    colors: {
+                        gold: {
+                            50: '#F7F3E9',
+                            100: '#E8D9A0',
+                            400: '#C9A84C',
+                            500: '#D4AF37',
+                            600: '#F5E27A',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
                 }
             }
         }
@@ -21,11 +32,14 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body class="min-h-screen">
-        <!-- Navbar -->
-    <nav class="sticky top-0 bg-[var(--surface-elevated)] border-b border-gold-100 dark:border-[#2E2A1F] z-50 px-8 h-20 flex items-center justify-between transition-colors">
+    
+    <!-- Navbar -->
+    <nav class="sticky top-0 bg-[var(--surface-elevated)] border-b border-[var(--border-gold)] z-50 px-8 h-20 flex items-center justify-between transition-colors">
         <!-- Gauche: Logo -->
         <div class="w-1/3 flex items-center">
-            <a href="/frontend/dashboard.html" class="text-2xl font-serif gold-gradient-text tracking-widest uppercase">EJP</a>
+            <a href="/frontend/dashboard.html" class="text-2xl font-serif gold-gradient-text tracking-widest uppercase flex items-center gap-2">
+                <i class="ph ph-church text-gold-500"></i> EJP
+            </a>
         </div>
 
         <!-- Centre: Navigation -->
@@ -33,7 +47,7 @@
             <a href="/frontend/dashboard.html" class="nav-link " data-i18n="nav.dashboard">Dashboard</a>
             <a href="/frontend/formations.html" class="nav-link " data-i18n="nav.formations">Formations</a>
             <a href="/frontend/progression.html" class="nav-link " data-i18n="nav.progression">Progression</a>
-            <a href="/frontend/evenements.html" class="nav-link " data-i18n="nav.events">�v�nements</a>
+            <a href="/frontend/evenements.html" class="nav-link " data-i18n="nav.events">Événements</a>
         </div>
 
         <!-- Droite: Actions -->
@@ -43,81 +57,171 @@
                 <span class="opacity-20 text-gold-500">|</span>
                 <span class="cursor-pointer opacity-50 hover:opacity-100 transition-opacity">EN</span>
             </div>
+            
+            <!-- Notifications Bell -->
+            <button class="relative p-2 text-gold-500/70 hover:text-gold-500 transition-colors">
+                <i class="ph ph-bell text-xl"></i>
+            </button>
+
+            <!-- Theme Toggle -->
             <button onclick="toggleTheme()" class="w-10 h-10 border border-gold-100 dark:border-[#2E2A1F] rounded-full flex items-center justify-center hover:bg-gold-50 dark:hover:bg-white/5 transition-all text-gold-500">
                 <span id="theme-icon"><i class="ph ph-moon text-lg"></i></span>
             </button>
+
+            <!-- User Profile -->
             <div class="flex items-center space-x-3 pl-6 border-l border-gold-100 dark:border-[#2E2A1F]">
                 <div class="text-right hidden sm:block">
-                    <p class="text-xs font-bold leading-none">Jean-Baptiste</p>
-                    <p class="text-[10px] text-[#A89B7A] uppercase tracking-widest">Nouveau Membre</p>
+                    <p class="text-xs font-bold leading-none text-[var(--text-primary)]">Jean-Baptiste</p>
+                    <p class="text-[10px] text-gold-500 uppercase tracking-widest font-bold">Star</p>
                 </div>
-                <div class="w-10 h-10 rounded-full border border-gold-500 p-0.5 overflow-hidden">
+                <div class="w-10 h-10 rounded-full border border-gold-500 p-0.5 overflow-hidden bg-[var(--surface)]">
                     <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=JB" alt="User" class="w-full h-full rounded-full">
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto p-10 space-y-16 animate-in fade-in duration-700">
-        <header class="text-center">
-            <h1 class="text-5xl font-serif gold-gradient-text" data-i18n="nav.history">Mon Historique</h1>
-            <p class="text-sm text-[#A89B7A] tracking-[0.2em] uppercase mt-4">Revivez les moments clés de votre engagement</p>
-        </header>
+    <main class="max-w-5xl mx-auto p-8 space-y-12 animate-in fade-in duration-700">
+        
+        <!-- Page Header -->
+        <div class="text-center space-y-4">
+            <div class="inline-flex items-center justify-center w-16 h-16 mb-2 rounded-full bg-gold-500/10 border border-gold-500/30 gold-glow text-gold-500">
+                <i class="ph ph-clock-counter-clockwise text-3xl"></i>
+            </div>
+            <h1 class="text-4xl font-serif text-[var(--text-primary)]">Mon Historique</h1>
+            <p class="text-[var(--text-secondary)] text-sm max-w-lg mx-auto">Retracez votre parcours spirituel et votre engagement au sein de l'EJP.</p>
+        </div>
 
-        <!-- Stats Grid -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div class="bg-[#1A1A1A] p-8 rounded-[2rem] border border-gold-500/10 text-center space-y-2">
-                <span class="block text-3xl font-serif text-gold-500">4</span>
-                <span class="text-[9px] uppercase font-bold text-[#A89B7A] tracking-widest">Formations</span>
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="bg-[var(--surface-elevated)] p-6 rounded-3xl border border-[var(--border-gold)] text-center shadow-lg hover:shadow-gold-500/5 transition-all">
+                <div class="w-10 h-10 bg-gold-500/10 text-gold-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="ph ph-graduation-cap text-xl"></i>
+                </div>
+                <span class="block text-2xl font-serif text-[var(--text-primary)]">4</span>
+                <span class="text-[9px] uppercase font-bold text-[var(--text-secondary)] tracking-[0.2em]">Formations</span>
             </div>
-            <div class="bg-[#1A1A1A] p-8 rounded-[2rem] border border-gold-500/10 text-center space-y-2">
-                <span class="block text-3xl font-serif text-gold-500">12</span>
-                <span class="text-[9px] uppercase font-bold text-[#A89B7A] tracking-widest">Cultes</span>
+            <div class="bg-[var(--surface-elevated)] p-6 rounded-3xl border border-[var(--border-gold)] text-center shadow-lg hover:shadow-gold-500/5 transition-all">
+                <div class="w-10 h-10 bg-blue-500/10 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="ph ph-calendar-check text-xl"></i>
+                </div>
+                <span class="block text-2xl font-serif text-[var(--text-primary)]">12</span>
+                <span class="text-[9px] uppercase font-bold text-[var(--text-secondary)] tracking-[0.2em]">Sessions</span>
             </div>
-            <div class="bg-[#1A1A1A] p-8 rounded-[2rem] border border-gold-500/10 text-center space-y-2">
-                <span class="block text-3xl font-serif text-gold-500">3</span>
-                <span class="text-[9px] uppercase font-bold text-[#A89B7A] tracking-widest">Mois</span>
+            <div class="bg-[var(--surface-elevated)] p-6 rounded-3xl border border-[var(--border-gold)] text-center shadow-lg hover:shadow-gold-500/5 transition-all">
+                <div class="w-10 h-10 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="ph ph-hourglass-high text-xl"></i>
+                </div>
+                <span class="block text-2xl font-serif text-[var(--text-primary)]">3</span>
+                <span class="text-[9px] uppercase font-bold text-[var(--text-secondary)] tracking-[0.2em]">Mois</span>
             </div>
-            <div class="bg-[#1A1A1A] p-8 rounded-[2rem] border border-gold-500/10 text-center space-y-2">
-                <span class="block text-3xl font-serif text-emerald-500">Star</span>
-                <span class="text-[9px] uppercase font-bold text-[#A89B7A] tracking-widest">Palier</span>
+            <div class="bg-[var(--surface-elevated)] p-6 rounded-3xl border border-[var(--border-gold)] text-center shadow-lg hover:shadow-gold-500/5 transition-all border-l-gold-500 border-l-4">
+                <div class="w-10 h-10 bg-gold-500 text-black rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-gold-500/30">
+                    <i class="ph ph-star text-xl"></i>
+                </div>
+                <span class="block text-2xl font-serif text-gold-500">Star</span>
+                <span class="text-[9px] uppercase font-bold text-[var(--text-secondary)] tracking-[0.2em]">Niveau</span>
             </div>
         </div>
 
-        <!-- Timeline -->
-        <div class="relative pl-12 space-y-16 before:content-[''] before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[1px] before:bg-[#2E2A1F]">
-            <!-- Item 1 -->
-            <div class="relative group">
-                <div class="absolute left-[-39px] top-1.5 h-7 w-7 rounded-full bg-gold-500 border-[6px] border-[#0D0D0D] shadow-[0_0_15px_rgba(212,175,55,0.4)]"></div>
-                <div class="bg-[#1A1A1A]/50 p-8 rounded-3xl border border-gold-500/5 group-hover:border-gold-500/20 transition-all">
-                    <span class="text-[10px] font-bold text-gold-500 uppercase tracking-widest block mb-4">9 Mai 2026</span>
-                    <h3 class="text-xl font-serif text-[#F5F0E8] mb-2">Aujourd'hui</h3>
-                    <p class="text-sm text-[#A89B7A] leading-relaxed italic">"Vous continuez votre ascension spirituelle avec ferveur..."</p>
+        <!-- Activity Filter -->
+        <div class="flex flex-wrap items-center justify-center gap-4 border-b border-[var(--border-gold)] pb-8">
+            <button class="px-6 py-2 rounded-full bg-gold-500 text-black text-xs font-bold uppercase tracking-widest shadow-lg shadow-gold-500/20 transition-all">Tous</button>
+            <button class="px-6 py-2 rounded-full bg-[var(--surface)] border border-[var(--border-gold)] text-[var(--text-secondary)] text-xs font-bold uppercase tracking-widest hover:border-gold-500 hover:text-gold-500 transition-all">Formations</button>
+            <button class="px-6 py-2 rounded-full bg-[var(--surface)] border border-[var(--border-gold)] text-[var(--text-secondary)] text-xs font-bold uppercase tracking-widest hover:border-gold-500 hover:text-gold-500 transition-all">Sessions</button>
+            <button class="px-6 py-2 rounded-full bg-[var(--surface)] border border-[var(--border-gold)] text-[var(--text-secondary)] text-xs font-bold uppercase tracking-widest hover:border-gold-500 hover:text-gold-500 transition-all">Progression</button>
+        </div>
+
+        <!-- Timeline Section -->
+        <div class="relative max-w-3xl mx-auto pl-8 sm:pl-16 space-y-12 before:content-[''] before:absolute before:left-[11px] sm:before:left-[27px] before:top-2 before:bottom-2 before:w-1 before:bg-gradient-to-b before:from-gold-500 before:to-transparent before:opacity-20">
+            
+            <!-- Timeline Item 1: Progression -->
+            <div class="relative animate-in slide-in-from-left-4 duration-500">
+                <!-- Marker -->
+                <div class="absolute left-[-29px] sm:left-[-45px] top-1.5 h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-gold-500 border-4 border-[var(--surface-elevated)] shadow-[0_0_15px_rgba(212,175,55,0.4)] z-10 flex items-center justify-center">
+                    <i class="ph ph-arrow-up-bold text-[10px] sm:text-xs text-black"></i>
+                </div>
+                
+                <div class="bg-[var(--surface-elevated)] p-6 sm:p-8 rounded-3xl border border-gold-500/20 shadow-xl relative overflow-hidden group hover:border-gold-500/40 transition-all">
+                    <div class="absolute top-0 right-0 p-4 opacity-[0.05] group-hover:scale-110 transition-transform">
+                        <i class="ph ph-star text-7xl text-gold-500"></i>
+                    </div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-[10px] font-bold text-gold-500 uppercase tracking-[0.2em]">12 Février 2026</span>
+                        <span class="px-3 py-1 bg-gold-500/10 border border-gold-500/20 rounded-full text-[8px] font-bold uppercase tracking-widest text-gold-500">Progression</span>
+                    </div>
+                    <h3 class="text-xl font-serif text-[var(--text-primary)] mb-2">Niveau Star Atteint</h3>
+                    <p class="text-sm text-[var(--text-secondary)] leading-relaxed italic">"Vous avez officiellement rejoint le rang des Stars de l'EJP. Que votre éclat illumine votre service."</p>
                 </div>
             </div>
 
-            <!-- Item 2 -->
-            <div class="relative group opacity-60">
-                <div class="absolute left-[-39px] top-1.5 h-7 w-7 rounded-full bg-[#2E2A1F] border-[6px] border-[#0D0D0D]"></div>
-                <div class="p-8 rounded-3xl border border-white/5">
-                    <span class="text-[10px] font-bold text-[#A89B7A] uppercase tracking-widest block mb-4">15 Avril 2026</span>
-                    <h3 class="text-xl font-serif text-[#F5F0E8] mb-2">Module 1 Validé</h3>
-                    <p class="text-sm text-[#A89B7A]">Achèvement des Fondements de la Foi.</p>
+            <!-- Timeline Item 2: Formation -->
+            <div class="relative animate-in slide-in-from-left-4 duration-500 delay-100">
+                <!-- Marker -->
+                <div class="absolute left-[-29px] sm:left-[-45px] top-1.5 h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-blue-500 border-4 border-[var(--surface-elevated)] z-10 flex items-center justify-center">
+                    <i class="ph ph-graduation-cap text-[10px] sm:text-xs text-white"></i>
+                </div>
+                
+                <div class="bg-[var(--surface-elevated)] p-6 sm:p-8 rounded-3xl border border-[var(--border-gold)] shadow-xl relative overflow-hidden group hover:border-blue-500/40 transition-all">
+                    <div class="absolute top-0 right-0 p-4 opacity-[0.05] group-hover:scale-110 transition-transform">
+                        <i class="ph ph-books text-7xl text-blue-500"></i>
+                    </div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-[10px] font-bold text-blue-500 uppercase tracking-[0.2em]">05 Février 2026</span>
+                        <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-[8px] font-bold uppercase tracking-widest text-blue-500">Formation</span>
+                    </div>
+                    <h3 class="text-xl font-serif text-[var(--text-primary)] mb-2">Module 1 Validé</h3>
+                    <p class="text-sm text-[var(--text-secondary)] leading-relaxed">Achèvement complet de la formation "Les Fondements de la Foi".</p>
+                    <div class="mt-4 pt-4 border-t border-[var(--border-gold)] flex items-center gap-2">
+                        <i class="ph ph-certificate text-gold-500"></i>
+                        <span class="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">Certificat obtenu</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Item 3 -->
-            <div class="relative group opacity-40">
-                <div class="absolute left-[-39px] top-1.5 h-7 w-7 rounded-full bg-[#2E2A1F] border-[6px] border-[#0D0D0D]"></div>
-                <div class="p-8 rounded-3xl border border-white/5">
-                    <span class="text-[10px] font-bold text-[#A89B7A] uppercase tracking-widest block mb-4">15 Janvier 2026</span>
-                    <h3 class="text-xl font-serif text-[#F5F0E8] mb-2">Bienvenue à l'EJP</h3>
-                    <p class="text-sm text-[#A89B7A]">Premiers pas dans la communauté Prodigue.</p>
+            <!-- Timeline Item 3: Service Session -->
+            <div class="relative animate-in slide-in-from-left-4 duration-500 delay-200">
+                <!-- Marker -->
+                <div class="absolute left-[-29px] sm:left-[-45px] top-1.5 h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-emerald-500 border-4 border-[var(--surface-elevated)] z-10 flex items-center justify-center">
+                    <i class="ph ph-calendar-check text-[10px] sm:text-xs text-white"></i>
+                </div>
+                
+                <div class="bg-[var(--surface-elevated)] p-6 sm:p-8 rounded-3xl border border-[var(--border-gold)] shadow-xl relative overflow-hidden group hover:border-emerald-500/40 transition-all">
+                    <div class="absolute top-0 right-0 p-4 opacity-[0.05] group-hover:scale-110 transition-transform">
+                        <i class="ph ph-users-three text-7xl text-emerald-500"></i>
+                    </div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-[10px] font-bold text-emerald-500 uppercase tracking-[0.2em]">28 Janvier 2026</span>
+                        <span class="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-[8px] font-bold uppercase tracking-widest text-emerald-500">Session</span>
+                    </div>
+                    <h3 class="text-xl font-serif text-[var(--text-primary)] mb-2">Service d'accueil du Culte</h3>
+                    <p class="text-sm text-[var(--text-secondary)] leading-relaxed">Participation active à l'organisation du culte dominical. Thème : "La Gloire des Prodiges".</p>
+                </div>
+            </div>
+
+            <!-- Timeline Item 4: Welcome -->
+            <div class="relative animate-in slide-in-from-left-4 duration-500 delay-300">
+                <!-- Marker -->
+                <div class="absolute left-[-29px] sm:left-[-45px] top-1.5 h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-zinc-500 border-4 border-[var(--surface-elevated)] z-10 flex items-center justify-center">
+                    <i class="ph ph-hand-waving text-[10px] sm:text-xs text-white"></i>
+                </div>
+                
+                <div class="bg-[var(--surface-elevated)] p-6 sm:p-8 rounded-3xl border border-[var(--border-gold)] shadow-xl relative overflow-hidden group opacity-80">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em]">15 Janvier 2026</span>
+                        <span class="px-3 py-1 bg-zinc-500/10 border border-zinc-500/20 rounded-full text-[8px] font-bold uppercase tracking-widest text-[var(--text-secondary)]">Arrivée</span>
+                    </div>
+                    <h3 class="text-xl font-serif text-[var(--text-primary)] mb-2">Bienvenue à l'EJP</h3>
+                    <p class="text-sm text-[var(--text-secondary)] leading-relaxed">Vos premiers pas au sein de la communauté des Jeunes Prodiges.</p>
                 </div>
             </div>
         </div>
+
     </main>
-    </main>
+
+    <footer class="mt-8 p-8 border-t border-[var(--border-gold)] text-center text-xs text-[var(--text-secondary)] opacity-80">
+        <p>© 2026 EJP - Église des Jeunes Prodiges. <span data-i18n="footer.rights">Tous droits réservés</span>.</p>
+    </footer>
 
     <script src="assets/js/theme.js"></script>
     <script type="module" src="assets/i18n/i18n.js"></script>

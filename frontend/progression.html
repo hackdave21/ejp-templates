@@ -12,8 +12,19 @@
             darkMode: 'selector',
             theme: {
                 extend: {
-                    colors: { gold: { 50: '#F7F3E9', 100: '#E8D9A0', 400: '#C9A84C', 500: '#D4AF37', 600: '#F5E27A' } },
-                    fontFamily: { serif: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] }
+                    colors: {
+                        gold: {
+                            50: '#F7F3E9',
+                            100: '#E8D9A0',
+                            400: '#C9A84C',
+                            500: '#D4AF37',
+                            600: '#F5E27A',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
                 }
             }
         }
@@ -21,11 +32,14 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body class="min-h-screen">
-        <!-- Navbar -->
-    <nav class="sticky top-0 bg-[var(--surface-elevated)] border-b border-gold-100 dark:border-[#2E2A1F] z-50 px-8 h-20 flex items-center justify-between transition-colors">
+    
+    <!-- Navbar -->
+    <nav class="sticky top-0 bg-[var(--surface-elevated)] border-b border-[var(--border-gold)] z-50 px-8 h-20 flex items-center justify-between transition-colors">
         <!-- Gauche: Logo -->
         <div class="w-1/3 flex items-center">
-            <a href="/frontend/dashboard.html" class="text-2xl font-serif gold-gradient-text tracking-widest uppercase">EJP</a>
+            <a href="/frontend/dashboard.html" class="text-2xl font-serif gold-gradient-text tracking-widest uppercase flex items-center gap-2">
+                <i class="ph ph-church text-gold-500"></i> EJP
+            </a>
         </div>
 
         <!-- Centre: Navigation -->
@@ -33,7 +47,7 @@
             <a href="/frontend/dashboard.html" class="nav-link " data-i18n="nav.dashboard">Dashboard</a>
             <a href="/frontend/formations.html" class="nav-link " data-i18n="nav.formations">Formations</a>
             <a href="/frontend/progression.html" class="nav-link active" data-i18n="nav.progression">Progression</a>
-            <a href="/frontend/evenements.html" class="nav-link " data-i18n="nav.events">�v�nements</a>
+            <a href="/frontend/evenements.html" class="nav-link " data-i18n="nav.events">Événements</a>
         </div>
 
         <!-- Droite: Actions -->
@@ -43,84 +57,238 @@
                 <span class="opacity-20 text-gold-500">|</span>
                 <span class="cursor-pointer opacity-50 hover:opacity-100 transition-opacity">EN</span>
             </div>
+            
+            <!-- Notifications Bell -->
+            <button class="relative p-2 text-gold-500/70 hover:text-gold-500 transition-colors">
+                <i class="ph ph-bell text-xl"></i>
+            </button>
+
+            <!-- Theme Toggle -->
             <button onclick="toggleTheme()" class="w-10 h-10 border border-gold-100 dark:border-[#2E2A1F] rounded-full flex items-center justify-center hover:bg-gold-50 dark:hover:bg-white/5 transition-all text-gold-500">
                 <span id="theme-icon"><i class="ph ph-moon text-lg"></i></span>
             </button>
+
+            <!-- User Profile -->
             <div class="flex items-center space-x-3 pl-6 border-l border-gold-100 dark:border-[#2E2A1F]">
                 <div class="text-right hidden sm:block">
-                    <p class="text-xs font-bold leading-none">Jean-Baptiste</p>
-                    <p class="text-[10px] text-[#A89B7A] uppercase tracking-widest">Nouveau Membre</p>
+                    <p class="text-xs font-bold leading-none text-[var(--text-primary)]">Jean-Baptiste</p>
+                    <p class="text-[10px] text-gold-500 uppercase tracking-widest font-bold">Star</p>
                 </div>
-                <div class="w-10 h-10 rounded-full border border-gold-500 p-0.5 overflow-hidden">
+                <div class="w-10 h-10 rounded-full border border-gold-500 p-0.5 overflow-hidden bg-[var(--surface)]">
                     <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=JB" alt="User" class="w-full h-full rounded-full">
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto p-10 space-y-16 animate-in fade-in duration-700">
-        <header class="text-center">
-            <h1 class="text-5xl font-serif gold-gradient-text">Votre Élévation</h1>
-            <p class="text-sm text-[#A89B7A] tracking-[0.2em] uppercase mt-4">Suivez votre parcours spirituel au sein de l'EJP</p>
-        </header>
+    <main class="max-w-4xl mx-auto p-8 space-y-10 animate-in fade-in duration-700">
+        
+        <!-- Page Header -->
+        <div class="text-center space-y-3 mb-12">
+            <div class="inline-flex items-center justify-center w-16 h-16 mb-2 rounded-full bg-gold-500/10 border border-gold-500/30 gold-glow text-gold-500">
+                <i class="ph ph-rocket-launch text-3xl"></i>
+            </div>
+            <h1 class="text-4xl font-serif text-[var(--text-primary)]">Demande de Progression</h1>
+            <p class="text-[var(--text-secondary)] text-sm max-w-lg mx-auto">Vérifiez vos prérequis et soumettez votre demande pour passer au niveau spirituel supérieur.</p>
+        </div>
 
-        <!-- Stepper -->
-        <div class="relative py-12 px-4 md:px-0">
-            <div class="absolute top-1/2 left-0 w-full h-[1px] bg-[#2E2A1F] -translate-y-1/2 z-0 hidden md:block"></div>
-            <div class="flex flex-col md:flex-row justify-between items-center relative z-10 space-y-12 md:space-y-0">
-                <!-- Step 1 -->
-                <div class="flex flex-col items-center">
-                    <div class="h-14 w-14 rounded-full bg-gold-500 text-black flex items-center justify-center font-bold shadow-[0_0_20px_rgba(212,175,55,0.4)]">✓</div>
-                    <span class="mt-6 text-[10px] font-bold uppercase tracking-[0.3em] text-gold-500" data-i18n="status.new">Nouveau</span>
+        <!-- Progress Tracker (Stepper) -->
+        <div class="bg-[var(--surface-elevated)] border border-[var(--border-gold)] rounded-3xl p-8 shadow-xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none">
+                <i class="ph ph-trend-up text-[15rem] text-gold-500"></i>
+            </div>
+            
+            <h3 class="text-lg font-serif text-[var(--text-primary)] mb-10 text-center uppercase tracking-widest">Votre parcours spirituel</h3>
+            
+            <div class="relative flex justify-between items-center w-full px-4 sm:px-12 mb-6">
+                <!-- Connecting Line -->
+                <div class="absolute top-1/2 left-0 w-full h-1 bg-[var(--border-gold)] -translate-y-1/2 rounded-full z-0 opacity-50"></div>
+                <!-- Active Line -->
+                <div class="absolute top-1/2 left-0 w-1/4 h-1 bg-gradient-to-r from-gold-400 to-gold-600 -translate-y-1/2 rounded-full z-0 gold-glow"></div>
+                
+                <!-- Step 1 (Completed) -->
+                <div class="relative z-10 flex flex-col items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-gold-500 text-[var(--surface-elevated)] flex items-center justify-center shadow-lg shadow-gold-500/40 border-4 border-[var(--surface-elevated)]">
+                        <i class="ph ph-sparkle text-xl"></i>
+                    </div>
+                    <span class="text-[9px] uppercase tracking-widest font-bold text-gold-500">Nouveau</span>
                 </div>
-                <!-- Step 2 -->
-                <div class="flex flex-col items-center">
-                    <div class="h-20 w-20 rounded-full bg-[#1A1A1A] border-2 border-gold-500 flex items-center justify-center text-4xl shadow-[0_0_30px_rgba(212,175,55,0.2)] scale-110">⭐</div>
-                    <span class="mt-6 text-[10px] font-bold uppercase tracking-[0.3em] text-gold-500" data-i18n="status.star">Star</span>
+                
+                <!-- Step 2 (Current) -->
+                <div class="relative z-10 flex flex-col items-center gap-3">
+                    <div class="w-14 h-14 rounded-full bg-[var(--surface-elevated)] border-2 border-gold-500 text-gold-500 flex items-center justify-center shadow-[0_0_20px_rgba(212,175,55,0.3)] bg-gradient-to-b from-transparent to-gold-500/10">
+                        <i class="ph ph-star text-2xl animate-pulse"></i>
+                    </div>
+                    <div class="text-center">
+                        <span class="text-[10px] uppercase tracking-widest font-bold text-[var(--text-primary)] block">Star</span>
+                        <span class="text-[8px] text-[var(--text-secondary)] uppercase tracking-widest bg-[var(--surface)] px-2 py-0.5 rounded-full border border-[var(--border-gold)]">Actuel</span>
+                    </div>
                 </div>
-                <!-- Step 3 -->
-                <div class="flex flex-col items-center opacity-30">
-                    <div class="h-14 w-14 rounded-full bg-[#0D0D0D] border border-white/10 flex items-center justify-center text-zinc-600">🔒</div>
-                    <span class="mt-6 text-[10px] font-bold uppercase tracking-[0.3em]" data-i18n="status.pilot">Pilote</span>
+                
+                <!-- Step 3 (Target) -->
+                <div class="relative z-10 flex flex-col items-center gap-3">
+                    <div class="w-14 h-14 rounded-full bg-[var(--surface)] border-2 border-dashed border-emerald-500 text-emerald-500 flex items-center justify-center shadow-[0_0_15px_rgba(16,185,129,0.1)]">
+                        <i class="ph ph-paper-plane-tilt text-2xl"></i>
+                    </div>
+                    <div class="text-center">
+                        <span class="text-[10px] uppercase tracking-widest font-bold text-emerald-500 block">Pilote</span>
+                        <span class="text-[8px] text-emerald-500 uppercase tracking-widest bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/30">Cible</span>
+                    </div>
                 </div>
-                <!-- Step 4 -->
-                <div class="flex flex-col items-center opacity-30">
-                    <div class="h-14 w-14 rounded-full bg-[#0D0D0D] border border-white/10 flex items-center justify-center text-zinc-600">🔒</div>
-                    <span class="mt-6 text-[10px] font-bold uppercase tracking-[0.3em]" data-i18n="status.pillar">Pilier</span>
+                
+                <!-- Step 4 (Locked) -->
+                <div class="relative z-10 flex flex-col items-center gap-3 opacity-40 grayscale hidden sm:flex">
+                    <div class="w-12 h-12 rounded-full bg-[var(--surface)] border border-[var(--border-gold)] text-[var(--text-secondary)] flex items-center justify-center">
+                        <i class="ph ph-pillars text-xl"></i>
+                    </div>
+                    <span class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)]">Pilier</span>
                 </div>
-                <!-- Step 5 -->
-                <div class="flex flex-col items-center opacity-30">
-                    <div class="h-14 w-14 rounded-full bg-[#0D0D0D] border border-white/10 flex items-center justify-center text-zinc-600">🔒</div>
-                    <span class="mt-6 text-[10px] font-bold uppercase tracking-[0.3em]" data-i18n="status.missionary">Missionnaire</span>
+                
+                <!-- Step 5 (Locked) -->
+                <div class="relative z-10 flex flex-col items-center gap-3 opacity-40 grayscale hidden sm:flex">
+                    <div class="w-12 h-12 rounded-full bg-[var(--surface)] border border-[var(--border-gold)] text-[var(--text-secondary)] flex items-center justify-center">
+                        <i class="ph ph-globe-hemisphere-east text-xl"></i>
+                    </div>
+                    <span class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)]">Missionnaire</span>
                 </div>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-            <div class="bg-[#1A1A1A] p-10 rounded-[2rem] border border-gold-500/20 space-y-8 shadow-2xl">
-                <h3 class="text-2xl font-serif text-[#F5F0E8]">Conditions pour devenir <span class="text-gold-500">Star ⭐</span></h3>
-                <ul class="space-y-6">
-                    <li class="flex items-center space-x-4 text-sm">
-                        <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
-                        <span class="text-[#F5F0E8]">Compléter le module "Fondements"</span>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Current Level Info -->
+            <div class="bg-[var(--surface-elevated)] border border-[var(--border-gold)] rounded-3xl p-8 shadow-xl">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="ph ph-user-circle text-gold-500 text-2xl"></i>
+                    <h3 class="font-serif text-xl text-[var(--text-primary)]">Votre Statut</h3>
+                </div>
+                
+                <div class="flex flex-col items-center text-center p-6 bg-[var(--surface)] border border-[var(--border-gold)] rounded-2xl">
+                    <div class="w-20 h-20 bg-gradient-to-br from-gold-400 to-gold-600 rounded-2xl flex items-center justify-center shadow-lg shadow-gold-500/30 transform rotate-3 mb-4">
+                        <i class="ph ph-star text-4xl text-black"></i>
+                    </div>
+                    <h4 class="text-2xl font-serif text-[var(--text-primary)] mb-1">Star</h4>
+                    <p class="text-xs text-[var(--text-secondary)]">Depuis le 12 Février 2026</p>
+                </div>
+                <p class="text-sm text-[var(--text-secondary)] mt-6 text-center">Vous accomplissez vos services avec excellence. Vous êtes maintenant prêt(e) à passer à l'étape suivante.</p>
+            </div>
+
+            <!-- Conditions Checklist -->
+            <div class="bg-[var(--surface-elevated)] border border-[var(--border-gold)] rounded-3xl p-8 shadow-xl flex flex-col">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="ph ph-list-checks text-gold-500 text-2xl"></i>
+                    <h3 class="font-serif text-xl text-[var(--text-primary)]">Conditions requises</h3>
+                </div>
+                
+                <ul class="space-y-4 flex-1">
+                    <!-- Condition Met -->
+                    <li class="flex items-start gap-3 p-3 bg-emerald-500/5 border border-emerald-500/20 rounded-xl">
+                        <i class="ph ph-check-circle text-emerald-500 text-xl flex-shrink-0 mt-0.5"></i>
+                        <div>
+                            <p class="text-sm font-medium text-[var(--text-primary)] leading-tight">Toutes les formations obligatoires "Star" complétées</p>
+                            <p class="text-[10px] text-emerald-500/70 uppercase tracking-widest font-bold mt-1">100% (4/4)</p>
+                        </div>
                     </li>
-                    <li class="flex items-center space-x-4 text-sm opacity-40">
-                        <div class="w-1.5 h-1.5 rounded-full bg-gold-500"></div>
-                        <span class="text-[#A89B7A]">Participer à 5 cultes (Actuel: 2)</span>
+                    <!-- Condition Met -->
+                    <li class="flex items-start gap-3 p-3 bg-emerald-500/5 border border-emerald-500/20 rounded-xl">
+                        <i class="ph ph-check-circle text-emerald-500 text-xl flex-shrink-0 mt-0.5"></i>
+                        <div>
+                            <p class="text-sm font-medium text-[var(--text-primary)] leading-tight">3 mois d'ancienneté au niveau Star</p>
+                            <p class="text-[10px] text-emerald-500/70 uppercase tracking-widest font-bold mt-1">4 mois écoulés</p>
+                        </div>
                     </li>
+                    <!-- Condition Met -->
+                    <li class="flex items-start gap-3 p-3 bg-emerald-500/5 border border-emerald-500/20 rounded-xl">
+                        <i class="ph ph-check-circle text-emerald-500 text-xl flex-shrink-0 mt-0.5"></i>
+                        <div>
+                            <p class="text-sm font-medium text-[var(--text-primary)] leading-tight">10 sessions de service validées</p>
+                            <p class="text-[10px] text-emerald-500/70 uppercase tracking-widest font-bold mt-1">12 sessions validées</p>
+                        </div>
+                    </li>
+                    <!-- Example of an unmet condition (hidden/commented out for UI state demonstration) -->
+                    <!--
+                    <li class="flex items-start gap-3 p-3 bg-[var(--surface)] border border-[var(--border-gold)] opacity-60 rounded-xl">
+                        <i class="ph ph-x-circle text-[var(--text-secondary)] text-xl flex-shrink-0 mt-0.5"></i>
+                        <div>
+                            <p class="text-sm font-medium text-[var(--text-secondary)] leading-tight">Entretien avec le Chef de département</p>
+                            <p class="text-[10px] text-[var(--text-secondary)] uppercase tracking-widest font-bold mt-1">Non planifié</p>
+                        </div>
+                    </li>
+                    -->
                 </ul>
             </div>
+        </div>
 
-            <div class="flex flex-col justify-center space-y-8">
-                <div class="p-10 bg-[#222222] border border-dashed border-gold-500/30 rounded-[2rem] text-center space-y-6">
-                    <p class="text-sm italic text-[#A89B7A]">"Votre engagement est la clé de votre croissance spirituelle."</p>
-                    <button class="w-full opacity-30 cursor-not-allowed bg-zinc-800 text-zinc-500 py-5 rounded-2xl font-bold uppercase tracking-[0.3em] text-[10px]" title="Conditions non remplies">
-                        Demande Verrouillée
-                    </button>
+        <!-- Call to Action (Conditions Met) -->
+        <!-- Note: If conditions are not met, replace 'bg-emerald-500' with 'bg-[var(--surface)] border border-[var(--border-gold)] grayscale opacity-50' -->
+        <div class="bg-gradient-to-r from-emerald-600 to-emerald-500 rounded-3xl p-8 shadow-[0_0_40px_rgba(16,185,129,0.2)] text-center relative overflow-hidden group">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHBhdGggZD0iTTAgMGg0MHY0MEgweiIgZmlsbD0ibm9uZSIvPjxjaXJjbGUgY3g9IjIwIiBjeT0iMjAiIHI9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4yIi8+PC9zdmc+')] opacity-20"></div>
+            
+            <div class="relative z-10">
+                <div class="w-16 h-16 mx-auto bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm mb-4">
+                    <i class="ph ph-confetti text-3xl text-white"></i>
                 </div>
+                <h2 class="text-2xl font-serif text-white mb-2">Félicitations ! Vous êtes éligible.</h2>
+                <p class="text-emerald-50 max-w-md mx-auto text-sm mb-8">Vous avez rempli toutes les conditions requises pour devenir Pilote. Vous pouvez soumettre votre demande à votre Chef pour validation.</p>
+                
+                <button class="bg-white text-emerald-600 hover:bg-emerald-50 px-8 py-4 rounded-xl font-bold uppercase tracking-widest text-sm transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 flex items-center gap-2 mx-auto">
+                    Envoyer ma demande <i class="ph ph-paper-plane-right text-lg"></i>
+                </button>
             </div>
         </div>
+
+        <!-- History Section -->
+        <div class="bg-[var(--surface-elevated)] border border-[var(--border-gold)] rounded-3xl p-8 shadow-xl">
+            <h3 class="font-serif text-xl text-[var(--text-primary)] mb-6 flex items-center gap-2">
+                <i class="ph ph-clock-counter-clockwise text-gold-500"></i> Historique de mes demandes
+            </h3>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-[var(--border-gold)] text-[10px] uppercase tracking-widest text-[var(--text-secondary)]">
+                            <th class="pb-3 px-4 font-bold">Date</th>
+                            <th class="pb-3 px-4 font-bold">Niveau Cible</th>
+                            <th class="pb-3 px-4 font-bold">Statut</th>
+                            <th class="pb-3 px-4 font-bold hidden md:table-cell">Commentaires du Chef</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm text-[var(--text-primary)]">
+                        <!-- History Item 1 -->
+                        <tr class="border-b border-[var(--border-gold)] hover:bg-[var(--surface)] transition-colors">
+                            <td class="py-4 px-4 whitespace-nowrap">12 Fév 2026</td>
+                            <td class="py-4 px-4 font-serif font-bold text-gold-500">Star</td>
+                            <td class="py-4 px-4">
+                                <span class="bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2 py-1 rounded text-[10px] uppercase tracking-widest font-bold flex items-center gap-1 w-max">
+                                    <i class="ph ph-check-circle"></i> Validée
+                                </span>
+                            </td>
+                            <td class="py-4 px-4 text-xs text-[var(--text-secondary)] hidden md:table-cell italic">
+                                "Excellent parcours, prêt pour le service actif."
+                            </td>
+                        </tr>
+                        <!-- History Item 2 -->
+                        <tr class="border-b border-transparent hover:bg-[var(--surface)] transition-colors">
+                            <td class="py-4 px-4 whitespace-nowrap">05 Fév 2026</td>
+                            <td class="py-4 px-4 font-serif font-bold text-gold-500">Star</td>
+                            <td class="py-4 px-4">
+                                <span class="bg-red-500/10 text-red-500 border border-red-500/20 px-2 py-1 rounded text-[10px] uppercase tracking-widest font-bold flex items-center gap-1 w-max">
+                                    <i class="ph ph-x-circle"></i> Refusée
+                                </span>
+                            </td>
+                            <td class="py-4 px-4 text-xs text-[var(--text-secondary)] hidden md:table-cell italic">
+                                "Veuillez terminer la vidéo Module 2 avant de soumettre."
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </main>
+
+    <footer class="mt-8 p-8 border-t border-[var(--border-gold)] text-center text-xs text-[var(--text-secondary)] opacity-80">
+        <p>© 2026 EJP - Église des Jeunes Prodiges. <span data-i18n="footer.rights">Tous droits réservés</span>.</p>
+    </footer>
 
     <script src="assets/js/theme.js"></script>
     <script type="module" src="assets/i18n/i18n.js"></script>

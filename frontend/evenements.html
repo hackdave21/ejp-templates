@@ -12,8 +12,19 @@
             darkMode: 'selector',
             theme: {
                 extend: {
-                    colors: { gold: { 50: '#F7F3E9', 100: '#E8D9A0', 400: '#C9A84C', 500: '#D4AF37', 600: '#F5E27A' } },
-                    fontFamily: { serif: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] }
+                    colors: {
+                        gold: {
+                            50: '#F7F3E9',
+                            100: '#E8D9A0',
+                            400: '#C9A84C',
+                            500: '#D4AF37',
+                            600: '#F5E27A',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
                 }
             }
         }
@@ -21,11 +32,14 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body class="min-h-screen">
-        <!-- Navbar -->
-    <nav class="sticky top-0 bg-[var(--surface-elevated)] border-b border-gold-100 dark:border-[#2E2A1F] z-50 px-8 h-20 flex items-center justify-between transition-colors">
+    
+    <!-- Navbar -->
+    <nav class="sticky top-0 bg-[var(--surface-elevated)] border-b border-[var(--border-gold)] z-50 px-8 h-20 flex items-center justify-between transition-colors">
         <!-- Gauche: Logo -->
         <div class="w-1/3 flex items-center">
-            <a href="/frontend/dashboard.html" class="text-2xl font-serif gold-gradient-text tracking-widest uppercase">EJP</a>
+            <a href="/frontend/dashboard.html" class="text-2xl font-serif gold-gradient-text tracking-widest uppercase flex items-center gap-2">
+                <i class="ph ph-church text-gold-500"></i> EJP
+            </a>
         </div>
 
         <!-- Centre: Navigation -->
@@ -33,7 +47,7 @@
             <a href="/frontend/dashboard.html" class="nav-link " data-i18n="nav.dashboard">Dashboard</a>
             <a href="/frontend/formations.html" class="nav-link " data-i18n="nav.formations">Formations</a>
             <a href="/frontend/progression.html" class="nav-link " data-i18n="nav.progression">Progression</a>
-            <a href="/frontend/evenements.html" class="nav-link active" data-i18n="nav.events">�v�nements</a>
+            <a href="/frontend/evenements.html" class="nav-link active" data-i18n="nav.events">Événements</a>
         </div>
 
         <!-- Droite: Actions -->
@@ -43,70 +57,284 @@
                 <span class="opacity-20 text-gold-500">|</span>
                 <span class="cursor-pointer opacity-50 hover:opacity-100 transition-opacity">EN</span>
             </div>
+            
+            <!-- Notifications Bell -->
+            <button class="relative p-2 text-gold-500/70 hover:text-gold-500 transition-colors">
+                <i class="ph ph-bell text-xl"></i>
+            </button>
+
+            <!-- Theme Toggle -->
             <button onclick="toggleTheme()" class="w-10 h-10 border border-gold-100 dark:border-[#2E2A1F] rounded-full flex items-center justify-center hover:bg-gold-50 dark:hover:bg-white/5 transition-all text-gold-500">
                 <span id="theme-icon"><i class="ph ph-moon text-lg"></i></span>
             </button>
+
+            <!-- User Profile -->
             <div class="flex items-center space-x-3 pl-6 border-l border-gold-100 dark:border-[#2E2A1F]">
                 <div class="text-right hidden sm:block">
-                    <p class="text-xs font-bold leading-none">Jean-Baptiste</p>
-                    <p class="text-[10px] text-[#A89B7A] uppercase tracking-widest">Nouveau Membre</p>
+                    <p class="text-xs font-bold leading-none text-[var(--text-primary)]">Jean-Baptiste</p>
+                    <p class="text-[10px] text-gold-500 uppercase tracking-widest font-bold">Star</p>
                 </div>
-                <div class="w-10 h-10 rounded-full border border-gold-500 p-0.5 overflow-hidden">
+                <div class="w-10 h-10 rounded-full border border-gold-500 p-0.5 overflow-hidden bg-[var(--surface)]">
                     <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=JB" alt="User" class="w-full h-full rounded-full">
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto p-10 space-y-12 animate-in fade-in duration-700">
-        <h1 class="text-5xl font-serif gold-gradient-text" data-i18n="nav.events">Événements à Venir</h1>
+    <main class="max-w-7xl mx-auto p-8 space-y-10 animate-in fade-in duration-700">
+        
+        <!-- Page Header -->
+        <div class="text-center space-y-3 mb-12">
+            <div class="inline-flex items-center justify-center w-16 h-16 mb-2 rounded-full bg-gold-500/10 border border-gold-500/30 gold-glow text-gold-500">
+                <i class="ph ph-calendar-star text-3xl"></i>
+            </div>
+            <h1 class="text-4xl font-serif text-[var(--text-primary)]">Événements</h1>
+            <p class="text-[var(--text-secondary)] text-sm max-w-lg mx-auto">Restez informé des prochaines activités de l'EJP et impliquez-vous dans votre service.</p>
+        </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            <!-- Event 1 -->
-            <div class="bg-[#1A1A1A] rounded-[2.5rem] overflow-hidden border border-gold-500/10 hover:scale-[1.02] transition-all gold-glow group shadow-2xl">
-                <div class="h-56 bg-[#0D0D0D] relative overflow-hidden flex items-center justify-center">
-                    <div class="absolute inset-0 bg-gradient-to-br from-gold-500/10 to-transparent"></div>
-                    <div class="relative z-10 opacity-20 group-hover:scale-125 transition-transform duration-700">
-                         <span class="text-9xl font-serif text-gold-500">✦</span>
+        <!-- Filters/Tabs -->
+        <div class="flex gap-4 border-b border-[var(--border-gold)] pb-px px-2 overflow-x-auto hide-scrollbar">
+            <button class="px-8 py-3 border-b-2 border-gold-500 text-gold-500 font-bold text-xs uppercase tracking-widest transition-colors flex items-center gap-2 whitespace-nowrap">
+                <i class="ph ph-clock text-lg"></i> À venir
+            </button>
+            <button class="px-8 py-3 border-b-2 border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--text-secondary)] font-bold text-xs uppercase tracking-widest transition-colors flex items-center gap-2 whitespace-nowrap">
+                <i class="ph ph-clock-counter-clockwise text-lg"></i> Passés
+            </button>
+        </div>
+
+        <!-- Events Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            
+            <!-- Event Card 1 -->
+            <div class="bg-[var(--surface-elevated)] border border-[var(--border-gold)] rounded-3xl overflow-hidden shadow-xl hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 flex flex-col group">
+                <!-- Event Image -->
+                <div class="relative h-64 overflow-hidden bg-black">
+                    <!-- Placeholder visual for the event poster -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-indigo-900 to-purple-900 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
+                        <i class="ph ph-cross text-white/20 text-9xl"></i>
                     </div>
-                    <div class="absolute top-6 left-6 bg-gold-500 text-black text-[9px] font-bold px-4 py-1.5 rounded-full uppercase tracking-[0.2em] shadow-lg">Pâques 2026</div>
+                    <!-- Overlay Badge -->
+                    <div class="absolute top-4 right-4 bg-gold-500 text-black text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg">
+                        Bientôt
+                    </div>
+                    <!-- Date Badge Overlay -->
+                    <div class="absolute bottom-0 left-6 translate-y-1/2 bg-[var(--surface-elevated)] border border-[var(--border-gold)] shadow-xl rounded-2xl flex flex-col items-center justify-center w-16 h-16 z-10">
+                        <span class="text-sm font-bold text-gold-500 uppercase">15</span>
+                        <span class="text-[9px] text-[var(--text-primary)] font-bold uppercase tracking-widest">Mai</span>
+                    </div>
                 </div>
-                <div class="p-8 space-y-6">
-                    <div class="flex items-center space-x-3 text-gold-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                        <span class="text-[10px] font-bold uppercase tracking-widest">12 Juillet 2026 • 18:00</span>
+                
+                <!-- Event Info -->
+                <div class="p-8 pt-10 flex flex-col flex-1">
+                    <h2 class="text-2xl font-serif text-[var(--text-primary)] mb-4 font-bold">Nuit des Prodiges 2026</h2>
+                    
+                    <div class="space-y-3 mb-6 flex-1">
+                        <div class="flex items-center gap-3 text-sm text-[var(--text-secondary)]">
+                            <div class="w-8 h-8 rounded-full bg-[var(--surface)] border border-[var(--border-gold)] flex items-center justify-center text-gold-500 flex-shrink-0">
+                                <i class="ph ph-clock"></i>
+                            </div>
+                            <span class="font-medium">21h00 — 05h00</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm text-[var(--text-secondary)]">
+                            <div class="w-8 h-8 rounded-full bg-[var(--surface)] border border-[var(--border-gold)] flex items-center justify-center text-gold-500 flex-shrink-0">
+                                <i class="ph ph-map-pin"></i>
+                            </div>
+                            <span class="font-medium truncate">Temple Central de l'EJP</span>
+                        </div>
                     </div>
-                    <h3 class="text-2xl font-serif text-[#F5F0E8]">Grande Célébration de Pâques</h3>
-                    <p class="text-sm text-[#A89B7A] line-clamp-2 leading-relaxed italic">"Une soirée exceptionnelle de louange et d'adoration pour célébrer ensemble la résurrection..."</p>
-                    <button class="w-full py-4 border border-gold-500 text-gold-500 rounded-2xl font-bold uppercase tracking-widest text-[10px] hover:bg-gold-500 hover:text-black transition-all">Voir Détails</button>
+                    
+                    <p class="text-sm text-[var(--text-secondary)] line-clamp-2 mb-8">Rejoignez-nous pour une nuit exceptionnelle de louange, d'adoration et d'enseignements puissants destinés à tous les jeunes prodiges de notre génération.</p>
+                    
+                    <button onclick="openModal()" class="w-full py-4 bg-transparent border border-gold-500 hover:bg-gold-500 hover:text-black text-gold-500 rounded-xl text-xs font-bold uppercase tracking-widest transition-all shadow-lg shadow-gold-500/10 flex items-center justify-center gap-2">
+                        Voir les détails <i class="ph ph-arrow-right text-lg"></i>
+                    </button>
                 </div>
             </div>
 
-            <!-- Event 2 -->
-            <div class="bg-[#1A1A1A] rounded-[2.5rem] overflow-hidden border border-gold-500/10 hover:scale-[1.02] transition-all gold-glow group shadow-2xl opacity-60">
-                <div class="h-56 bg-[#0D0D0D] relative overflow-hidden flex items-center justify-center">
-                    <div class="absolute inset-0 bg-gradient-to-br from-zinc-500/10 to-transparent"></div>
-                    <div class="relative z-10 opacity-20">
-                         <span class="text-9xl font-serif text-zinc-500">✦</span>
+            <!-- Event Card 2 -->
+            <div class="bg-[var(--surface-elevated)] border border-[var(--border-gold)] rounded-3xl overflow-hidden shadow-xl hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 flex flex-col group">
+                <!-- Event Image -->
+                <div class="relative h-64 overflow-hidden bg-black">
+                    <!-- Placeholder visual for the event poster -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-emerald-900 to-teal-900 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
+                        <i class="ph ph-users-three text-white/20 text-9xl"></i>
                     </div>
-                    <div class="absolute top-6 left-6 bg-emerald-500 text-white text-[9px] font-bold px-4 py-1.5 rounded-full uppercase tracking-[0.2em] shadow-lg">Formation</div>
+                    <!-- Date Badge Overlay -->
+                    <div class="absolute bottom-0 left-6 translate-y-1/2 bg-[var(--surface-elevated)] border border-[var(--border-gold)] shadow-xl rounded-2xl flex flex-col items-center justify-center w-16 h-16 z-10">
+                        <span class="text-sm font-bold text-gold-500 uppercase">22</span>
+                        <span class="text-[9px] text-[var(--text-primary)] font-bold uppercase tracking-widest">Mai</span>
+                    </div>
                 </div>
-                <div class="p-8 space-y-6">
-                    <div class="flex items-center space-x-3 text-gold-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                        <span class="text-[10px] font-bold uppercase tracking-widest">25 Août 2026 • 09:00</span>
+                
+                <!-- Event Info -->
+                <div class="p-8 pt-10 flex flex-col flex-1">
+                    <h2 class="text-2xl font-serif text-[var(--text-primary)] mb-4 font-bold">Séminaire de Formation des Pilotes</h2>
+                    
+                    <div class="space-y-3 mb-6 flex-1">
+                        <div class="flex items-center gap-3 text-sm text-[var(--text-secondary)]">
+                            <div class="w-8 h-8 rounded-full bg-[var(--surface)] border border-[var(--border-gold)] flex items-center justify-center text-gold-500 flex-shrink-0">
+                                <i class="ph ph-clock"></i>
+                            </div>
+                            <span class="font-medium">14h00 — 18h00</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm text-[var(--text-secondary)]">
+                            <div class="w-8 h-8 rounded-full bg-[var(--surface)] border border-[var(--border-gold)] flex items-center justify-center text-gold-500 flex-shrink-0">
+                                <i class="ph ph-map-pin"></i>
+                            </div>
+                            <span class="font-medium truncate">Salle des Conférences, EJP</span>
+                        </div>
                     </div>
-                    <h3 class="text-2xl font-serif text-[#F5F0E8]">Atelier Leadership Spirituel</h3>
-                    <p class="text-sm text-[#A89B7A] line-clamp-2 leading-relaxed">Venez découvrir les clés d'un leadership au service de la communauté et de l'église...</p>
-                    <button class="w-full py-4 border border-gold-100/20 text-[#A89B7A] rounded-2xl font-bold uppercase tracking-widest text-[10px] cursor-not-allowed">Complet</button>
+                    
+                    <p class="text-sm text-[var(--text-secondary)] line-clamp-2 mb-8">Un séminaire intensif obligatoire pour tous ceux qui désirent passer au niveau Pilote et prendre plus de responsabilités au sein du ministère.</p>
+                    
+                    <button onclick="openModal()" class="w-full py-4 bg-transparent border border-[var(--border-gold)] hover:border-gold-500 hover:text-gold-500 text-[var(--text-primary)] rounded-xl text-xs font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2">
+                        Voir les détails <i class="ph ph-arrow-right text-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Event Card 3 -->
+            <div class="bg-[var(--surface-elevated)] border border-[var(--border-gold)] rounded-3xl overflow-hidden shadow-xl hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 flex flex-col group">
+                <!-- Event Image -->
+                <div class="relative h-64 overflow-hidden bg-black">
+                    <!-- Placeholder visual for the event poster -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-amber-700 to-orange-900 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
+                        <i class="ph ph-guitar text-white/20 text-9xl"></i>
+                    </div>
+                    <!-- Date Badge Overlay -->
+                    <div class="absolute bottom-0 left-6 translate-y-1/2 bg-[var(--surface-elevated)] border border-[var(--border-gold)] shadow-xl rounded-2xl flex flex-col items-center justify-center w-16 h-16 z-10">
+                        <span class="text-sm font-bold text-gold-500 uppercase">05</span>
+                        <span class="text-[9px] text-[var(--text-primary)] font-bold uppercase tracking-widest">Juin</span>
+                    </div>
+                </div>
+                
+                <!-- Event Info -->
+                <div class="p-8 pt-10 flex flex-col flex-1">
+                    <h2 class="text-2xl font-serif text-[var(--text-primary)] mb-4 font-bold">Concert de Louange EJP Worship</h2>
+                    
+                    <div class="space-y-3 mb-6 flex-1">
+                        <div class="flex items-center gap-3 text-sm text-[var(--text-secondary)]">
+                            <div class="w-8 h-8 rounded-full bg-[var(--surface)] border border-[var(--border-gold)] flex items-center justify-center text-gold-500 flex-shrink-0">
+                                <i class="ph ph-clock"></i>
+                            </div>
+                            <span class="font-medium">19h00 — 22h00</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm text-[var(--text-secondary)]">
+                            <div class="w-8 h-8 rounded-full bg-[var(--surface)] border border-[var(--border-gold)] flex items-center justify-center text-gold-500 flex-shrink-0">
+                                <i class="ph ph-map-pin"></i>
+                            </div>
+                            <span class="font-medium truncate">Auditorium Municipal</span>
+                        </div>
+                    </div>
+                    
+                    <p class="text-sm text-[var(--text-secondary)] line-clamp-2 mb-8">Un temps de célébration musicale ouvert au public. Invitez vos amis pour cette soirée exceptionnelle de connexion spirituelle à travers la musique.</p>
+                    
+                    <button onclick="openModal()" class="w-full py-4 bg-transparent border border-[var(--border-gold)] hover:border-gold-500 hover:text-gold-500 text-[var(--text-primary)] rounded-xl text-xs font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2">
+                        Voir les détails <i class="ph ph-arrow-right text-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Event Detail Modal (Hidden by default) -->
+    <div id="eventModal" class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 sm:p-8 animate-in fade-in duration-300">
+        <div class="bg-[var(--surface-elevated)] border border-[var(--border-gold)] rounded-3xl w-full max-w-3xl max-h-full overflow-y-auto shadow-2xl relative">
+            
+            <!-- Close Button -->
+            <button onclick="closeModal()" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-gold-500 hover:text-black transition-colors z-20 backdrop-blur-md">
+                <i class="ph ph-x text-xl"></i>
+            </button>
+
+            <!-- Modal Header Image -->
+            <div class="relative h-64 sm:h-80 bg-gradient-to-br from-indigo-900 to-purple-900 flex items-center justify-center overflow-hidden">
+                <i class="ph ph-cross text-white/10 text-[12rem] absolute"></i>
+            </div>
+
+            <!-- Modal Content -->
+            <div class="p-8 sm:p-12">
+                <div class="inline-block bg-gold-500 text-black text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-4">
+                    Événement Majeur
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-serif text-[var(--text-primary)] mb-6 font-bold">Nuit des Prodiges 2026</h2>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8 bg-[var(--surface)] p-6 rounded-2xl border border-[var(--border-gold)]">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-[var(--surface-elevated)] border border-[var(--border-gold)] flex items-center justify-center text-gold-500">
+                            <i class="ph ph-calendar-blank text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase tracking-widest text-[var(--text-secondary)] font-bold">Date & Heure</p>
+                            <p class="text-sm font-medium text-[var(--text-primary)]">15 Mai 2026<br>De 21h00 à 05h00</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-[var(--surface-elevated)] border border-[var(--border-gold)] flex items-center justify-center text-gold-500">
+                            <i class="ph ph-map-pin text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase tracking-widest text-[var(--text-secondary)] font-bold">Lieu</p>
+                            <p class="text-sm font-medium text-[var(--text-primary)]">Temple Central de l'EJP<br>123 Avenue de la Paix</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-sm text-[var(--text-secondary)] leading-relaxed mb-10">
+                    <p>Rejoignez-nous pour une nuit exceptionnelle de louange, d'adoration et d'enseignements puissants destinés à tous les jeunes prodiges de notre génération. Cette veillée de prière est le point culminant de notre année spirituelle.</p>
+                    <p>Des orateurs invités de renom seront présents, ainsi que notre équipe de louange complète. Un temps de restauration gratuit sera prévu au milieu de la nuit.</p>
+                    <h4 class="text-[var(--text-primary)] font-bold text-base mt-6 mb-2">Au programme :</h4>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>21h00 : Accueil et installation</li>
+                        <li>21h30 : Temps de louange intense</li>
+                        <li>23h00 : Premier enseignement</li>
+                        <li>01h00 : Pause café/restauration</li>
+                        <li>02h00 : Ateliers de prière prophétique</li>
+                        <li>04h30 : Clôture et bénédiction</li>
+                    </ul>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 border-t border-[var(--border-gold)] pt-8">
+                    <button onclick="closeModal()" class="flex-1 py-4 bg-gold-500 hover:bg-gold-400 text-black rounded-xl text-sm font-bold uppercase tracking-widest transition-all shadow-lg shadow-gold-500/20 text-center">
+                        S'inscrire (Service)
+                    </button>
+                    <button class="flex-1 py-4 bg-transparent border border-[var(--border-gold)] hover:text-gold-500 text-[var(--text-primary)] rounded-xl text-sm font-bold uppercase tracking-widest transition-colors text-center flex items-center justify-center gap-2">
+                        <i class="ph ph-share-network text-lg"></i> Partager
+                    </button>
                 </div>
             </div>
         </div>
-    </main>
-        </div>
-    </main>
+    </div>
+
+    <footer class="mt-8 p-8 border-t border-[var(--border-gold)] text-center text-xs text-[var(--text-secondary)] opacity-80">
+        <p>© 2026 EJP - Église des Jeunes Prodiges. <span data-i18n="footer.rights">Tous droits réservés</span>.</p>
+    </footer>
 
     <script src="assets/js/theme.js"></script>
     <script type="module" src="assets/i18n/i18n.js"></script>
+    <script>
+        // Simple modal logic
+        function openModal() {
+            const modal = document.getElementById('eventModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('eventModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+        
+        // Close modal when clicking outside the card
+        document.getElementById('eventModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
