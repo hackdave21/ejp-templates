@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paramètres | Admin EJP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../frontend/assets/css/index.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'selector',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            50: '#F7F3E9',
+                            100: '#E8D9A0',
+                            400: '#C9A84C',
+                            500: '#D4AF37',
+                            600: '#F5E27A',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        .sidebar-link {
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        .sidebar-link.active {
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.05);
+            border-left-color: #D4AF37;
+        }
+        [data-theme="dark"] .sidebar-link.active {
+            background: rgba(212, 175, 55, 0.1);
+        }
+        .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+        .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.2); border-radius: 10px; }
+    </style>
+</head>
+<body class="h-screen bg-[var(--bg-primary)] flex overflow-hidden">
+    
+    <!-- Mobile Sidebar Backdrop -->
+    <div id="sidebarBackdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden backdrop-blur-sm"></div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-[var(--surface-elevated)] border-r border-gold-100/50 dark:border-gold-500/10 z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col shadow-2xl lg:shadow-none">
+        <div class="p-6 border-b border-gold-100/50 dark:border-gold-500/10">
+            <a href="dashboard.html" class="text-xl font-serif gold-gradient-text tracking-widest uppercase flex items-center gap-2">
+                <i class="ph ph-church text-gold-500"></i> EJP
+            </a>
+            <p class="text-[9px] uppercase tracking-[0.3em] font-bold text-gold-500 mt-1 opacity-60">Administration</p>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto sidebar-scroll py-4">
+            <ul class="space-y-1">
+                <li><a href="dashboard.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-squares-four text-lg"></i> Tableau de bord</a></li>
+                <li><a href="membres.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-users text-lg"></i> Membres</a></li>
+                <li><a href="chefs.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-briefcase text-lg"></i> Chefs</a></li>
+                <li><a href="formations.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-graduation-cap text-lg"></i> Formations</a></li>
+                <li><a href="cultes.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-hands-praying text-lg"></i> Cultes</a></li>
+                <li><a href="pv.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-file-text text-lg"></i> Réunions (PV)</a></li>
+                <li><a href="evenements.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-calendar-event text-lg"></i> Événements</a></li>
+                <li><a href="settings.html" class="sidebar-link active flex items-center gap-3 px-6 py-3 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-gear text-lg"></i> Paramètres</a></li>
+            </ul>
+        </nav>
+
+        <div class="p-6 border-t border-gold-100/50 dark:border-gold-500/10">
+            <button class="w-full flex items-center gap-3 text-red-500 font-bold text-[10px] uppercase tracking-widest hover:opacity-80 transition-opacity">
+                <i class="ph ph-sign-out text-lg"></i> Déconnexion
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col lg:ml-64 min-w-0 overflow-hidden">
+        
+        <!-- Header -->
+        <header class="h-20 bg-[var(--surface-elevated)] border-b border-gold-100/50 dark:border-gold-500/10 px-8 flex items-center justify-between sticky top-0 z-30">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="lg:hidden p-2 text-[var(--text-primary)] hover:bg-gold-500/10 rounded-lg">
+                    <i class="ph ph-list text-2xl"></i>
+                </button>
+                <h2 class="text-lg font-serif text-[var(--text-primary)]">Paramètres Généraux</h2>
+            </div>
+
+            <div class="flex items-center gap-6">
+                <!-- Theme Toggle -->
+                <button onclick="toggleTheme()" class="w-10 h-10 border border-gold-100 dark:border-gold-500/10 rounded-full flex items-center justify-center hover:bg-gold-50 dark:hover:bg-white/5 transition-all text-gold-500">
+                    <span id="theme-icon"><i class="ph ph-moon text-lg"></i></span>
+                </button>
+                
+                <!-- Admin Profile -->
+                <div class="flex items-center gap-4 pl-6 border-l border-gold-100/50 dark:border-gold-500/10">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-xs font-bold leading-none text-[var(--text-primary)]">Past. Emmanuel</p>
+                        <p class="text-[9px] text-gold-500 uppercase tracking-widest font-bold mt-1">Super Admin</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl border-2 border-gold-500 p-0.5 overflow-hidden bg-[var(--surface)] shadow-lg shadow-gold-500/10">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=PE" alt="Admin" class="w-full h-full rounded-lg">
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Scrollable Content -->
+        <main class="flex-1 overflow-y-auto p-6 lg:p-10 animate-in fade-in duration-700">
+            
+            <div class="max-w-4xl mx-auto space-y-12">
+                
+                <!-- Section 1: Profil Admin -->
+                <section class="space-y-6">
+                    <div class="flex items-center gap-2 text-gold-500 border-b border-gold-500/20 pb-2">
+                        <i class="ph ph-user-circle text-2xl"></i>
+                        <h3 class="text-sm font-bold uppercase tracking-widest">Compte Administrateur</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-[var(--surface-elevated)] p-8 rounded-3xl border border-gold-100/50 dark:border-gold-500/10 shadow-sm">
+                        <div class="space-y-1">
+                            <label class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)]">Nom d'affichage</label>
+                            <input type="text" value="Past. Emmanuel" class="w-full bg-[var(--surface)] border border-gold-100/50 dark:border-gold-500/20 rounded-xl p-3 text-sm focus:outline-none focus:border-gold-500 transition-all">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)]">Adresse E-mail</label>
+                            <input type="email" value="emmanuel@ejp.ci" class="w-full bg-[var(--surface)] border border-gold-100/50 dark:border-gold-500/20 rounded-xl p-3 text-sm focus:outline-none focus:border-gold-500 transition-all">
+                        </div>
+                        <div class="md:col-span-2">
+                            <button class="bg-gold-500 text-black px-6 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-gold-400 transition-all shadow-lg shadow-gold-500/10">Enregistrer les modifications</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 2: Plateforme -->
+                <section class="space-y-6">
+                    <div class="flex items-center gap-2 text-gold-500 border-b border-gold-500/20 pb-2">
+                        <i class="ph ph-desktop text-2xl"></i>
+                        <h3 class="text-sm font-bold uppercase tracking-widest">Configuration Plateforme</h3>
+                    </div>
+                    <div class="space-y-6 bg-[var(--surface-elevated)] p-8 rounded-3xl border border-gold-100/50 dark:border-gold-500/10 shadow-sm">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-1">
+                                <label class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)]">Nom du Ministère</label>
+                                <input type="text" value="Eglise des Jeunes Prodiges" class="w-full bg-[var(--surface)] border border-gold-100/50 dark:border-gold-500/20 rounded-xl p-3 text-sm focus:outline-none focus:border-gold-500 transition-all">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)]">Slogan</label>
+                                <input type="text" value="Connectez-vous à votre espace personnel" class="w-full bg-[var(--surface)] border border-gold-100/50 dark:border-gold-500/20 rounded-xl p-3 text-sm focus:outline-none focus:border-gold-500 transition-all">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <p class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)]">Logo de la Plateforme</p>
+                            <div class="flex items-center gap-6">
+                                <div class="w-20 h-20 bg-black rounded-2xl flex items-center justify-center border border-gold-500/30">
+                                    <span class="text-2xl font-serif gold-gradient-text">EJP</span>
+                                </div>
+                                <button class="text-xs text-gold-500 font-bold uppercase hover:underline">Changer le logo</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3: Niveaux -->
+                <section class="space-y-6">
+                    <div class="flex items-center gap-2 text-gold-500 border-b border-gold-500/20 pb-2">
+                        <i class="ph ph-stairs text-2xl"></i>
+                        <h3 class="text-sm font-bold uppercase tracking-widest">Gestion des Paliers</h3>
+                    </div>
+                    <div class="bg-[var(--surface-elevated)] rounded-3xl border border-gold-100/50 dark:border-gold-500/10 overflow-hidden shadow-sm">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-[var(--surface)] text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)]">
+                                <tr>
+                                    <th class="px-6 py-4">Ordre</th>
+                                    <th class="px-6 py-4">Nom du Palier</th>
+                                    <th class="px-6 py-4">Icône</th>
+                                    <th class="px-6 py-4 text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gold-500/5">
+                                <tr>
+                                    <td class="px-6 py-4 font-bold">1</td>
+                                    <td class="px-6 py-4">Nouveau Membre</td>
+                                    <td class="px-6 py-4"><i class="ph ph-user text-lg text-blue-500"></i></td>
+                                    <td class="px-6 py-4 text-right"><button class="text-gold-500"><i class="ph ph-pencil-simple text-lg"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 font-bold">2</td>
+                                    <td class="px-6 py-4">Star</td>
+                                    <td class="px-6 py-4"><i class="ph ph-star text-lg text-gold-500"></i></td>
+                                    <td class="px-6 py-4 text-right"><button class="text-gold-500"><i class="ph ph-pencil-simple text-lg"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 font-bold">3</td>
+                                    <td class="px-6 py-4">Pilote</td>
+                                    <td class="px-6 py-4"><i class="ph ph-paper-plane-tilt text-lg text-sky-500"></i></td>
+                                    <td class="px-6 py-4 text-right"><button class="text-gold-500"><i class="ph ph-pencil-simple text-lg"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Section 4: Notifications -->
+                <section class="space-y-6">
+                    <div class="flex items-center gap-2 text-gold-500 border-b border-gold-500/20 pb-2">
+                        <i class="ph ph-bell text-2xl"></i>
+                        <h3 class="text-sm font-bold uppercase tracking-widest">Système de Notifications</h3>
+                    </div>
+                    <div class="bg-[var(--surface-elevated)] p-8 rounded-3xl border border-gold-100/50 dark:border-gold-500/10 shadow-sm space-y-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-bold text-[var(--text-primary)]">Notifications E-mail</p>
+                                <p class="text-[10px] text-[var(--text-secondary)]">Envoyer des résumés hebdomadaires et alertes d'événements.</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-zinc-200 peer-focus:outline-none rounded-full peer dark:bg-zinc-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-gold-500"></div>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between pt-6 border-t border-gold-500/5">
+                            <div>
+                                <p class="text-sm font-bold text-[var(--text-primary)]">Alertes SMS</p>
+                                <p class="text-[10px] text-[var(--text-secondary)]">Envoyer des SMS pour les rappels de culte et urgences.</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" class="sr-only peer">
+                                <div class="w-11 h-6 bg-zinc-200 peer-focus:outline-none rounded-full peer dark:bg-zinc-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-gold-500"></div>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+        </main>
+    </div>
+
+    <script src="../frontend/assets/js/theme.js"></script>
+    <script type="module" src="../frontend/assets/i18n/i18n.js"></script>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            sidebar.classList.toggle('-translate-x-full');
+            backdrop.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>

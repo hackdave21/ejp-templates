@@ -1,105 +1,357 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="dark">
+<html lang="fr" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Membres | Admin EJP</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/index.css">
+    <link rel="stylesheet" href="../frontend/assets/css/index.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'selector',
             theme: {
                 extend: {
-                    colors: { gold: { 50: '#F7F3E9', 100: '#E8D9A0', 400: '#C9A84C', 500: '#D4AF37', 600: '#F5E27A' } },
-                    fontFamily: { serif: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] }
+                    colors: {
+                        gold: {
+                            50: '#F7F3E9',
+                            100: '#E8D9A0',
+                            400: '#C9A84C',
+                            500: '#D4AF37',
+                            600: '#F5E27A',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
                 }
             }
         }
     </script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        .sidebar-link {
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        .sidebar-link.active {
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.05);
+            border-left-color: #D4AF37;
+        }
+        [data-theme="dark"] .sidebar-link.active {
+            background: rgba(212, 175, 55, 0.1);
+        }
+        /* Custom scrollbar for sidebar */
+        .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+        .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.2); border-radius: 10px; }
+        
+        .table-row-hover:hover {
+            background: rgba(212, 175, 55, 0.02);
+        }
+        [data-theme="dark"] .table-row-hover:hover {
+            background: rgba(212, 175, 55, 0.05);
+        }
+    </style>
 </head>
-<body class="flex min-h-screen bg-[#0D0D0D] text-[#F5F0E8]">
+<body class="h-screen bg-[var(--bg-primary)] flex overflow-hidden">
+    
+    <!-- Mobile Sidebar Backdrop -->
+    <div id="sidebarBackdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden backdrop-blur-sm"></div>
+
     <!-- Sidebar -->
-    <aside class="w-20 lg:w-64 flex-shrink-0 border-r border-gold-500/10 bg-[#1A1A1A] flex flex-col items-center lg:items-start transition-all">
-        <div class="h-20 w-full flex items-center justify-center lg:justify-start lg:px-8 border-b border-gold-500/10">
-            <a href="/admin/dashboard.html" class="text-2xl font-serif gold-gradient-text tracking-widest uppercase">EJP</a>
+    <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-[var(--surface-elevated)] border-r border-gold-100/50 dark:border-gold-500/10 z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col shadow-2xl lg:shadow-none">
+        <div class="p-6 border-b border-gold-100/50 dark:border-gold-500/10">
+            <a href="dashboard.html" class="text-xl font-serif gold-gradient-text tracking-widest uppercase flex items-center gap-2">
+                <i class="ph ph-church text-gold-500"></i> EJP
+            </a>
+            <p class="text-[9px] uppercase tracking-[0.3em] font-bold text-gold-500 mt-1 opacity-60">Administration</p>
         </div>
-        <nav class="flex-1 w-full py-8 space-y-2 px-4">
-            <a href="/admin/dashboard.html" class="flex items-center space-x-4 p-4 rounded-2xl hover:bg-white/5 text-[#A89B7A] group transition-all">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                <span class="hidden lg:inline text-[10px] font-bold uppercase tracking-[0.2em]">Dashboard</span>
-            </a>
-            <a href="/admin/membres.html" class="flex items-center space-x-4 p-4 rounded-2xl bg-gold-500/10 border border-gold-500/20 text-gold-500 group transition-all">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
-                <span class="hidden lg:inline text-[10px] font-bold uppercase tracking-[0.2em]">Membres</span>
-            </a>
+
+        <nav class="flex-1 overflow-y-auto sidebar-scroll py-4">
+            <ul class="space-y-1">
+                <li><a href="dashboard.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-squares-four text-lg"></i> Tableau de bord</a></li>
+                <li><a href="membres.html" class="sidebar-link active flex items-center gap-3 px-6 py-3 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-users text-lg"></i> Membres</a></li>
+                <li><a href="chefs.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-briefcase text-lg"></i> Chefs</a></li>
+                <li><a href="formations.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-graduation-cap text-lg"></i> Formations</a></li>
+                <li><a href="cultes.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-hands-praying text-lg"></i> Cultes</a></li>
+                <li><a href="pv.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-file-text text-lg"></i> Réunions (PV)</a></li>
+                <li><a href="evenements.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-calendar-event text-lg"></i> Événements</a></li>
+                <li><a href="settings.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-gear text-lg"></i> Paramètres</a></li>
+            </ul>
         </nav>
+
+        <div class="p-6 border-t border-gold-100/50 dark:border-gold-500/10">
+            <button class="w-full flex items-center gap-3 text-red-500 font-bold text-[10px] uppercase tracking-widest hover:opacity-80 transition-opacity">
+                <i class="ph ph-sign-out text-lg"></i> Déconnexion
+            </button>
+        </div>
     </aside>
 
-    <main class="flex-1 overflow-y-auto">
-        <header class="h-20 border-b border-gold-500/10 flex items-center justify-between px-10 bg-[#0D0D0D]/80 backdrop-blur-md sticky top-0 z-30">
-            <h2 class="font-serif text-2xl gold-gradient-text">Gestion des Membres</h2>
-            <button class="bg-gold-500 text-black px-8 py-3 rounded-2xl text-[10px] font-bold uppercase tracking-[0.2em] shadow-lg shadow-gold-500/20 hover:scale-[1.02] transition-all">
-                Ajouter Membre
-            </button>
-        </header>
-
-        <div class="p-10 space-y-10">
-            <!-- Search & Filters -->
-            <div class="flex flex-col md:flex-row space-y-6 md:space-y-0 md:space-x-6">
-                <div class="flex-1 relative">
-                    <input type="text" placeholder="Rechercher..." class="w-full bg-[#1A1A1A] border border-gold-500/10 rounded-2xl py-4 px-14 text-sm focus:outline-none focus:border-gold-500/40 transition-all text-white">
-                    <svg class="absolute left-6 top-1/2 -translate-y-1/2 text-gold-500/40" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                </div>
-                <select class="bg-[#1A1A1A] border border-gold-500/10 rounded-2xl px-8 text-sm focus:outline-none focus:border-gold-500/40 text-white cursor-pointer uppercase font-bold tracking-widest text-[10px]">
-                    <option>Tous les statuts</option>
-                    <option>Nouveau Membre</option>
-                    <option>Star</option>
-                </select>
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col lg:ml-64 min-w-0 overflow-hidden">
+        
+        <!-- Header -->
+        <header class="h-20 bg-[var(--surface-elevated)] border-b border-gold-100/50 dark:border-gold-500/10 px-8 flex items-center justify-between sticky top-0 z-30">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="lg:hidden p-2 text-[var(--text-primary)] hover:bg-gold-500/10 rounded-lg">
+                    <i class="ph ph-list text-2xl"></i>
+                </button>
+                <h2 class="text-lg font-serif text-[var(--text-primary)]">Gestion des Membres</h2>
             </div>
 
-            <!-- Table -->
-            <div class="bg-[#1A1A1A] rounded-[2rem] border border-gold-500/10 overflow-hidden shadow-2xl">
+            <div class="flex items-center gap-6">
+                <!-- Theme Toggle -->
+                <button onclick="toggleTheme()" class="w-10 h-10 border border-gold-100 dark:border-gold-500/10 rounded-full flex items-center justify-center hover:bg-gold-50 dark:hover:bg-white/5 transition-all text-gold-500">
+                    <span id="theme-icon"><i class="ph ph-moon text-lg"></i></span>
+                </button>
+                
+                <!-- Admin Profile -->
+                <div class="flex items-center gap-4 pl-6 border-l border-gold-100/50 dark:border-gold-500/10">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-xs font-bold leading-none text-[var(--text-primary)]">Past. Emmanuel</p>
+                        <p class="text-[9px] text-gold-500 uppercase tracking-widest font-bold mt-1">Super Admin</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl border-2 border-gold-500 p-0.5 overflow-hidden bg-[var(--surface)] shadow-lg shadow-gold-500/10">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=PE" alt="Admin" class="w-full h-full rounded-lg">
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Scrollable Content -->
+        <main class="flex-1 overflow-y-auto p-6 lg:p-8 space-y-6 animate-in fade-in duration-700">
+            
+            <!-- Action Bar -->
+            <div class="flex flex-col xl:flex-row gap-4">
+                <!-- Search -->
+                <div class="flex-1 relative">
+                    <i class="ph ph-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gold-500 text-lg"></i>
+                    <input type="text" placeholder="Rechercher par nom, prénom ou téléphone..." class="w-full bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/20 rounded-xl py-3 pl-12 pr-4 text-xs focus:outline-none focus:border-gold-500 transition-all text-[var(--text-primary)]">
+                </div>
+                
+                <!-- Filters Group -->
+                <div class="flex flex-wrap gap-4 items-center">
+                    <select class="bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/20 rounded-xl px-4 py-3 text-[10px] font-bold uppercase tracking-widest text-[var(--text-secondary)] focus:outline-none focus:border-gold-500 transition-all">
+                        <option>Filtrer par statut</option>
+                        <option>Nouveau Membre</option>
+                        <option>Star</option>
+                        <option>Pilote</option>
+                    </select>
+                    <select class="bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/20 rounded-xl px-4 py-3 text-[10px] font-bold uppercase tracking-widest text-[var(--text-secondary)] focus:outline-none focus:border-gold-500 transition-all">
+                        <option>Filtrer par Chef</option>
+                        <option>Past. Emmanuel</option>
+                        <option>Chef David</option>
+                    </select>
+                    
+                    <button class="flex items-center gap-2 bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/20 px-4 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest text-[var(--text-secondary)] hover:text-gold-500 transition-colors">
+                        <i class="ph ph-microsoft-excel text-lg"></i> Exporter
+                    </button>
+                    
+                    <button class="flex items-center gap-2 bg-gold-500 text-black px-6 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-gold-400 transition-all shadow-lg shadow-gold-500/20">
+                        <i class="ph ph-plus-bold text-sm"></i> Créer un membre
+                    </button>
+                </div>
+            </div>
+
+            <!-- Members Table -->
+            <div class="bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/10 rounded-2xl shadow-sm overflow-hidden">
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left">
+                    <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="text-[9px] uppercase font-bold text-gold-500/40 tracking-[0.3em] bg-[#0D0D0D]">
-                                <th class="px-10 py-6">Membre</th>
-                                <th class="px-10 py-6">Statut</th>
-                                <th class="px-10 py-6">Chef</th>
-                                <th class="px-10 py-6">Arrivée</th>
-                                <th class="px-10 py-6 text-right">Actions</th>
+                            <tr class="text-[9px] uppercase tracking-widest text-[var(--text-secondary)] bg-[var(--surface)] border-b border-gold-100/50 dark:border-gold-500/10">
+                                <th class="px-6 py-4 font-bold">Photo</th>
+                                <th class="px-6 py-4 font-bold">Nom & Prénom</th>
+                                <th class="px-6 py-4 font-bold">Statut</th>
+                                <th class="px-6 py-4 font-bold">Chef responsable</th>
+                                <th class="px-6 py-4 font-bold">Date d'entrée</th>
+                                <th class="px-6 py-4 font-bold text-center">Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gold-500/5">
-                            <tr class="hover:bg-white/5 transition-colors">
-                                <td class="px-10 py-6">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="h-12 w-12 rounded-2xl border border-gold-500/20 overflow-hidden shadow-lg">
-                                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Jean" alt="User">
-                                        </div>
-                                        <div>
-                                            <p class="text-sm font-bold text-[#F5F0E8]">Jean-Baptiste P.</p>
-                                            <p class="text-[10px] text-[#A89B7A] tracking-wider uppercase">Nouveau Proche</p>
-                                        </div>
+                        <tbody class="text-xs divide-y divide-gold-100/30 dark:divide-gold-500/5">
+                            <!-- Member 1 -->
+                            <tr class="table-row-hover transition-colors">
+                                <td class="px-6 py-3">
+                                    <div class="w-10 h-10 rounded-lg overflow-hidden border border-gold-500/20">
+                                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Jean" alt="Jean">
                                     </div>
                                 </td>
-                                <td class="px-10 py-6"><span class="px-3 py-1 bg-[#222222] text-[#A89B7A] text-[9px] rounded-full border border-white/5 uppercase font-bold tracking-widest">Nouveau</span></td>
-                                <td class="px-10 py-6 text-xs text-[#A89B7A]">Past. Emmanuel</td>
-                                <td class="px-10 py-6 text-xs text-[#A89B7A]">15/01/26</td>
-                                <td class="px-10 py-6 text-right space-x-3">
-                                    <button class="p-3 rounded-2xl bg-[#0D0D0D] border border-gold-500/10 hover:border-gold-500 transition-all text-gold-500">👁</button>
+                                <td class="px-6 py-3">
+                                    <span class="font-bold text-[var(--text-primary)]">Jean-Baptiste Prodige</span>
+                                </td>
+                                <td class="px-6 py-3">
+                                    <span class="text-[8px] bg-gold-500/10 text-gold-500 border border-gold-500/20 px-2 py-0.5 rounded-full font-bold uppercase tracking-widest">Star</span>
+                                </td>
+                                <td class="px-6 py-3 text-[var(--text-secondary)]">Past. Emmanuel</td>
+                                <td class="px-6 py-3 text-[var(--text-secondary)]">15 Jan 2026</td>
+                                <td class="px-6 py-3">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <button onclick="openModal()" title="Voir la fiche" class="w-8 h-8 rounded-lg bg-gold-500/10 text-gold-500 flex items-center justify-center hover:bg-gold-500 hover:text-black transition-all"><i class="ph ph-eye text-lg"></i></button>
+                                        <button title="Modifier" class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-all"><i class="ph ph-pencil-simple text-lg"></i></button>
+                                        <button title="Changer de Chef" class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center hover:bg-emerald-500 hover:text-white transition-all"><i class="ph ph-arrows-left-right text-lg"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Repeat for more members -->
+                            <tr class="table-row-hover transition-colors">
+                                <td class="px-6 py-3">
+                                    <div class="w-10 h-10 rounded-lg overflow-hidden border border-gold-500/20">
+                                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Samuel" alt="Samuel">
+                                    </div>
+                                </td>
+                                <td class="px-6 py-3">
+                                    <span class="font-bold text-[var(--text-primary)]">Samuel Kofi</span>
+                                </td>
+                                <td class="px-6 py-3">
+                                    <span class="text-[8px] bg-blue-500/10 text-blue-500 border border-blue-500/20 px-2 py-0.5 rounded-full font-bold uppercase tracking-widest">Nouveau</span>
+                                </td>
+                                <td class="px-6 py-3 text-[var(--text-secondary)]">Chef David</td>
+                                <td class="px-6 py-3 text-[var(--text-secondary)]">12 Fév 2026</td>
+                                <td class="px-6 py-3">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <button onclick="openModal()" class="w-8 h-8 rounded-lg bg-gold-500/10 text-gold-500 flex items-center justify-center hover:bg-gold-500 hover:text-black transition-all"><i class="ph ph-eye text-lg"></i></button>
+                                        <button class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-all"><i class="ph ph-pencil-simple text-lg"></i></button>
+                                        <button class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center hover:bg-emerald-500 hover:text-white transition-all"><i class="ph ph-arrows-left-right text-lg"></i></button>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+                
+                <!-- Pagination -->
+                <div class="p-4 bg-[var(--surface)] border-t border-gold-100/50 dark:border-gold-500/10 flex items-center justify-between">
+                    <p class="text-[10px] text-[var(--text-secondary)] font-bold uppercase">Affichage 1-10 de 1,248 membres</p>
+                    <div class="flex items-center gap-2">
+                        <button class="p-2 rounded-lg border border-gold-100/50 dark:border-gold-500/10 text-gold-500 hover:bg-gold-500/5 transition-all"><i class="ph ph-caret-left"></i></button>
+                        <button class="p-2 rounded-lg bg-gold-500 text-black font-bold text-[10px] w-8">1</button>
+                        <button class="p-2 rounded-lg border border-gold-100/50 dark:border-gold-500/10 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 transition-all text-[10px] w-8">2</button>
+                        <button class="p-2 rounded-lg border border-gold-100/50 dark:border-gold-500/10 text-gold-500 hover:bg-gold-500/5 transition-all"><i class="ph ph-caret-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Member Detail Modal -->
+    <div id="memberModal" class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 animate-in fade-in duration-300">
+        <div class="bg-[var(--surface-elevated)] border border-gold-500/30 rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl relative scroll-smooth sidebar-scroll">
+            <!-- Close -->
+            <button onclick="closeModal()" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-black/20 hover:bg-red-500 hover:text-white transition-all flex items-center justify-center text-[var(--text-primary)] z-10">
+                <i class="ph ph-x text-xl"></i>
+            </button>
+
+            <!-- Modal Content -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-0 lg:divide-x divide-gold-500/10 h-full">
+                <!-- Profile Summary (Left Sidebar of Modal) -->
+                <div class="p-8 flex flex-col items-center text-center bg-gold-500/5">
+                    <div class="w-32 h-32 rounded-2xl border-2 border-gold-500 p-1 overflow-hidden shadow-2xl mb-6 transform rotate-2">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Jean" alt="Jean" class="w-full h-full rounded-xl">
+                    </div>
+                    <h3 class="text-2xl font-serif text-[var(--text-primary)] mb-1">Jean-Baptiste Prodige</h3>
+                    <span class="text-[10px] bg-gold-500 text-black px-3 py-1 rounded-full font-bold uppercase tracking-widest mb-8">Star</span>
+                    
+                    <div class="w-full space-y-4 text-left">
+                        <div class="p-3 bg-[var(--surface)] rounded-xl border border-gold-100/30">
+                            <p class="text-[9px] uppercase tracking-widest text-[var(--text-secondary)] font-bold mb-1">Téléphone</p>
+                            <p class="text-sm font-medium">+225 07 00 00 00 00</p>
+                        </div>
+                        <div class="p-3 bg-[var(--surface)] rounded-xl border border-gold-100/30">
+                            <p class="text-[9px] uppercase tracking-widest text-[var(--text-secondary)] font-bold mb-1">E-mail</p>
+                            <p class="text-sm font-medium truncate">jean.baptiste@ejp.ci</p>
+                        </div>
+                        <div class="p-3 bg-[var(--surface)] rounded-xl border border-gold-100/30">
+                            <p class="text-[9px] uppercase tracking-widest text-[var(--text-secondary)] font-bold mb-1">Date d'arrivée</p>
+                            <p class="text-sm font-medium">15 Janvier 2026</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Info (Main Content of Modal) -->
+                <div class="lg:col-span-2 p-8 space-y-8">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Stats Mini Cards -->
+                        <div class="p-6 bg-[var(--surface)] rounded-2xl border border-gold-100/30 space-y-2">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-[9px] uppercase tracking-widest text-gold-500 font-bold">Formations</span>
+                                <i class="ph ph-graduation-cap text-xl text-gold-500"></i>
+                            </div>
+                            <p class="text-2xl font-serif">4/10 <span class="text-xs text-[var(--text-secondary)]">Vidéos</span></p>
+                        </div>
+                        <div class="p-6 bg-[var(--surface)] rounded-2xl border border-gold-100/30 space-y-2">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-[9px] uppercase tracking-widest text-blue-500 font-bold">Sessions Service</span>
+                                <i class="ph ph-calendar-check text-xl text-blue-500"></i>
+                            </div>
+                            <p class="text-2xl font-serif">12 <span class="text-xs text-[var(--text-secondary)]">Activités</span></p>
+                        </div>
+                    </div>
+
+                    <!-- History Timeline -->
+                    <div>
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-[var(--text-primary)] mb-4 flex items-center gap-2">
+                            <i class="ph ph-clock-counter-clockwise text-gold-500"></i> Historique de Progression
+                        </h4>
+                        <div class="space-y-4 pl-4 border-l border-gold-500/20">
+                            <div class="relative pl-6">
+                                <div class="absolute left-[-21px] top-1.5 w-2 h-2 rounded-full bg-gold-500"></div>
+                                <p class="text-[10px] font-bold text-gold-500 uppercase">12 Février 2026</p>
+                                <p class="text-xs font-medium">Passage au niveau <span class="font-bold">Star</span> par Past. Emmanuel</p>
+                            </div>
+                            <div class="relative pl-6">
+                                <div class="absolute left-[-21px] top-1.5 w-2 h-2 rounded-full bg-gold-500/30"></div>
+                                <p class="text-[10px] font-bold text-[var(--text-secondary)] uppercase">15 Janvier 2026</p>
+                                <p class="text-xs font-medium text-[var(--text-secondary)]">Inscription comme <span class="font-bold">Nouveau Membre</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Admin Quick Actions -->
+                    <div class="pt-8 border-t border-gold-500/10 flex flex-wrap gap-4">
+                        <button class="bg-gold-500 text-black px-6 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-gold-400 transition-all flex items-center gap-2">
+                            <i class="ph ph-pencil-simple-bold"></i> Modifier infos
+                        </button>
+                        <button class="bg-blue-500 text-white px-6 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-blue-400 transition-all flex items-center gap-2">
+                            <i class="ph ph-user-switch-bold"></i> Changer de Chef
+                        </button>
+                        <button class="bg-emerald-500 text-white px-6 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-emerald-400 transition-all flex items-center gap-2">
+                            <i class="ph ph-shield-check-bold"></i> Valider Niveau
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-    </main>
+    </div>
 
-    <script src="assets/js/theme.js"></script>
-    <script type="module" src="assets/i18n/i18n.js"></script>
+    <script src="../frontend/assets/js/theme.js"></script>
+    <script type="module" src="../frontend/assets/i18n/i18n.js"></script>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            sidebar.classList.toggle('-translate-x-full');
+            backdrop.classList.toggle('hidden');
+        }
+
+        function openModal() {
+            const modal = document.getElementById('memberModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('memberModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('memberModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+    </script>
 </body>
 </html>

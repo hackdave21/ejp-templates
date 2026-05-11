@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formations | Admin EJP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../frontend/assets/css/index.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'selector',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            50: '#F7F3E9',
+                            100: '#E8D9A0',
+                            400: '#C9A84C',
+                            500: '#D4AF37',
+                            600: '#F5E27A',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        .sidebar-link {
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        .sidebar-link.active {
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.05);
+            border-left-color: #D4AF37;
+        }
+        [data-theme="dark"] .sidebar-link.active {
+            background: rgba(212, 175, 55, 0.1);
+        }
+        .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+        .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.2); border-radius: 10px; }
+        
+        .module-header:hover .module-actions { opacity: 1; }
+        .video-row:hover .video-actions { opacity: 1; }
+    </style>
+</head>
+<body class="h-screen bg-[var(--bg-primary)] flex overflow-hidden">
+    
+    <!-- Mobile Sidebar Backdrop -->
+    <div id="sidebarBackdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden backdrop-blur-sm"></div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-[var(--surface-elevated)] border-r border-gold-100/50 dark:border-gold-500/10 z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col shadow-2xl lg:shadow-none">
+        <div class="p-6 border-b border-gold-100/50 dark:border-gold-500/10">
+            <a href="dashboard.html" class="text-xl font-serif gold-gradient-text tracking-widest uppercase flex items-center gap-2">
+                <i class="ph ph-church text-gold-500"></i> EJP
+            </a>
+            <p class="text-[9px] uppercase tracking-[0.3em] font-bold text-gold-500 mt-1 opacity-60">Administration</p>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto sidebar-scroll py-4">
+            <ul class="space-y-1">
+                <li><a href="dashboard.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-squares-four text-lg"></i> Tableau de bord</a></li>
+                <li><a href="membres.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-users text-lg"></i> Membres</a></li>
+                <li><a href="chefs.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-briefcase text-lg"></i> Chefs</a></li>
+                <li><a href="formations.html" class="sidebar-link active flex items-center gap-3 px-6 py-3 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-graduation-cap text-lg"></i> Formations</a></li>
+                <li><a href="cultes.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-hands-praying text-lg"></i> Cultes</a></li>
+                <li><a href="pv.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-file-text text-lg"></i> Réunions (PV)</a></li>
+                <li><a href="evenements.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-calendar-event text-lg"></i> Événements</a></li>
+                <li><a href="settings.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-gear text-lg"></i> Paramètres</a></li>
+            </ul>
+        </nav>
+
+        <div class="p-6 border-t border-gold-100/50 dark:border-gold-500/10">
+            <button class="w-full flex items-center gap-3 text-red-500 font-bold text-[10px] uppercase tracking-widest hover:opacity-80 transition-opacity">
+                <i class="ph ph-sign-out text-lg"></i> Déconnexion
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col lg:ml-64 min-w-0 overflow-hidden">
+        
+        <!-- Header -->
+        <header class="h-20 bg-[var(--surface-elevated)] border-b border-gold-100/50 dark:border-gold-500/10 px-8 flex items-center justify-between sticky top-0 z-30">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="lg:hidden p-2 text-[var(--text-primary)] hover:bg-gold-500/10 rounded-lg">
+                    <i class="ph ph-list text-2xl"></i>
+                </button>
+                <h2 class="text-lg font-serif text-[var(--text-primary)]">Gestion des Formations</h2>
+            </div>
+
+            <div class="flex items-center gap-6">
+                <!-- Theme Toggle -->
+                <button onclick="toggleTheme()" class="w-10 h-10 border border-gold-100 dark:border-gold-500/10 rounded-full flex items-center justify-center hover:bg-gold-50 dark:hover:bg-white/5 transition-all text-gold-500">
+                    <span id="theme-icon"><i class="ph ph-moon text-lg"></i></span>
+                </button>
+                
+                <!-- Admin Profile -->
+                <div class="flex items-center gap-4 pl-6 border-l border-gold-100/50 dark:border-gold-500/10">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-xs font-bold leading-none text-[var(--text-primary)]">Past. Emmanuel</p>
+                        <p class="text-[9px] text-gold-500 uppercase tracking-widest font-bold mt-1">Super Admin</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl border-2 border-gold-500 p-0.5 overflow-hidden bg-[var(--surface)] shadow-lg shadow-gold-500/10">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=PE" alt="Admin" class="w-full h-full rounded-lg">
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Scrollable Content -->
+        <main class="flex-1 overflow-y-auto p-6 lg:p-8 space-y-8 animate-in fade-in duration-700">
+            
+            <!-- Action Bar -->
+            <div class="flex justify-end gap-4">
+                <button class="flex items-center gap-2 border border-gold-500 text-gold-500 px-6 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-gold-500/5 transition-all">
+                    <i class="ph ph-plus-circle text-lg"></i> Créer un module
+                </button>
+                <button onclick="openModal()" class="flex items-center gap-2 bg-gold-500 text-black px-6 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-gold-400 transition-all shadow-lg shadow-gold-500/20">
+                    <i class="ph ph-video-camera text-lg"></i> Ajouter une vidéo
+                </button>
+            </div>
+
+            <!-- Modules Accordion -->
+            <div class="space-y-4">
+                
+                <!-- Module 1 -->
+                <div class="bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/10 rounded-2xl overflow-hidden shadow-sm">
+                    <div class="module-header flex items-center justify-between p-6 bg-[var(--surface)] border-b border-gold-100/50 dark:border-gold-500/10 group cursor-pointer">
+                        <div class="flex items-center gap-4">
+                            <i class="ph ph-dots-six-vertical text-xl text-gold-500/30 cursor-grab active:cursor-grabbing"></i>
+                            <div>
+                                <h3 class="font-serif text-lg text-[var(--text-primary)]">Module 1 — Introduction à l'EJP</h3>
+                                <p class="text-[10px] text-[var(--text-secondary)] uppercase tracking-widest font-bold">4 vidéos présentes</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="module-actions opacity-0 transition-opacity flex items-center gap-2">
+                                <button class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-all"><i class="ph ph-pencil-simple text-lg"></i></button>
+                                <button class="w-8 h-8 rounded-lg bg-red-500/10 text-red-500 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all"><i class="ph ph-trash text-lg"></i></button>
+                            </div>
+                            <i class="ph ph-caret-down text-lg text-[var(--text-secondary)]"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 space-y-3">
+                        <!-- Video Row 1 -->
+                        <div class="video-row flex items-center justify-between p-4 bg-[var(--bg-primary)] border border-gold-100/30 dark:border-gold-500/5 rounded-xl group/row">
+                            <div class="flex items-center gap-4">
+                                <i class="ph ph-dots-six-vertical text-lg text-gold-500/20 cursor-grab"></i>
+                                <div class="w-20 aspect-video rounded-lg bg-black/80 flex items-center justify-center text-white/20">
+                                    <i class="ph ph-youtube-logo text-2xl"></i>
+                                </div>
+                                <div class="max-w-md">
+                                    <h4 class="text-sm font-bold text-[var(--text-primary)]">L'histoire de notre église</h4>
+                                    <p class="text-[10px] text-[var(--text-secondary)] line-clamp-1">Découvrez les origines de l'EJP et notre mission fondamentale...</p>
+                                </div>
+                                <span class="text-[8px] bg-gold-500/10 text-gold-500 border border-gold-500/20 px-2 py-0.5 rounded-full font-bold uppercase tracking-widest">Obligatoire</span>
+                            </div>
+                            <div class="video-actions opacity-0 transition-opacity flex items-center gap-2">
+                                <button class="w-7 h-7 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-all"><i class="ph ph-pencil-simple text-sm"></i></button>
+                                <button class="w-7 h-7 rounded-lg bg-red-500/10 text-red-500 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all"><i class="ph ph-trash text-sm"></i></button>
+                            </div>
+                        </div>
+                        
+                        <!-- Video Row 2 -->
+                        <div class="video-row flex items-center justify-between p-4 bg-[var(--bg-primary)] border border-gold-100/30 dark:border-gold-500/5 rounded-xl group/row">
+                            <div class="flex items-center gap-4">
+                                <i class="ph ph-dots-six-vertical text-lg text-gold-500/20 cursor-grab"></i>
+                                <div class="w-20 aspect-video rounded-lg bg-black/80 flex items-center justify-center text-white/20">
+                                    <i class="ph ph-youtube-logo text-2xl"></i>
+                                </div>
+                                <div class="max-w-md">
+                                    <h4 class="text-sm font-bold text-[var(--text-primary)]">La vision des Prodiges</h4>
+                                    <p class="text-[10px] text-[var(--text-secondary)] line-clamp-1">Comprendre ce que signifie être un Prodige dans notre génération.</p>
+                                </div>
+                                <span class="text-[8px] bg-zinc-500/10 text-zinc-500 border border-zinc-500/20 px-2 py-0.5 rounded-full font-bold uppercase tracking-widest">Optionnelle</span>
+                            </div>
+                            <div class="video-actions opacity-0 transition-opacity flex items-center gap-2">
+                                <button class="w-7 h-7 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-all"><i class="ph ph-pencil-simple text-sm"></i></button>
+                                <button class="w-7 h-7 rounded-lg bg-red-500/10 text-red-500 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all"><i class="ph ph-trash text-sm"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 2 -->
+                <div class="bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/10 rounded-2xl overflow-hidden shadow-sm opacity-60">
+                    <div class="module-header flex items-center justify-between p-6 bg-[var(--surface)] border-b border-gold-100/50 dark:border-gold-500/10 group cursor-pointer">
+                        <div class="flex items-center gap-4">
+                            <i class="ph ph-dots-six-vertical text-xl text-gold-500/30 cursor-grab"></i>
+                            <div>
+                                <h3 class="font-serif text-lg text-[var(--text-primary)]">Module 2 — Les fondements de la foi</h3>
+                                <p class="text-[10px] text-[var(--text-secondary)] uppercase tracking-widest font-bold">3 vidéos présentes</p>
+                            </div>
+                        </div>
+                        <i class="ph ph-caret-right text-lg text-[var(--text-secondary)]"></i>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Video Modal -->
+    <div id="addVideoModal" class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 animate-in fade-in duration-300">
+        <div class="bg-[var(--surface-elevated)] border border-gold-500/30 rounded-3xl w-full max-w-lg shadow-2xl relative p-8">
+            <button onclick="closeModal()" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-black/10 hover:bg-red-500 hover:text-white transition-all flex items-center justify-center text-[var(--text-primary)]">
+                <i class="ph ph-x text-xl"></i>
+            </button>
+
+            <h3 class="text-2xl font-serif text-[var(--text-primary)] mb-6 flex items-center gap-3">
+                <i class="ph ph-video-camera text-gold-500"></i> Ajouter une vidéo
+            </h3>
+
+            <form class="space-y-4">
+                <div class="space-y-1">
+                    <label class="text-[10px] uppercase tracking-widest font-bold text-gold-500">Titre de la vidéo</label>
+                    <input type="text" class="w-full bg-[var(--surface)] border border-gold-100/50 dark:border-gold-500/20 rounded-xl p-3 text-sm focus:outline-none focus:border-gold-500 transition-all">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] uppercase tracking-widest font-bold text-gold-500">Module</label>
+                    <select class="w-full bg-[var(--surface)] border border-gold-100/50 dark:border-gold-500/20 rounded-xl p-3 text-sm focus:outline-none focus:border-gold-500 transition-all">
+                        <option>Module 1 — Introduction à l'EJP</option>
+                        <option>Module 2 — Les fondements de la foi</option>
+                    </select>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] uppercase tracking-widest font-bold text-gold-500">Lien YouTube</label>
+                    <input type="url" placeholder="https://youtube.com/..." class="w-full bg-[var(--surface)] border border-gold-100/50 dark:border-gold-500/20 rounded-xl p-3 text-sm focus:outline-none focus:border-gold-500 transition-all">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="text-[10px] uppercase tracking-widest font-bold text-gold-500">Ordre d'affichage</label>
+                        <input type="number" value="1" class="w-full bg-[var(--surface)] border border-gold-100/50 dark:border-gold-500/20 rounded-xl p-3 text-sm focus:outline-none focus:border-gold-500 transition-all">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] uppercase tracking-widest font-bold text-gold-500">Type de contenu</label>
+                        <div class="flex items-center gap-3 h-[46px]">
+                            <span class="text-xs text-[var(--text-secondary)]">Optionnelle</span>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" value="" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-zinc-200 peer-focus:outline-none rounded-full peer dark:bg-zinc-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-gold-500"></div>
+                            </label>
+                            <span class="text-xs font-bold text-gold-500">Obligatoire</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] uppercase tracking-widest font-bold text-gold-500">Description courte</label>
+                    <textarea rows="2" class="w-full bg-[var(--surface)] border border-gold-100/50 dark:border-gold-500/20 rounded-xl p-3 text-sm focus:outline-none focus:border-gold-500 transition-all"></textarea>
+                </div>
+                
+                <button type="button" class="w-full bg-gold-500 text-black py-4 rounded-xl font-bold uppercase tracking-widest text-xs mt-4 shadow-lg shadow-gold-500/20 hover:bg-gold-400 transition-all">
+                    Enregistrer la vidéo
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../frontend/assets/js/theme.js"></script>
+    <script type="module" src="../frontend/assets/i18n/i18n.js"></script>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            sidebar.classList.toggle('-translate-x-full');
+            backdrop.classList.toggle('hidden');
+        }
+        function openModal() {
+            const modal = document.getElementById('addVideoModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal() {
+            const modal = document.getElementById('addVideoModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+        document.getElementById('addVideoModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+    </script>
+</body>
+</html>

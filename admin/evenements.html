@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Événements | Admin EJP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../frontend/assets/css/index.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'selector',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            50: '#F7F3E9',
+                            100: '#E8D9A0',
+                            400: '#C9A84C',
+                            500: '#D4AF37',
+                            600: '#F5E27A',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        .sidebar-link {
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        .sidebar-link.active {
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.05);
+            border-left-color: #D4AF37;
+        }
+        [data-theme="dark"] .sidebar-link.active {
+            background: rgba(212, 175, 55, 0.1);
+        }
+        .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+        .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.2); border-radius: 10px; }
+        
+        .event-card:hover { transform: translateY(-5px); }
+    </style>
+</head>
+<body class="h-screen bg-[var(--bg-primary)] flex overflow-hidden">
+    
+    <!-- Mobile Sidebar Backdrop -->
+    <div id="sidebarBackdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden backdrop-blur-sm"></div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-[var(--surface-elevated)] border-r border-gold-100/50 dark:border-gold-500/10 z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col shadow-2xl lg:shadow-none">
+        <div class="p-6 border-b border-gold-100/50 dark:border-gold-500/10">
+            <a href="dashboard.html" class="text-xl font-serif gold-gradient-text tracking-widest uppercase flex items-center gap-2">
+                <i class="ph ph-church text-gold-500"></i> EJP
+            </a>
+            <p class="text-[9px] uppercase tracking-[0.3em] font-bold text-gold-500 mt-1 opacity-60">Administration</p>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto sidebar-scroll py-4">
+            <ul class="space-y-1">
+                <li><a href="dashboard.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-squares-four text-lg"></i> Tableau de bord</a></li>
+                <li><a href="membres.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-users text-lg"></i> Membres</a></li>
+                <li><a href="chefs.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-briefcase text-lg"></i> Chefs</a></li>
+                <li><a href="formations.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-graduation-cap text-lg"></i> Formations</a></li>
+                <li><a href="cultes.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-hands-praying text-lg"></i> Cultes</a></li>
+                <li><a href="pv.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-file-text text-lg"></i> Réunions (PV)</a></li>
+                <li><a href="evenements.html" class="sidebar-link active flex items-center gap-3 px-6 py-3 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-calendar-event text-lg"></i> Événements</a></li>
+                <li><a href="settings.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-gear text-lg"></i> Paramètres</a></li>
+            </ul>
+        </nav>
+
+        <div class="p-6 border-t border-gold-100/50 dark:border-gold-500/10">
+            <button class="w-full flex items-center gap-3 text-red-500 font-bold text-[10px] uppercase tracking-widest hover:opacity-80 transition-opacity">
+                <i class="ph ph-sign-out text-lg"></i> Déconnexion
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col lg:ml-64 min-w-0 overflow-hidden">
+        
+        <!-- Header -->
+        <header class="h-20 bg-[var(--surface-elevated)] border-b border-gold-100/50 dark:border-gold-500/10 px-8 flex items-center justify-between sticky top-0 z-30">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="lg:hidden p-2 text-[var(--text-primary)] hover:bg-gold-500/10 rounded-lg">
+                    <i class="ph ph-list text-2xl"></i>
+                </button>
+                <h2 class="text-lg font-serif text-[var(--text-primary)]">Gestion des Événements</h2>
+            </div>
+
+            <div class="flex items-center gap-6">
+                <!-- Theme Toggle -->
+                <button onclick="toggleTheme()" class="w-10 h-10 border border-gold-100 dark:border-gold-500/10 rounded-full flex items-center justify-center hover:bg-gold-50 dark:hover:bg-white/5 transition-all text-gold-500">
+                    <span id="theme-icon"><i class="ph ph-moon text-lg"></i></span>
+                </button>
+                
+                <!-- Admin Profile -->
+                <div class="flex items-center gap-4 pl-6 border-l border-gold-100/50 dark:border-gold-500/10">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-xs font-bold leading-none text-[var(--text-primary)]">Past. Emmanuel</p>
+                        <p class="text-[9px] text-gold-500 uppercase tracking-widest font-bold mt-1">Super Admin</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl border-2 border-gold-500 p-0.5 overflow-hidden bg-[var(--surface)] shadow-lg shadow-gold-500/10">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=PE" alt="Admin" class="w-full h-full rounded-lg">
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Scrollable Content -->
+        <main class="flex-1 overflow-y-auto p-6 lg:p-8 space-y-8 animate-in fade-in duration-700">
+            
+            <!-- Action Bar -->
+            <div class="flex justify-end">
+                <button onclick="openModal()" class="flex items-center gap-2 bg-gold-500 text-black px-8 py-3 rounded-xl text-[11px] font-bold uppercase tracking-widest hover:bg-gold-400 transition-all shadow-lg shadow-gold-500/20">
+                    <i class="ph ph-plus-circle text-lg"></i> Créer un événement
+                </button>
+            </div>
+
+            <!-- Events Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                
+                <!-- Event Card 1 -->
+                <div class="event-card bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/10 rounded-3xl overflow-hidden shadow-xl transition-all duration-300 group">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80" alt="Nuit des Prodiges" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        <span class="absolute top-4 right-4 px-3 py-1 bg-emerald-500 text-white text-[9px] font-bold uppercase tracking-widest rounded-full shadow-lg">À venir</span>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <h3 class="text-xl font-serif text-[var(--text-primary)]">Nuit des Prodiges 2026</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-2 text-[var(--text-secondary)] text-xs font-medium">
+                                <i class="ph ph-calendar text-gold-500"></i> 15 Mai 2026 — 21h00
+                            </div>
+                            <div class="flex items-center gap-2 text-[var(--text-secondary)] text-xs font-medium">
+                                <i class="ph ph-map-pin text-gold-500"></i> Temple Central EJP
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-gold-100/30 dark:border-gold-500/5 flex items-center justify-between">
+                            <div class="flex gap-2">
+                                <button title="Éditer" class="w-9 h-9 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-all"><i class="ph ph-pencil-simple text-lg"></i></button>
+                                <button title="Supprimer" class="w-9 h-9 rounded-lg bg-red-500/10 text-red-500 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all"><i class="ph ph-trash text-lg"></i></button>
+                            </div>
+                            <button title="Envoyer une notification" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gold-500/10 text-gold-500 text-[9px] font-bold uppercase tracking-widest hover:bg-gold-500 hover:text-black transition-all">
+                                <i class="ph ph-paper-plane-tilt text-lg"></i> Notifier
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Card 2 -->
+                <div class="event-card bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/10 rounded-3xl overflow-hidden shadow-xl transition-all duration-300 group opacity-70">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1523580494863-6f30312246d5?auto=format&fit=crop&w=800&q=80" alt="Concert Gospel" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        <span class="absolute top-4 right-4 px-3 py-1 bg-zinc-500 text-white text-[9px] font-bold uppercase tracking-widest rounded-full shadow-lg">Passé</span>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <h3 class="text-xl font-serif text-[var(--text-primary)]">Concert Gospel de Pâques</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-2 text-[var(--text-secondary)] text-xs font-medium">
+                                <i class="ph ph-calendar text-gold-500"></i> 12 Avril 2026
+                            </div>
+                            <div class="flex items-center gap-2 text-[var(--text-secondary)] text-xs font-medium">
+                                <i class="ph ph-map-pin text-gold-500"></i> Salle des Fêtes
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Create/Edit Event Modal -->
+    <div id="eventModal" class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 animate-in fade-in duration-300">
+        <div class="bg-[var(--surface-elevated)] border border-gold-500/30 rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl relative p-8 sidebar-scroll">
+            <button onclick="closeModal()" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-black/10 hover:bg-red-500 hover:text-white transition-all flex items-center justify-center text-[var(--text-primary)]">
+                <i class="ph ph-x text-xl"></i>
+            </button>
+
+            <h3 class="text-2xl font-serif text-[var(--text-primary)] mb-8 flex items-center gap-3">
+                <i class="ph ph-calendar-plus text-gold-500"></i> Créer un événement
+            </h3>
+
+            <form class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Left: Basic Info -->
+                <div class="space-y-4">
+                    <div class="space-y-1">
+                        <label class="text-[10px] uppercase tracking-widest font-bold text-gold-500">Nom de l'événement</label>
+                        <input type="text" placeholder="Ex: Nuit des Prodiges" class="w-full bg-[var(--surface)] border border-gold-100/50 dark:border-gold-500/20 rounded-xl p-3 text-sm focus:outline-none focus:border-gold-500 transition-all">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-1">
+                            <label class="text-[10px] uppercase tracking-widest font-bold text-gold-500">Date</label>
+                            <input type="date" class="w-full bg-[var(--surface)] border border-gold-100/50 dark:border-gold-500/20 rounded-xl p-3 text-sm focus:outline-none focus:border-gold-500 transition-all">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[10px] uppercase tracking-widest font-bold text-gold-500">Heure</label>
+                            <input type="time" class="w-full bg-[var(--surface)] border border-gold-100/50 dark:border-gold-500/20 rounded-xl p-3 text-sm focus:outline-none focus:border-gold-500 transition-all">
+                        </div>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] uppercase tracking-widest font-bold text-gold-500">Lieu</label>
+                        <input type="text" placeholder="Ex: Salle principale" class="w-full bg-[var(--surface)] border border-gold-100/50 dark:border-gold-500/20 rounded-xl p-3 text-sm focus:outline-none focus:border-gold-500 transition-all">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] uppercase tracking-widest font-bold text-gold-500">Affiche / Image</label>
+                        <div class="w-full h-40 border-2 border-dashed border-gold-100/50 dark:border-gold-500/20 rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-gold-500 transition-all bg-[var(--surface)]">
+                            <i class="ph ph-image text-3xl text-gold-500/50"></i>
+                            <span class="text-xs text-[var(--text-secondary)]">Cliquez ou glissez l'affiche ici</span>
+                        </div>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] uppercase tracking-widest font-bold text-gold-500">Description</label>
+                        <textarea rows="4" class="w-full bg-[var(--surface)] border border-gold-100/50 dark:border-gold-500/20 rounded-xl p-3 text-sm focus:outline-none focus:border-gold-500 transition-all"></textarea>
+                    </div>
+                </div>
+
+                <!-- Right: Communication & Targeting -->
+                <div class="space-y-6 bg-gold-500/5 p-6 rounded-3xl border border-gold-500/20">
+                    <h4 class="text-sm font-bold uppercase tracking-widest text-gold-500 flex items-center gap-2">
+                        <i class="ph ph-megaphone text-lg"></i> Communication
+                    </h4>
+                    
+                    <div class="space-y-4">
+                        <div class="flex gap-6">
+                            <label class="flex items-center gap-2 cursor-pointer group">
+                                <input type="checkbox" class="w-4 h-4 rounded border-gold-500 accent-gold-500">
+                                <span class="text-xs font-medium text-[var(--text-primary)]">E-mail</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer group">
+                                <input type="checkbox" class="w-4 h-4 rounded border-gold-500 accent-gold-500" checked>
+                                <span class="text-xs font-medium text-[var(--text-primary)]">SMS</span>
+                            </label>
+                        </div>
+
+                        <div class="space-y-3">
+                            <p class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)]">Destinataires</p>
+                            <div class="space-y-2">
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="radio" name="target" class="accent-gold-500" checked>
+                                    <span class="text-xs">Tous les membres</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="radio" name="target" class="accent-gold-500">
+                                    <span class="text-xs">Sélectionner par statut</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="radio" name="target" class="accent-gold-500">
+                                    <span class="text-xs">Sélectionner par Chef</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2 pt-4 border-t border-gold-500/10">
+                            <p class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)]">Aperçu du message</p>
+                            <div class="bg-[var(--surface-elevated)] p-4 rounded-xl border border-gold-500/10 text-xs italic text-[var(--text-secondary)] leading-relaxed">
+                                "Bonjour [Prénom] ! Ne manquez pas notre événement [Nom] le [Date] à [Lieu]. Nous vous attendons avec impatience ! 🙏"
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="w-full bg-gold-500 text-black py-4 rounded-xl font-bold uppercase tracking-widest text-xs mt-6 shadow-lg shadow-gold-500/20 hover:bg-gold-400 transition-all">
+                        Enregistrer & Envoyer les invitations
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../frontend/assets/js/theme.js"></script>
+    <script type="module" src="../frontend/assets/i18n/i18n.js"></script>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            sidebar.classList.toggle('-translate-x-full');
+            backdrop.classList.toggle('hidden');
+        }
+        function openModal() {
+            const modal = document.getElementById('eventModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal() {
+            const modal = document.getElementById('eventModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+        document.getElementById('eventModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+    </script>
+</body>
+</html>

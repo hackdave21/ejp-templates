@@ -1,150 +1,335 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="dark">
+<html lang="fr" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | EJP</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/index.css">
+    <link rel="stylesheet" href="../frontend/assets/css/index.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'selector',
             theme: {
                 extend: {
-                    colors: { gold: { 50: '#F7F3E9', 100: '#E8D9A0', 400: '#C9A84C', 500: '#D4AF37', 600: '#F5E27A' } },
-                    fontFamily: { serif: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] }
+                    colors: {
+                        gold: {
+                            50: '#F7F3E9',
+                            100: '#E8D9A0',
+                            400: '#C9A84C',
+                            500: '#D4AF37',
+                            600: '#F5E27A',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
                 }
             }
         }
     </script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        .sidebar-link {
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        .sidebar-link.active {
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.05);
+            border-left-color: #D4AF37;
+        }
+        [data-theme="dark"] .sidebar-link.active {
+            background: rgba(212, 175, 55, 0.1);
+        }
+        /* Custom scrollbar for sidebar */
+        .sidebar-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .sidebar-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .sidebar-scroll::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.2);
+            border-radius: 10px;
+        }
+    </style>
 </head>
-<body class="flex min-h-screen bg-[#0D0D0D] text-[#F5F0E8]">
+<body class="h-screen bg-[var(--bg-primary)] flex overflow-hidden">
+    
+    <!-- Mobile Sidebar Backdrop -->
+    <div id="sidebarBackdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden backdrop-blur-sm"></div>
+
     <!-- Sidebar -->
-    <aside class="w-20 lg:w-64 flex-shrink-0 border-r border-gold-500/10 bg-[#1A1A1A] flex flex-col items-center lg:items-start transition-all">
-        <div class="h-20 w-full flex items-center justify-center lg:justify-start lg:px-8 border-b border-gold-500/10">
-            <span class="text-2xl font-serif gold-gradient-text tracking-widest">EJP</span>
+    <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-[var(--surface-elevated)] border-r border-gold-100/50 dark:border-gold-500/10 z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col shadow-2xl lg:shadow-none">
+        <div class="p-6 border-b border-gold-100/50 dark:border-gold-500/10">
+            <a href="#" class="text-xl font-serif gold-gradient-text tracking-widest uppercase flex items-center gap-2">
+                <i class="ph ph-church text-gold-500"></i> EJP
+            </a>
+            <p class="text-[9px] uppercase tracking-[0.3em] font-bold text-gold-500 mt-1 opacity-60">Administration</p>
         </div>
-        <nav class="flex-1 w-full py-8 space-y-2 px-4">
-            <a href="/admin/dashboard.html" class="flex items-center space-x-4 p-4 rounded-2xl bg-gold-500/10 border border-gold-500/20 text-gold-500 group transition-all">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                <span class="hidden lg:inline text-[10px] font-bold uppercase tracking-[0.2em]">Dashboard</span>
-            </a>
-            <a href="/admin/membres.html" class="flex items-center space-x-4 p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-gold-500/10 transition-all text-[#A89B7A] hover:text-gold-500 group">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                <span class="hidden lg:inline text-[10px] font-bold uppercase tracking-[0.2em]">Membres</span>
-            </a>
-             <a href="/admin/demandes.html" class="flex items-center space-x-4 p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-gold-500/10 transition-all text-[#A89B7A] hover:text-gold-500 group">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path><path d="m9 12 2 2 4-4"></path></svg>
-                <span class="hidden lg:inline text-[10px] font-bold uppercase tracking-[0.2em]">Demandes</span>
-            </a>
+
+        <nav class="flex-1 overflow-y-auto sidebar-scroll py-4">
+            <ul class="space-y-1">
+                <li>
+                    <a href="dashboard.html" class="sidebar-link active flex items-center gap-3 px-6 py-3 font-bold text-[10px] uppercase tracking-widest">
+                        <i class="ph ph-squares-four text-lg"></i>
+                        Tableau de bord
+                    </a>
+                </li>
+                <li>
+                    <a href="membres.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest">
+                        <i class="ph ph-users text-lg"></i>
+                        Membres
+                    </a>
+                </li>
+                <li>
+                    <a href="chefs.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest">
+                        <i class="ph ph-briefcase text-lg"></i>
+                        Chefs
+                    </a>
+                </li>
+                <li>
+                    <a href="formations.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest">
+                        <i class="ph ph-graduation-cap text-lg"></i>
+                        Formations
+                    </a>
+                </li>
+                <li>
+                    <a href="cultes.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest">
+                        <i class="ph ph-hands-praying text-lg"></i>
+                        Cultes
+                    </a>
+                </li>
+                <li>
+                    <a href="pv.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest">
+                        <i class="ph ph-file-text text-lg"></i>
+                        Réunions (PV)
+                    </a>
+                </li>
+                <li>
+                    <a href="evenements.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest">
+                        <i class="ph ph-calendar-event text-lg"></i>
+                        Événements
+                    </a>
+                </li>
+                <li>
+                    <a href="settings.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest">
+                        <i class="ph ph-gear text-lg"></i>
+                        Paramètres
+                    </a>
+                </li>
+            </ul>
         </nav>
-        <div class="p-6 border-t border-gold-500/10 w-full">
-            <button class="w-full flex items-center space-x-4 text-zinc-500 hover:text-red-400 transition-colors px-4 py-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                <span class="hidden lg:inline text-[10px] font-bold uppercase tracking-[0.2em]">Logout</span>
+
+        <div class="p-6 border-t border-gold-100/50 dark:border-gold-500/10">
+            <button class="w-full flex items-center gap-3 text-red-500 font-bold text-[10px] uppercase tracking-widest hover:opacity-80 transition-opacity">
+                <i class="ph ph-sign-out text-lg"></i>
+                Déconnexion
             </button>
         </div>
     </aside>
 
-    <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto">
-        <!-- Topbar -->
-        <header class="h-20 border-b border-gold-500/10 flex items-center justify-between px-10 bg-[#0D0D0D]/80 backdrop-blur-md sticky top-0 z-30">
-            <h2 class="font-serif text-2xl gold-gradient-text">Vue d'ensemble</h2>
-            <div class="flex items-center space-x-8">
-                <button onclick="toggleTheme()" class="w-10 h-10 border border-gold-500/10 rounded-full flex items-center justify-center hover:bg-white/5 transition-all"><span id="theme-icon">🌙</span></button>
-                <div class="flex items-center space-x-4 pl-8 border-l border-gold-500/10">
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col lg:ml-64 min-w-0 overflow-hidden">
+        
+        <!-- Header -->
+        <header class="h-20 bg-[var(--surface-elevated)] border-b border-gold-100/50 dark:border-gold-500/10 px-8 flex items-center justify-between sticky top-0 z-30">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="lg:hidden p-2 text-[var(--text-primary)] hover:bg-gold-500/10 rounded-lg">
+                    <i class="ph ph-list text-2xl"></i>
+                </button>
+                <h2 class="text-lg font-serif text-[var(--text-primary)]">Vue d'ensemble</h2>
+            </div>
+
+            <div class="flex items-center gap-6">
+                <!-- Theme Toggle -->
+                <button onclick="toggleTheme()" class="w-10 h-10 border border-gold-100 dark:border-gold-500/10 rounded-full flex items-center justify-center hover:bg-gold-50 dark:hover:bg-white/5 transition-all text-gold-500">
+                    <span id="theme-icon"><i class="ph ph-moon text-lg"></i></span>
+                </button>
+                
+                <!-- Admin Profile -->
+                <div class="flex items-center gap-4 pl-6 border-l border-gold-100/50 dark:border-gold-500/10">
                     <div class="text-right hidden sm:block">
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-[#F5F0E8]">Past. Emmanuel</p>
-                        <p class="text-[9px] text-gold-500/60 uppercase font-bold">Admin</p>
+                        <p class="text-xs font-bold leading-none text-[var(--text-primary)]">Past. Emmanuel</p>
+                        <p class="text-[9px] text-gold-500 uppercase tracking-widest font-bold mt-1">Super Admin</p>
                     </div>
-                    <div class="h-10 w-10 rounded-2xl border border-gold-500/30 overflow-hidden shadow-lg shadow-gold-500/10">
-                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=PE" alt="Admin">
+                    <div class="w-10 h-10 rounded-xl border-2 border-gold-500 p-0.5 overflow-hidden bg-[var(--surface)] shadow-lg shadow-gold-500/10">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=PE" alt="Admin" class="w-full h-full rounded-lg">
                     </div>
                 </div>
             </div>
         </header>
 
-        <div class="p-10 space-y-10 animate-in fade-in duration-700">
-            <!-- Stats -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="bg-[#1A1A1A] p-8 rounded-[2rem] border border-gold-500/10 flex items-center space-x-6 hover:shadow-[0_0_30px_rgba(212,175,55,0.05)] transition-all group">
-                    <div class="h-14 w-14 rounded-2xl bg-gold-500 text-black flex items-center justify-center font-bold text-xl shadow-lg shadow-gold-500/20 group-hover:scale-110 transition-transform">124</div>
-                    <div>
-                        <p class="text-[9px] font-bold text-gold-500/60 uppercase tracking-[0.2em]">Total Membres</p>
-                        <p class="text-xl font-serif text-[#F5F0E8]">+12 cette semaine</p>
+        <!-- Page Scrollable Content -->
+        <main class="flex-1 overflow-y-auto p-6 lg:p-10 space-y-8 animate-in fade-in duration-700">
+            
+            <!-- Stats Row -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-6">
+                <!-- Total Membres -->
+                <div class="bg-[var(--surface-elevated)] p-5 rounded-2xl border border-gold-100/50 dark:border-gold-500/10 shadow-sm relative overflow-hidden group">
+                    <div class="absolute -right-2 -bottom-2 opacity-[0.03] group-hover:scale-110 transition-transform duration-500">
+                        <i class="ph ph-users text-7xl"></i>
+                    </div>
+                    <p class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)] mb-2">Total Membres</p>
+                    <div class="flex items-end gap-2">
+                        <span class="text-3xl font-serif text-[var(--text-primary)] leading-none">1,248</span>
+                        <span class="text-[9px] font-bold text-emerald-500 mb-0.5">+12%</span>
                     </div>
                 </div>
-                <div class="bg-[#1A1A1A] p-8 rounded-[2rem] border border-gold-500/10 flex items-center space-x-6">
-                    <div class="h-14 w-14 rounded-2xl bg-[#222222] border border-gold-500/20 text-gold-500 flex items-center justify-center font-bold text-xl">8</div>
-                    <div>
-                        <p class="text-[9px] font-bold text-gold-500/60 uppercase tracking-[0.2em]">En Attente</p>
-                        <p class="text-xl font-serif text-amber-500">Action requise</p>
+                <!-- Stars -->
+                <div class="bg-[var(--surface-elevated)] p-5 rounded-2xl border border-gold-100/50 dark:border-gold-500/10 shadow-sm relative overflow-hidden group">
+                    <p class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)] mb-3">Stars</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-gold-500/10 text-gold-500 flex items-center justify-center border border-gold-500/20">
+                            <i class="ph ph-star-fill text-sm"></i>
+                        </div>
+                        <span class="text-2xl font-serif text-[var(--text-primary)] leading-none">412</span>
                     </div>
                 </div>
-                 <div class="bg-[#1A1A1A] p-8 rounded-[2rem] border border-gold-500/10 flex items-center space-x-6">
-                    <div class="h-14 w-14 rounded-2xl bg-[#222222] border border-gold-500/20 text-gold-500 flex items-center justify-center font-bold text-xl">42%</div>
-                    <div>
-                        <p class="text-[9px] font-bold text-gold-500/60 uppercase tracking-[0.2em]">Engagement</p>
-                        <p class="text-xl font-serif text-[#F5F0E8]">Moyenne cultes</p>
+                <!-- Pilotes -->
+                <div class="bg-[var(--surface-elevated)] p-5 rounded-2xl border border-gold-100/50 dark:border-gold-500/10 shadow-sm relative overflow-hidden group">
+                    <p class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)] mb-3">Pilotes</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center border border-blue-500/20">
+                            <i class="ph ph-paper-plane-tilt-fill text-sm"></i>
+                        </div>
+                        <span class="text-2xl font-serif text-[var(--text-primary)] leading-none">156</span>
                     </div>
                 </div>
-                 <div class="bg-[#1A1A1A] p-8 rounded-[2rem] border border-gold-500/10 flex items-center space-x-6">
-                    <div class="h-14 w-14 rounded-2xl bg-[#222222] border border-gold-500/20 text-gold-500 flex items-center justify-center font-bold text-xl">2</div>
-                    <div>
-                        <p class="text-[9px] font-bold text-gold-500/60 uppercase tracking-[0.2em]">Événements</p>
-                        <p class="text-xl font-serif text-[#F5F0E8]">Ce mois-ci</p>
+                <!-- Piliers -->
+                <div class="bg-[var(--surface-elevated)] p-5 rounded-2xl border border-gold-100/50 dark:border-gold-500/10 shadow-sm relative overflow-hidden group">
+                    <p class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)] mb-3">Piliers</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-indigo-500/10 text-indigo-500 flex items-center justify-center border border-indigo-500/20">
+                            <i class="ph ph-pillars-fill text-sm"></i>
+                        </div>
+                        <span class="text-2xl font-serif text-[var(--text-primary)] leading-none">84</span>
+                    </div>
+                </div>
+                <!-- Missionnaires -->
+                <div class="bg-[var(--surface-elevated)] p-5 rounded-2xl border border-gold-100/50 dark:border-gold-500/10 shadow-sm relative overflow-hidden group">
+                    <p class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)] mb-3">Missionnaires</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center border border-emerald-500/20">
+                            <i class="ph ph-flag-banner-fill text-sm"></i>
+                        </div>
+                        <span class="text-2xl font-serif text-[var(--text-primary)] leading-none">32</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Recent Activity & Pending Requests -->
+            <!-- Pending Requests -->
+            <section class="bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/10 rounded-2xl p-6 lg:p-8 shadow-sm">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-serif text-[var(--text-primary)] flex items-center gap-2">
+                        <i class="ph ph-bell-ringing text-gold-500"></i> Demandes en attente
+                    </h3>
+                    <button class="text-[10px] text-gold-500 font-bold uppercase tracking-widest hover:underline">Voir tout</button>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-separate border-spacing-y-3">
+                        <thead>
+                            <tr class="text-[9px] uppercase tracking-widest text-[var(--text-secondary)]">
+                                <th class="px-4 pb-2 font-bold">Membre</th>
+                                <th class="px-4 pb-2 font-bold">Niveau</th>
+                                <th class="px-4 pb-2 font-bold">Cible</th>
+                                <th class="px-4 pb-2 font-bold">Date</th>
+                                <th class="px-4 pb-2 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-xs">
+                            <tr class="bg-[var(--surface)] border border-gold-100/50 dark:border-gold-500/10 rounded-xl">
+                                <td class="px-4 py-3 rounded-l-xl">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-8 h-8 rounded-full overflow-hidden border border-gold-500/20">
+                                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=SK" alt="SK">
+                                        </div>
+                                        <span class="font-bold">Samuel Kofi</span>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <span class="text-[9px] bg-gold-500/10 text-gold-500 border border-gold-500/20 px-2 py-0.5 rounded-md font-bold uppercase tracking-widest">Nouveau</span>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <span class="text-[9px] bg-gold-500/10 text-gold-500 border border-gold-500/20 px-2 py-0.5 rounded-md font-bold uppercase tracking-widest">Star</span>
+                                </td>
+                                <td class="px-4 py-3 text-[var(--text-secondary)]">Il y a 2h</td>
+                                <td class="px-4 py-3 rounded-r-xl text-center">
+                                    <button class="bg-gold-500 text-black px-4 py-1.5 rounded-lg text-[9px] font-bold uppercase tracking-widest hover:bg-gold-400 transition-colors">Examiner</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 2-Column Grid -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="glass p-6 rounded-2xl border border-gold-500/20 space-y-6">
-                    <div class="flex items-center justify-between">
-                        <h3 class="font-serif text-xl text-gold-500">Dernières Demandes</h3>
-                        <a href="/admin/demandes.html" class="text-xs text-gold-500/40 hover:text-gold-500 transition-colors uppercase tracking-widest">Voir tout</a>
-                    </div>
+                <div class="bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/10 rounded-2xl p-6 shadow-sm">
+                    <h3 class="text-base font-serif text-[var(--text-primary)] mb-6 flex items-center gap-2">
+                        <i class="ph ph-chart-bar text-gold-500"></i> Formations populaires
+                    </h3>
                     <div class="space-y-4">
-                        <div class="flex items-center justify-between p-4 rounded-xl bg-black/40 border border-gold-500/10">
-                            <div class="flex items-center space-x-4">
-                                <div class="h-10 w-10 rounded-full border border-gold-500/30 overflow-hidden">
-                                     <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=SK" alt="Member">
-                                </div>
-                                <div>
-                                    <p class="text-sm font-bold">Samuel Kofi</p>
-                                    <p class="text-xs text-gold-500/50">Nouveau → Star</p>
-                                </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between items-center text-[10px]">
+                                <span class="font-bold">Fondements de la Foi</span>
+                                <span class="text-gold-500 font-bold">1,024</span>
                             </div>
-                            <div class="flex space-x-2">
-                                <button class="p-2 rounded-lg bg-emerald-500/20 text-emerald-500 hover:bg-emerald-500 hover:text-white transition-all">✓</button>
-                                <button class="p-2 rounded-lg bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white transition-all">✕</button>
+                            <div class="h-1.5 w-full bg-[var(--surface)] rounded-full overflow-hidden border border-gold-100/30">
+                                <div class="h-full bg-gold-500" style="width: 85%"></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="glass p-6 rounded-2xl border border-gold-500/20 space-y-6">
-                    <h3 class="font-serif text-xl text-gold-500">Activité Récente</h3>
-                    <div class="space-y-4 pl-4 border-l border-gold-500/10">
-                        <div class="relative">
-                            <div class="absolute left-[-21px] top-1 h-3 w-3 rounded-full bg-gold-500 border-2 border-black"></div>
-                            <p class="text-xs text-zinc-400">Il y a 2h</p>
-                            <p class="text-sm">Jean-Baptiste a terminé le module 1.</p>
-                        </div>
-                        <div class="relative">
-                            <div class="absolute left-[-21px] top-1 h-3 w-3 rounded-full bg-zinc-800 border-2 border-black text-[8px] flex items-center justify-center"></div>
-                            <p class="text-xs text-zinc-400">Il y a 5h</p>
-                            <p class="text-sm">Nouveau membre inscrit : Rachel Amavi.</p>
+                <div class="bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/10 rounded-2xl p-6 shadow-sm">
+                    <h3 class="text-base font-serif text-[var(--text-primary)] mb-6 flex items-center gap-2">
+                        <i class="ph ph-calendar-star text-gold-500"></i> Événements
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3 p-3 bg-[var(--surface)] border border-gold-100/30 rounded-xl">
+                            <div class="w-10 h-10 rounded-lg bg-gold-500 text-black flex flex-col items-center justify-center font-bold text-xs">
+                                <span>15</span>
+                                <span class="text-[7px] uppercase tracking-widest">Mai</span>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold">Nuit des Prodiges</p>
+                                <p class="text-[9px] text-gold-500 font-bold">Temple Central</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
 
-    <script src="assets/js/theme.js"></script>
-    <script type="module" src="assets/i18n/i18n.js"></script>
+            <!-- Activity Feed -->
+            <section class="bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/10 rounded-2xl p-6 shadow-sm">
+                <h3 class="text-base font-serif text-[var(--text-primary)] mb-6 flex items-center gap-2">
+                    <i class="ph ph-activity text-gold-500"></i> Activité récente
+                </h3>
+                <div class="space-y-4 relative before:content-[''] before:absolute before:left-3 before:top-2 before:bottom-2 before:w-px before:bg-gold-500/10">
+                    <div class="relative pl-8">
+                        <div class="absolute left-2.5 top-1.5 w-1.5 h-1.5 rounded-full bg-gold-500"></div>
+                        <p class="text-[9px] text-[var(--text-secondary)] font-bold mb-0.5">10 MIN</p>
+                        <p class="text-xs font-medium">Jean Dupont a complété le module 1.</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="../frontend/assets/js/theme.js"></script>
+    <script type="module" src="../frontend/assets/i18n/i18n.js"></script>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            sidebar.classList.toggle('-translate-x-full');
+            backdrop.classList.toggle('hidden');
+        }
+    </script>
 </body>
 </html>

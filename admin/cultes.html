@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultes | Admin EJP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../frontend/assets/css/index.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'selector',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            50: '#F7F3E9',
+                            100: '#E8D9A0',
+                            400: '#C9A84C',
+                            500: '#D4AF37',
+                            600: '#F5E27A',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        .sidebar-link {
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        .sidebar-link.active {
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.05);
+            border-left-color: #D4AF37;
+        }
+        [data-theme="dark"] .sidebar-link.active {
+            background: rgba(212, 175, 55, 0.1);
+        }
+        .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+        .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.2); border-radius: 10px; }
+    </style>
+</head>
+<body class="h-screen bg-[var(--bg-primary)] flex overflow-hidden">
+    
+    <!-- Mobile Sidebar Backdrop -->
+    <div id="sidebarBackdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden backdrop-blur-sm"></div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-[var(--surface-elevated)] border-r border-gold-100/50 dark:border-gold-500/10 z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col shadow-2xl lg:shadow-none">
+        <div class="p-6 border-b border-gold-100/50 dark:border-gold-500/10">
+            <a href="dashboard.html" class="text-xl font-serif gold-gradient-text tracking-widest uppercase flex items-center gap-2">
+                <i class="ph ph-church text-gold-500"></i> EJP
+            </a>
+            <p class="text-[9px] uppercase tracking-[0.3em] font-bold text-gold-500 mt-1 opacity-60">Administration</p>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto sidebar-scroll py-4">
+            <ul class="space-y-1">
+                <li><a href="dashboard.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-squares-four text-lg"></i> Tableau de bord</a></li>
+                <li><a href="membres.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-users text-lg"></i> Membres</a></li>
+                <li><a href="chefs.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-briefcase text-lg"></i> Chefs</a></li>
+                <li><a href="formations.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-graduation-cap text-lg"></i> Formations</a></li>
+                <li><a href="cultes.html" class="sidebar-link active flex items-center gap-3 px-6 py-3 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-hands-praying text-lg"></i> Cultes</a></li>
+                <li><a href="pv.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-file-text text-lg"></i> Réunions (PV)</a></li>
+                <li><a href="evenements.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-calendar-event text-lg"></i> Événements</a></li>
+                <li><a href="settings.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-gear text-lg"></i> Paramètres</a></li>
+            </ul>
+        </nav>
+
+        <div class="p-6 border-t border-gold-100/50 dark:border-gold-500/10">
+            <button class="w-full flex items-center gap-3 text-red-500 font-bold text-[10px] uppercase tracking-widest hover:opacity-80 transition-opacity">
+                <i class="ph ph-sign-out text-lg"></i> Déconnexion
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col lg:ml-64 min-w-0 overflow-hidden">
+        
+        <!-- Header -->
+        <header class="h-20 bg-[var(--surface-elevated)] border-b border-gold-100/50 dark:border-gold-500/10 px-8 flex items-center justify-between sticky top-0 z-30">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="lg:hidden p-2 text-[var(--text-primary)] hover:bg-gold-500/10 rounded-lg">
+                    <i class="ph ph-list text-2xl"></i>
+                </button>
+                <h2 class="text-lg font-serif text-[var(--text-primary)]">Gestion des Cultes</h2>
+            </div>
+
+            <div class="flex items-center gap-6">
+                <!-- Theme Toggle -->
+                <button onclick="toggleTheme()" class="w-10 h-10 border border-gold-100 dark:border-gold-500/10 rounded-full flex items-center justify-center hover:bg-gold-50 dark:hover:bg-white/5 transition-all text-gold-500">
+                    <span id="theme-icon"><i class="ph ph-moon text-lg"></i></span>
+                </button>
+                
+                <!-- Admin Profile -->
+                <div class="flex items-center gap-4 pl-6 border-l border-gold-100/50 dark:border-gold-500/10">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-xs font-bold leading-none text-[var(--text-primary)]">Past. Emmanuel</p>
+                        <p class="text-[9px] text-gold-500 uppercase tracking-widest font-bold mt-1">Super Admin</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl border-2 border-gold-500 p-0.5 overflow-hidden bg-[var(--surface)] shadow-lg shadow-gold-500/10">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=PE" alt="Admin" class="w-full h-full rounded-lg">
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Scrollable Content -->
+        <main class="flex-1 overflow-y-auto p-6 lg:p-8 space-y-8 animate-in fade-in duration-700">
+            
+            <!-- Action Bar -->
+            <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+                <div class="flex flex-1 gap-4 w-full md:w-auto">
+                    <!-- Search -->
+                    <div class="relative flex-1 max-w-sm">
+                        <i class="ph ph-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gold-500 text-lg"></i>
+                        <input type="text" placeholder="Rechercher par thème..." class="w-full bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/20 rounded-xl py-3 pl-12 pr-4 text-xs focus:outline-none focus:border-gold-500 transition-all text-[var(--text-primary)]">
+                    </div>
+                    <!-- Filter -->
+                    <select class="bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/20 rounded-xl px-4 py-3 text-[10px] font-bold uppercase tracking-widest text-[var(--text-secondary)] focus:outline-none focus:border-gold-500 transition-all">
+                        <option>Tous les thèmes</option>
+                        <option>Spiritualité</option>
+                        <option>Jeunesse</option>
+                    </select>
+                </div>
+                
+                <button class="flex items-center gap-2 bg-gold-500 text-black px-6 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-gold-400 transition-all shadow-lg shadow-gold-500/20 whitespace-nowrap">
+                    <i class="ph ph-plus-bold text-sm"></i> Ajouter un culte
+                </button>
+            </div>
+
+            <!-- Cultes Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                <!-- Culte Card 1 -->
+                <div class="bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/10 rounded-2xl p-6 shadow-sm hover:border-gold-500/30 transition-all group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-[9px] bg-gold-500/10 text-gold-500 border border-gold-500/20 px-3 py-1 rounded-full font-bold uppercase tracking-widest">Spiritualité</span>
+                        <p class="text-[10px] text-[var(--text-secondary)] font-bold">12 Mai 2026</p>
+                    </div>
+                    <h3 class="text-xl font-serif text-[var(--text-primary)] mb-3 group-hover:text-gold-500 transition-colors">La Puissance de la Prière</h3>
+                    <p class="text-xs text-[var(--text-secondary)] leading-relaxed line-clamp-2 mb-6">Un moment intense de communion fraternelle pour renforcer notre foi et nos liens spirituels...</p>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-gold-100/30 dark:border-gold-500/5">
+                        <div class="flex gap-2">
+                            <button title="Lien YouTube" class="w-8 h-8 rounded-lg bg-red-500/10 text-red-500 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all"><i class="ph ph-youtube-logo text-lg"></i></button>
+                            <button title="Éditer" class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-all"><i class="ph ph-pencil-simple text-lg"></i></button>
+                        </div>
+                        <button class="text-red-500/50 hover:text-red-500 transition-colors"><i class="ph ph-trash text-lg"></i></button>
+                    </div>
+                </div>
+
+                <!-- Culte Card 2 -->
+                <div class="bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/10 rounded-2xl p-6 shadow-sm hover:border-gold-500/30 transition-all group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-[9px] bg-blue-500/10 text-blue-500 border border-blue-500/20 px-3 py-1 rounded-full font-bold uppercase tracking-widest">Jeunesse</span>
+                        <p class="text-[10px] text-[var(--text-secondary)] font-bold">05 Mai 2026</p>
+                    </div>
+                    <h3 class="text-xl font-serif text-[var(--text-primary)] mb-3 group-hover:text-gold-500 transition-colors">Le Défi des Prodiges</h3>
+                    <p class="text-xs text-[var(--text-secondary)] leading-relaxed line-clamp-2 mb-6">Comment relever les défis de notre temps avec sagesse et persévérance.</p>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-gold-100/30 dark:border-gold-500/5">
+                        <div class="flex gap-2">
+                            <button class="w-8 h-8 rounded-lg bg-red-500/10 text-red-500 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all"><i class="ph ph-youtube-logo text-lg"></i></button>
+                            <button class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-all"><i class="ph ph-pencil-simple text-lg"></i></button>
+                        </div>
+                        <button class="text-red-500/50 hover:text-red-500 transition-colors"><i class="ph ph-trash text-lg"></i></button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="../frontend/assets/js/theme.js"></script>
+    <script type="module" src="../frontend/assets/i18n/i18n.js"></script>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            sidebar.classList.toggle('-translate-x-full');
+            backdrop.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
