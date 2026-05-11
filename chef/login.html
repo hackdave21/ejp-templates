@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Chef | EJP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../frontend/assets/css/index.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'selector',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            50: '#F7F3E9',
+                            100: '#E8D9A0',
+                            400: '#C9A84C',
+                            500: '#D4AF37',
+                            600: '#F5E27A',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body class="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center p-6 relative overflow-hidden grain-texture">
+    
+    <!-- Decorative background elements -->
+    <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-gold-500/5 rounded-full blur-[120px]"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-gold-500/5 rounded-full blur-[120px]"></div>
+
+    <!-- Login Card -->
+    <div class="w-full max-w-md bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/20 rounded-[2.5rem] p-10 shadow-2xl relative z-10 animate-in fade-in zoom-in duration-700">
+        
+        <!-- Header -->
+        <div class="text-center mb-10">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-black rounded-2xl mb-6 border border-gold-500/30 shadow-lg shadow-gold-500/10">
+                <span class="text-2xl font-serif gold-gradient-text tracking-widest">EJP</span>
+            </div>
+            <h1 class="text-2xl font-serif text-[var(--text-primary)] mb-2">Espace Chef</h1>
+            <p class="text-[10px] uppercase tracking-[0.3em] font-bold text-gold-500 opacity-60">Connexion Responsable</p>
+        </div>
+
+        <!-- Form -->
+        <form class="space-y-6">
+            <div class="space-y-1">
+                <label class="text-[10px] uppercase tracking-widest font-bold text-gold-500 ml-1">Identifiant ou E-mail</label>
+                <div class="relative">
+                    <i class="ph ph-user absolute left-4 top-1/2 -translate-y-1/2 text-gold-500/50 text-lg"></i>
+                    <input type="text" placeholder="votre@email.ci" class="w-full bg-[var(--surface)] border border-gold-100/50 dark:border-gold-500/10 rounded-2xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:border-gold-500 transition-all text-[var(--text-primary)]">
+                </div>
+            </div>
+
+            <div class="space-y-1">
+                <label class="text-[10px] uppercase tracking-widest font-bold text-gold-500 ml-1">Mot de passe</label>
+                <div class="relative">
+                    <i class="ph ph-lock absolute left-4 top-1/2 -translate-y-1/2 text-gold-500/50 text-lg"></i>
+                    <input type="password" id="password" placeholder="••••••••" class="w-full bg-[var(--surface)] border border-gold-100/50 dark:border-gold-500/10 rounded-2xl py-4 pl-12 pr-12 text-sm focus:outline-none focus:border-gold-500 transition-all text-[var(--text-primary)]">
+                    <button type="button" onclick="togglePassword()" class="absolute right-4 top-1/2 -translate-y-1/2 text-gold-500/50 hover:text-gold-500 transition-colors">
+                        <i id="eye-icon" class="ph ph-eye text-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="button" class="w-full bg-gold-500 text-black py-5 rounded-2xl font-bold uppercase tracking-widest text-xs shadow-xl shadow-gold-500/20 hover:bg-gold-400 hover:scale-[1.02] active:scale-[0.98] transition-all">
+                Se connecter
+            </button>
+        </form>
+
+        <!-- Footer -->
+        <div class="mt-10 pt-8 border-t border-gold-500/10 text-center">
+            <a href="#" class="text-[10px] uppercase tracking-widest font-bold text-[var(--text-secondary)] hover:text-gold-500 transition-colors">
+                Mot de passe oublié ? Contactez l'administration
+            </a>
+            <p class="mt-6 text-[8px] text-[var(--text-secondary)] opacity-50 leading-relaxed italic">
+                Accès strictement réservé aux Chefs responsables de l'EJP.<br>
+                La création de compte est gérée par l'administration centrale.
+            </p>
+        </div>
+    </div>
+
+    <!-- Theme Toggle Floating -->
+    <button onclick="toggleTheme()" class="fixed bottom-8 right-8 w-12 h-12 bg-[var(--surface-elevated)] border border-gold-500/20 rounded-full flex items-center justify-center shadow-2xl text-gold-500 hover:scale-110 transition-transform">
+        <i id="theme-icon" class="ph ph-moon text-xl"></i>
+    </button>
+
+    <script src="../frontend/assets/js/theme.js"></script>
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eye-icon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.classList.replace('ph-eye', 'ph-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.classList.replace('ph-eye-slash', 'ph-eye');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil Chef | EJP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../frontend/assets/css/index.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'selector',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            50: '#F7F3E9',
+                            100: '#E8D9A0',
+                            400: '#C9A84C',
+                            500: '#D4AF37',
+                            600: '#F5E27A',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        .sidebar-link {
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        .sidebar-link.active {
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.05);
+            border-left-color: #D4AF37;
+        }
+        [data-theme="dark"] .sidebar-link.active {
+            background: rgba(212, 175, 55, 0.1);
+        }
+        .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+        .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.2); border-radius: 10px; }
+    </style>
+</head>
+<body class="h-screen bg-[var(--bg-primary)] flex overflow-hidden">
+    
+    <!-- Mobile Sidebar Backdrop -->
+    <div id="sidebarBackdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden backdrop-blur-sm"></div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-[var(--surface-elevated)] border-r border-gold-100/50 dark:border-gold-500/10 z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col shadow-2xl lg:shadow-none">
+        <div class="p-6 border-b border-gold-100/50 dark:border-gold-500/10">
+            <a href="dashboard.html" class="text-xl font-serif gold-gradient-text tracking-widest uppercase flex items-center gap-2">
+                <i class="ph ph-church text-gold-500"></i> EJP
+            </a>
+            <p class="text-[9px] uppercase tracking-[0.3em] font-bold text-gold-500 mt-1 opacity-60">Espace Chef</p>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto sidebar-scroll py-4">
+            <ul class="space-y-1">
+                <li><a href="dashboard.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-squares-four text-lg"></i> Dashboard</a></li>
+                <li><a href="famille.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-users-three text-lg"></i> Ma Famille</a></li>
+                <li><a href="demandes.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-arrow-up-bold text-lg"></i> Demandes</a></li>
+                <li><a href="sessions.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-calendar-check text-lg"></i> Sessions Service</a></li>
+                <li><a href="profil.html" class="sidebar-link active flex items-center gap-3 px-6 py-3 font-bold text-[10px] uppercase tracking-widest transition-all"><i class="ph ph-user text-lg"></i> Mon Profil</a></li>
+            </ul>
+        </nav>
+
+        <div class="p-6 border-t border-gold-100/50 dark:border-gold-500/10">
+            <button class="w-full flex items-center gap-3 text-red-500 font-bold text-[10px] uppercase tracking-widest hover:opacity-80 transition-opacity">
+                <i class="ph ph-sign-out text-lg"></i> Déconnexion
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col lg:ml-64 min-w-0 overflow-hidden">
+        
+        <!-- Header -->
+        <header class="h-20 bg-[var(--surface-elevated)] border-b border-gold-100/50 dark:border-gold-500/10 px-8 flex items-center justify-between sticky top-0 z-30">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="lg:hidden p-2 text-[var(--text-primary)] hover:bg-gold-500/10 rounded-lg">
+                    <i class="ph ph-list text-2xl"></i>
+                </button>
+                <h2 class="text-lg font-serif text-[var(--text-primary)]">Mon Profil Responsable</h2>
+            </div>
+            
+            <!-- Theme Toggle -->
+            <button onclick="toggleTheme()" class="w-10 h-10 border border-gold-100 dark:border-gold-500/10 rounded-full flex items-center justify-center hover:bg-gold-50 dark:hover:bg-white/5 transition-all text-gold-500">
+                <span id="theme-icon"><i class="ph ph-moon text-lg"></i></span>
+            </button>
+        </header>
+
+        <!-- Page Scrollable Content -->
+        <main class="flex-1 overflow-y-auto p-6 lg:p-10 animate-in fade-in duration-700">
+            
+            <div class="max-w-4xl mx-auto space-y-12">
+                
+                <!-- Chef Profile Section -->
+                <div class="bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/10 rounded-[2.5rem] p-10 shadow-sm relative overflow-hidden group">
+                    <div class="absolute right-0 top-0 w-64 h-64 bg-gold-500/5 rounded-full -mr-32 -mt-32 blur-3xl group-hover:bg-gold-500/10 transition-colors"></div>
+                    
+                    <div class="relative flex flex-col md:flex-row items-center gap-10">
+                        <div class="relative">
+                            <div class="w-40 h-40 rounded-[2.5rem] border-4 border-gold-500 p-1.5 overflow-hidden bg-[var(--surface)] shadow-2xl shadow-gold-500/20">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=David" alt="David" class="w-full h-full rounded-[2rem] object-cover">
+                            </div>
+                            <button class="absolute -bottom-2 -right-2 bg-gold-500 text-black w-10 h-10 rounded-full border-4 border-[var(--surface-elevated)] flex items-center justify-center hover:scale-110 transition-transform">
+                                <i class="ph ph-camera text-xl"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="flex-1 text-center md:text-left">
+                            <h2 class="text-3xl font-serif text-[var(--text-primary)] mb-1">Chef David Amavi</h2>
+                            <p class="text-sm font-bold text-gold-500 uppercase tracking-widest mb-6">Responsable Louange</p>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div class="space-y-1">
+                                    <label class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)]">Adresse E-mail</label>
+                                    <p class="text-xs font-bold text-[var(--text-primary)] flex items-center gap-2"><i class="ph ph-envelope text-gold-500"></i> david.amavi@ejp.ci</p>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)]">Téléphone</label>
+                                    <p class="text-xs font-bold text-[var(--text-primary)] flex items-center gap-2"><i class="ph ph-phone text-gold-500"></i> +225 07 01 02 03 04</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats & Actions Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    
+                    <!-- Family Stats -->
+                    <div class="bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/10 rounded-3xl p-8 shadow-sm space-y-6">
+                        <h3 class="text-sm font-bold uppercase tracking-widest text-gold-500 border-b border-gold-500/20 pb-2">Ma Famille en chiffres</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="p-4 bg-[var(--bg-primary)] rounded-2xl border border-gold-100/30">
+                                <p class="text-2xl font-serif text-[var(--text-primary)]">24</p>
+                                <p class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)]">Membres</p>
+                            </div>
+                            <div class="p-4 bg-[var(--bg-primary)] rounded-2xl border border-gold-100/30">
+                                <p class="text-2xl font-serif text-[var(--text-primary)]">85%</p>
+                                <p class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)]">Formation Moy.</p>
+                            </div>
+                            <div class="p-4 bg-[var(--bg-primary)] rounded-2xl border border-gold-100/30 col-span-2">
+                                <p class="text-2xl font-serif text-[var(--text-primary)]">156</p>
+                                <p class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)]">Sessions Totales Enregistrées</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Password Update -->
+                    <div class="bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/10 rounded-3xl p-8 shadow-sm space-y-6">
+                        <h3 class="text-sm font-bold uppercase tracking-widest text-gold-500 border-b border-gold-500/20 pb-2">Changer mon mot de passe</h3>
+                        <form class="space-y-4">
+                            <input type="password" placeholder="Mot de passe actuel" class="w-full bg-[var(--surface)] border border-gold-100/50 dark:border-gold-500/10 rounded-xl p-3 text-xs focus:outline-none focus:border-gold-500 transition-all">
+                            <input type="password" placeholder="Nouveau mot de passe" class="w-full bg-[var(--surface)] border border-gold-100/50 dark:border-gold-500/10 rounded-xl p-3 text-xs focus:outline-none focus:border-gold-500 transition-all">
+                            <button type="button" class="w-full bg-gold-500 text-black py-4 rounded-xl text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-gold-500/10 hover:bg-gold-400 transition-all">Mettre à jour</button>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <script src="../frontend/assets/js/theme.js"></script>
+    <script type="module" src="../frontend/assets/i18n/i18n.js"></script>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            sidebar.classList.toggle('-translate-x-full');
+            backdrop.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Chef | EJP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../frontend/assets/css/index.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'selector',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            50: '#F7F3E9',
+                            100: '#E8D9A0',
+                            400: '#C9A84C',
+                            500: '#D4AF37',
+                            600: '#F5E27A',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        .sidebar-link {
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        .sidebar-link.active {
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.05);
+            border-left-color: #D4AF37;
+        }
+        [data-theme="dark"] .sidebar-link.active {
+            background: rgba(212, 175, 55, 0.1);
+        }
+        .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+        .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.2); border-radius: 10px; }
+    </style>
+</head>
+<body class="h-screen bg-[var(--bg-primary)] flex overflow-hidden">
+    
+    <!-- Mobile Sidebar Backdrop -->
+    <div id="sidebarBackdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden backdrop-blur-sm"></div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-[var(--surface-elevated)] border-r border-gold-100/50 dark:border-gold-500/10 z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col shadow-2xl lg:shadow-none">
+        <div class="p-6 border-b border-gold-100/50 dark:border-gold-500/10">
+            <a href="dashboard.html" class="text-xl font-serif gold-gradient-text tracking-widest uppercase flex items-center gap-2">
+                <i class="ph ph-church text-gold-500"></i> EJP
+            </a>
+            <p class="text-[9px] uppercase tracking-[0.3em] font-bold text-gold-500 mt-1 opacity-60">Espace Chef</p>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto sidebar-scroll py-4">
+            <ul class="space-y-1">
+                <li>
+                    <a href="dashboard.html" class="sidebar-link active flex items-center gap-3 px-6 py-3 font-bold text-[10px] uppercase tracking-widest">
+                        <i class="ph ph-squares-four text-lg"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="famille.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all">
+                        <i class="ph ph-users-three text-lg"></i>
+                        Ma Famille
+                    </a>
+                </li>
+                <li>
+                    <a href="demandes.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all">
+                        <i class="ph ph-arrow-up-bold text-lg"></i>
+                        Demandes
+                    </a>
+                </li>
+                <li>
+                    <a href="sessions.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all">
+                        <i class="ph ph-calendar-check text-lg"></i>
+                        Sessions Service
+                    </a>
+                </li>
+                <li>
+                    <a href="profil.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-[var(--text-secondary)] hover:text-gold-500 hover:bg-gold-500/5 font-bold text-[10px] uppercase tracking-widest transition-all">
+                        <i class="ph ph-user text-lg"></i>
+                        Mon Profil
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="p-6 border-t border-gold-100/50 dark:border-gold-500/10">
+            <button class="w-full flex items-center gap-3 text-red-500 font-bold text-[10px] uppercase tracking-widest hover:opacity-80 transition-opacity">
+                <i class="ph ph-sign-out text-lg"></i>
+                Déconnexion
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col lg:ml-64 min-w-0 overflow-hidden">
+        
+        <!-- Header -->
+        <header class="h-20 bg-[var(--surface-elevated)] border-b border-gold-100/50 dark:border-gold-500/10 px-8 flex items-center justify-between sticky top-0 z-30">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="lg:hidden p-2 text-[var(--text-primary)] hover:bg-gold-500/10 rounded-lg">
+                    <i class="ph ph-list text-2xl"></i>
+                </button>
+                <h2 class="text-lg font-serif text-[var(--text-primary)] hidden sm:block">Tableau de Bord Chef</h2>
+            </div>
+
+            <div class="flex items-center gap-6">
+                <!-- Notifications -->
+                <button class="relative p-2 text-[var(--text-secondary)] hover:text-gold-500 transition-colors">
+                    <i class="ph ph-bell text-xl"></i>
+                    <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-[var(--surface-elevated)]"></span>
+                </button>
+
+                <!-- Theme Toggle -->
+                <button onclick="toggleTheme()" class="w-10 h-10 border border-gold-100 dark:border-gold-500/10 rounded-full flex items-center justify-center hover:bg-gold-50 dark:hover:bg-white/5 transition-all text-gold-500">
+                    <span id="theme-icon"><i class="ph ph-moon text-lg"></i></span>
+                </button>
+                
+                <!-- Chef Profile -->
+                <div class="flex items-center gap-4 pl-6 border-l border-gold-100/50 dark:border-gold-500/10">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-xs font-bold leading-none text-[var(--text-primary)]">Chef David</p>
+                        <p class="text-[9px] text-gold-500 uppercase tracking-widest font-bold mt-1">Louange</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl border-2 border-gold-500 p-0.5 overflow-hidden bg-[var(--surface)] shadow-lg shadow-gold-500/10">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=David" alt="Chef" class="w-full h-full rounded-lg">
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Scrollable Content -->
+        <main class="flex-1 overflow-y-auto p-6 lg:p-10 space-y-8 animate-in fade-in duration-700">
+            
+            <!-- Welcome Banner -->
+            <div class="bg-gold-500/5 border border-gold-500/20 p-8 rounded-[2.5rem] relative overflow-hidden group">
+                <div class="absolute right-[-20px] top-[-20px] opacity-[0.05] group-hover:scale-110 transition-transform duration-700">
+                    <i class="ph ph-users-three text-[12rem]"></i>
+                </div>
+                <h2 class="text-3xl font-serif text-[var(--text-primary)] mb-2">Bonjour Chef David 👋</h2>
+                <p class="text-sm text-[var(--text-secondary)]">Voici un aperçu de l'état spirituel et de l'engagement de votre <span class="text-gold-500 font-bold uppercase tracking-widest text-[10px]">Famille des Disciples</span>.</p>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Total Membres -->
+                <div class="bg-[var(--surface-elevated)] p-6 rounded-3xl border border-gold-100/50 dark:border-gold-500/10 shadow-sm relative overflow-hidden group">
+                    <p class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)] mb-4">Membres Famille</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-gold-500/10 text-gold-500 flex items-center justify-center border border-gold-500/20">
+                            <i class="ph ph-users-three-fill"></i>
+                        </div>
+                        <span class="text-3xl font-serif text-[var(--text-primary)]">24</span>
+                    </div>
+                </div>
+                <!-- Demandes en attente -->
+                <div class="bg-[var(--surface-elevated)] p-6 rounded-3xl border border-gold-500/20 shadow-xl relative overflow-hidden group ring-2 ring-gold-500/30">
+                    <p class="text-[9px] uppercase tracking-widest font-bold text-gold-500 mb-4">Demandes en attente</p>
+                    <div class="flex items-center gap-3 text-gold-500">
+                        <div class="w-10 h-10 rounded-full bg-gold-500 text-black flex items-center justify-center shadow-lg shadow-gold-500/20">
+                            <i class="ph ph-hourglass-high-fill"></i>
+                        </div>
+                        <span class="text-3xl font-serif">3</span>
+                    </div>
+                </div>
+                <!-- Sessions ce mois -->
+                <div class="bg-[var(--surface-elevated)] p-6 rounded-3xl border border-gold-100/50 dark:border-gold-500/10 shadow-sm relative overflow-hidden group">
+                    <p class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)] mb-4">Sessions / Mois</p>
+                    <div class="flex items-center gap-3 text-blue-500">
+                        <div class="w-10 h-10 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center border border-blue-500/20">
+                            <i class="ph ph-calendar-check-fill"></i>
+                        </div>
+                        <span class="text-3xl font-serif text-[var(--text-primary)]">42</span>
+                    </div>
+                </div>
+                <!-- Formations complètes -->
+                <div class="bg-[var(--surface-elevated)] p-6 rounded-3xl border border-gold-100/50 dark:border-gold-500/10 shadow-sm relative overflow-hidden group">
+                    <p class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)] mb-4">Prêts pour Progression</p>
+                    <div class="flex items-center gap-3 text-emerald-500">
+                        <div class="w-10 h-10 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center border border-emerald-500/20">
+                            <i class="ph ph-check-circle-fill"></i>
+                        </div>
+                        <span class="text-3xl font-serif text-[var(--text-primary)]">8</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- Quick Pending Requests -->
+                <div class="bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/10 rounded-3xl p-8 shadow-sm">
+                    <div class="flex items-center justify-between mb-8">
+                        <h3 class="text-lg font-serif text-[var(--text-primary)] flex items-center gap-2">
+                            <i class="ph ph-arrow-up-bold text-gold-500"></i> Dernières Demandes
+                        </h3>
+                        <a href="demandes.html" class="text-[9px] text-gold-500 font-bold uppercase tracking-widest hover:underline">Voir tout</a>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-[var(--surface)] border border-gold-100/30 rounded-2xl hover:border-gold-500/30 transition-all">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg overflow-hidden border border-gold-500/20">
+                                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=SK" alt="SK">
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-[var(--text-primary)]">Samuel Kofi</p>
+                                    <p class="text-[9px] text-gold-500 font-bold uppercase">Nouveau → Star</p>
+                                </div>
+                            </div>
+                            <button class="bg-gold-500 text-black px-4 py-2 rounded-lg text-[9px] font-bold uppercase tracking-widest hover:bg-gold-400 transition-colors">Examiner</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Family Overview -->
+                <div class="bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/10 rounded-3xl p-8 shadow-sm flex flex-col">
+                    <div class="flex items-center justify-between mb-8">
+                        <h3 class="text-lg font-serif text-[var(--text-primary)] flex items-center gap-2">
+                            <i class="ph ph-users-three text-gold-500"></i> État de la Famille
+                        </h3>
+                        <a href="famille.html" class="text-[9px] text-gold-500 font-bold uppercase tracking-widest hover:underline">Ma Famille</a>
+                    </div>
+                    
+                    <div class="flex-1 space-y-4 overflow-y-auto max-h-[300px] sidebar-scroll pr-2">
+                        <div class="flex items-center justify-between p-3 bg-[var(--bg-primary)] rounded-xl border border-gold-100/30">
+                            <div class="flex items-center gap-3">
+                                <span class="text-[8px] bg-gold-500/10 text-gold-500 border border-gold-500/20 px-2 py-0.5 rounded-md font-bold uppercase">Star</span>
+                                <p class="text-xs font-bold">Jean-Baptiste P.</p>
+                            </div>
+                            <div class="w-24 h-1.5 bg-[var(--surface)] rounded-full overflow-hidden border border-gold-100/30">
+                                <div class="h-full bg-gold-500" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-[var(--bg-primary)] rounded-xl border border-gold-100/30">
+                            <div class="flex items-center gap-3">
+                                <span class="text-[8px] bg-blue-500/10 text-blue-500 border border-blue-500/20 px-2 py-0.5 rounded-md font-bold uppercase">Nouveau</span>
+                                <p class="text-xs font-bold">Rachel Amavi</p>
+                            </div>
+                            <div class="w-24 h-1.5 bg-[var(--surface)] rounded-full overflow-hidden border border-gold-100/30">
+                                <div class="h-full bg-blue-500" style="width: 35%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="lg:col-span-2 bg-[var(--surface-elevated)] border border-gold-100/50 dark:border-gold-500/10 rounded-3xl p-8 shadow-sm">
+                    <h3 class="text-lg font-serif text-[var(--text-primary)] mb-8 flex items-center gap-2">
+                        <i class="ph ph-activity text-gold-500"></i> Activité Récente
+                    </h3>
+                    <div class="space-y-6 relative before:content-[''] before:absolute before:left-3 before:top-2 before:bottom-2 before:w-px before:bg-gold-500/10">
+                        <div class="relative pl-8">
+                            <div class="absolute left-2.5 top-1.5 w-1.5 h-1.5 rounded-full bg-gold-500"></div>
+                            <p class="text-[9px] text-[var(--text-secondary)] font-bold mb-0.5 uppercase tracking-widest">Il y a 2h</p>
+                            <p class="text-xs font-medium"><span class="text-gold-500 font-bold">Marie</span> a complété la formation "Fondements de la Foi".</p>
+                        </div>
+                        <div class="relative pl-8">
+                            <div class="absolute left-2.5 top-1.5 w-1.5 h-1.5 rounded-full bg-gold-500/40"></div>
+                            <p class="text-[9px] text-[var(--text-secondary)] font-bold mb-0.5 uppercase tracking-widest">Il y a 5h</p>
+                            <p class="text-xs font-medium"><span class="text-gold-500 font-bold">Jean</span> a soumis une demande de progression vers le niveau <span class="text-gold-500">Star</span>.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <script src="../frontend/assets/js/theme.js"></script>
+    <script type="module" src="../frontend/assets/i18n/i18n.js"></script>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            sidebar.classList.toggle('-translate-x-full');
+            backdrop.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
