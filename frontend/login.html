@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | EJP - Église des Jeunes Prodiges</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'selector',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            50: '#F7F3E9',
+                            100: '#E8D9A0',
+                            400: '#C9A84C',
+                            500: '#D4AF37',
+                            600: '#F5E27A',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen flex flex-col justify-center items-center grain-texture relative overflow-hidden">
+    
+    <!-- Background Decor -->
+    <div class="absolute inset-0 z-0 opacity-20 pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-gold-400 blur-[120px]"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-gold-100 blur-[120px]"></div>
+    </div>
+
+    <!-- Top Controls -->
+    <div class="absolute top-6 right-6 flex items-center space-x-4 z-10">
+        <select id="lang-switcher" class="bg-transparent border border-gold-100 rounded-px px-2 py-1 text-sm focus:outline-none focus:border-gold-500 transition-colors">
+            <option value="fr">🇫🇷 FR</option>
+            <option value="en">🇬🇧 EN</option>
+        </select>
+        <button onclick="toggleTheme()" class="p-2 border border-gold-100 rounded-full hover:bg-gold-50 transition-all" id="theme-btn">
+            <span id="theme-icon">🌙</span>
+        </button>
+    </div>
+
+    <!-- Login Card -->
+    <div class="w-full max-w-md px-6 z-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
+        <div class="text-center mb-8">
+            <div class="inline-block p-4 mb-4 rounded-full border border-gold-500 gold-glow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-gold-500">
+                    <path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path>
+                </svg>
+            </div>
+            <h1 class="text-4xl font-serif gold-gradient-text tracking-tight mb-2">EJP</h1>
+            <p class="text-sm font-medium text-gold-500 tracking-widest uppercase" data-i18n="login.title">CHURCH MEMBERS</p>
+        </div>
+
+        <div class="glass p-8 rounded-2xl gold-border shadow-2xl shadow-black/50 space-y-6">
+            <div>
+                <label class="block text-[10px] uppercase font-bold tracking-[0.2em] mb-2 opacity-50" data-i18n="login.forgot">Identifiant</label>
+                <input type="text" placeholder="Email ou Nom d'utilisateur" class="w-full bg-transparent border-b border-gold-100/30 py-3 px-1 focus:outline-none focus:border-gold-500 transition-colors placeholder:text-zinc-500">
+            </div>
+            <div>
+                <label class="block text-[10px] uppercase font-bold tracking-[0.2em] mb-2 opacity-50">Mot de passe</label>
+                <input type="password" placeholder="••••••••" class="w-full bg-transparent border-b border-gold-100/30 py-3 px-1 focus:outline-none focus:border-gold-500 transition-colors placeholder:text-zinc-500">
+            </div>
+
+            <button onclick="window.location.href='/frontend/dashboard.html'" class="w-full btn-gold py-4 rounded-xl shimmer transform" data-i18n="btn.login">
+                Se Connecter
+            </button>
+
+            <div class="text-center pt-4">
+                <a href="#" class="text-xs text-gold-400 hover:text-gold-500 transition-colors" data-i18n="login.forgot">Mot de passe oublié ?</a>
+                <p class="mt-4 text-xs opacity-60" data-i18n="login.subtitle">Première connexion ? Contactez votre Chef</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/theme.js"></script>
+    <script type="module" src="assets/i18n/i18n.js"></script>
+</body>
+</html>

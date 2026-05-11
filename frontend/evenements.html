@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Événements | EJP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'selector',
+            theme: {
+                extend: {
+                    colors: { gold: { 50: '#F7F3E9', 100: '#E8D9A0', 400: '#C9A84C', 500: '#D4AF37', 600: '#F5E27A' } },
+                    fontFamily: { serif: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen">
+    <nav class="sticky top-0 bg-white dark:bg-[#1A1A1A] border-b border-gold-100 dark:border-[#2E2A1F] z-50 px-8 h-20 flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+            <a href="/frontend/dashboard.html" class="text-2xl font-serif gold-gradient-text tracking-widest uppercase">EJP</a>
+            <div class="hidden lg:flex space-x-8 ml-8">
+                <a href="/frontend/dashboard.html" class="nav-link" data-i18n="nav.dashboard">Dashboard</a>
+                <a href="/frontend/formations.html" class="nav-link" data-i18n="nav.formations">Formations</a>
+                <a href="/frontend/progression.html" class="nav-link" data-i18n="nav.progression">Progression</a>
+                <a href="/frontend/evenements.html" class="nav-link text-gold-500 border-b border-gold-500 pb-1" data-i18n="nav.events">Événements</a>
+            </div>
+        </div>
+        <button onclick="toggleTheme()" class="w-10 h-10 border border-gold-100 dark:border-[#2E2A1F] rounded-full flex items-center justify-center hover:bg-gold-50 dark:hover:bg-white/5 transition-all"><span id="theme-icon">🌙</span></button>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-10 space-y-12 animate-in fade-in duration-700">
+        <h1 class="text-5xl font-serif gold-gradient-text" data-i18n="nav.events">Événements à Venir</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <!-- Event 1 -->
+            <div class="bg-[#1A1A1A] rounded-[2.5rem] overflow-hidden border border-gold-500/10 hover:scale-[1.02] transition-all gold-glow group shadow-2xl">
+                <div class="h-56 bg-[#0D0D0D] relative overflow-hidden flex items-center justify-center">
+                    <div class="absolute inset-0 bg-gradient-to-br from-gold-500/10 to-transparent"></div>
+                    <div class="relative z-10 opacity-20 group-hover:scale-125 transition-transform duration-700">
+                         <span class="text-9xl font-serif text-gold-500">✦</span>
+                    </div>
+                    <div class="absolute top-6 left-6 bg-gold-500 text-black text-[9px] font-bold px-4 py-1.5 rounded-full uppercase tracking-[0.2em] shadow-lg">Pâques 2026</div>
+                </div>
+                <div class="p-8 space-y-6">
+                    <div class="flex items-center space-x-3 text-gold-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        <span class="text-[10px] font-bold uppercase tracking-widest">12 Juillet 2026 • 18:00</span>
+                    </div>
+                    <h3 class="text-2xl font-serif text-[#F5F0E8]">Grande Célébration de Pâques</h3>
+                    <p class="text-sm text-[#A89B7A] line-clamp-2 leading-relaxed italic">"Une soirée exceptionnelle de louange et d'adoration pour célébrer ensemble la résurrection..."</p>
+                    <button class="w-full py-4 border border-gold-500 text-gold-500 rounded-2xl font-bold uppercase tracking-widest text-[10px] hover:bg-gold-500 hover:text-black transition-all">Voir Détails</button>
+                </div>
+            </div>
+
+            <!-- Event 2 -->
+            <div class="bg-[#1A1A1A] rounded-[2.5rem] overflow-hidden border border-gold-500/10 hover:scale-[1.02] transition-all gold-glow group shadow-2xl opacity-60">
+                <div class="h-56 bg-[#0D0D0D] relative overflow-hidden flex items-center justify-center">
+                    <div class="absolute inset-0 bg-gradient-to-br from-zinc-500/10 to-transparent"></div>
+                    <div class="relative z-10 opacity-20">
+                         <span class="text-9xl font-serif text-zinc-500">✦</span>
+                    </div>
+                    <div class="absolute top-6 left-6 bg-emerald-500 text-white text-[9px] font-bold px-4 py-1.5 rounded-full uppercase tracking-[0.2em] shadow-lg">Formation</div>
+                </div>
+                <div class="p-8 space-y-6">
+                    <div class="flex items-center space-x-3 text-gold-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        <span class="text-[10px] font-bold uppercase tracking-widest">25 Août 2026 • 09:00</span>
+                    </div>
+                    <h3 class="text-2xl font-serif text-[#F5F0E8]">Atelier Leadership Spirituel</h3>
+                    <p class="text-sm text-[#A89B7A] line-clamp-2 leading-relaxed">Venez découvrir les clés d'un leadership au service de la communauté et de l'église...</p>
+                    <button class="w-full py-4 border border-gold-100/20 text-[#A89B7A] rounded-2xl font-bold uppercase tracking-widest text-[10px] cursor-not-allowed">Complet</button>
+                </div>
+            </div>
+        </div>
+    </main>
+        </div>
+    </main>
+
+    <script src="assets/js/theme.js"></script>
+    <script type="module" src="assets/i18n/i18n.js"></script>
+</body>
+</html>

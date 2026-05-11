@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | EJP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'selector',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            50: '#F7F3E9',
+                            100: '#E8D9A0',
+                            400: '#C9A84C',
+                            500: '#D4AF37',
+                            600: '#F5E27A',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-transparent">
+    <!-- Navbar -->
+    <nav class="sticky top-0 bg-white dark:bg-[#1A1A1A] border-b border-gold-100 dark:border-[#2E2A1F] z-50 px-8 h-20 flex items-center justify-between transition-colors">
+        <div class="flex items-center space-x-4">
+            <span class="text-2xl font-serif gold-gradient-text tracking-widest uppercase">EJP</span>
+            <div class="hidden lg:flex space-x-8 ml-8">
+                <a href="/frontend/dashboard.html" class="nav-link text-gold-500 border-b border-gold-500 pb-1" data-i18n="nav.dashboard">Dashboard</a>
+                <a href="/frontend/formations.html" class="nav-link" data-i18n="nav.formations">Formations</a>
+                <a href="/frontend/progression.html" class="nav-link" data-i18n="nav.progression">Progression</a>
+                <a href="/frontend/evenements.html" class="nav-link" data-i18n="nav.events">Événements</a>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-6">
+            <div class="hidden md:flex items-center space-x-3 text-[10px] uppercase tracking-widest font-bold">
+                <span class="cursor-pointer text-gold-500">FR</span>
+                <span class="opacity-20 text-gold-500">|</span>
+                <span class="cursor-pointer opacity-50 hover:opacity-100 transition-opacity">EN</span>
+            </div>
+            <button onclick="toggleTheme()" class="w-10 h-10 border border-gold-100 dark:border-[#2E2A1F] rounded-full flex items-center justify-center hover:bg-gold-50 dark:hover:bg-white/5 transition-all">
+                <span id="theme-icon" class="text-xs">🌙</span>
+            </button>
+            <div class="flex items-center space-x-3 pl-6 border-l border-gold-100 dark:border-[#2E2A1F]">
+                <div class="text-right hidden sm:block">
+                    <p class="text-xs font-bold leading-none">Jean-Baptiste</p>
+                    <p class="text-[10px] text-[#A89B7A] uppercase tracking-widest">Nouveau Membre</p>
+                </div>
+                <div class="w-10 h-10 rounded-full border border-gold-500 p-0.5 overflow-hidden">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=JB" alt="User" class="w-full h-full rounded-full">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-8 space-y-10 animate-in fade-in duration-700">
+        <!-- Hero Greeting -->
+        <section class="relative h-64 flex flex-col justify-center rounded-[2.5rem] p-12 bg-gradient-to-r from-[#1A1A1A] to-[#0D0D0D] dark:from-[#1A1A1A] dark:to-[#0D0D0D] border border-gold-500/20 shadow-2xl overflow-hidden glass">
+            <div class="relative z-10">
+                <h2 class="text-5xl font-serif gold-gradient-text mb-3">
+                    <span data-i18n="dashboard.welcome">Bienvenue</span>, Jean-Baptiste 👑
+                </h2>
+                <p class="text-[#A89B7A] tracking-[0.2em] uppercase text-xs font-medium">Que votre service aujourd'hui soit une bénédiction.</p>
+            </div>
+            <!-- Decorative icon -->
+            <div class="absolute top-0 right-0 p-16 opacity-[0.03] text-gold-500">
+                <span class="text-[15rem] font-serif leading-none">✦</span>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-12 gap-10">
+            <!-- Left Column: Status & Progress -->
+            <div class="col-span-12 lg:col-span-8 space-y-10">
+                <!-- Status Card -->
+                <div class="bg-[#1A1A1A] border-l-4 border-l-gold-500 border border-gold-500/20 shadow-2xl p-8 rounded-3xl flex items-center space-x-10 hover:shadow-gold-500/5 transition-all">
+                    <div class="h-24 w-24 flex-shrink-0 bg-gold-400/10 rounded-full border border-gold-500/30 flex items-center justify-center text-4xl shadow-[0_0_30px_rgba(212,175,55,0.1)]">
+                        🆕
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-gold-500/60 mb-2 block" data-i18n="dashboard.status">Statut Actuel</span>
+                        <h3 class="text-3xl font-serif text-[#F5F0E8] mb-2" data-i18n="status.new">Nouveau Membre</h3>
+                        <p class="text-sm text-[#A89B7A] max-w-md" data-i18n="level.description.new">Bienvenue dans la famille ! Commencez votre parcours pour servir le Seigneur.</p>
+                    </div>
+                </div>
+
+                <!-- Progress Section -->
+                <div class="bg-[#1A1A1A] border border-[#2E2A1F] rounded-3xl p-8 space-y-8 shadow-xl">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xl font-serif text-[#F5F0E8]" data-i18n="dashboard.progress">Avancement Formations</h3>
+                        <span class="text-gold-500 font-bold tracking-tighter text-lg">15%</span>
+                    </div>
+                    <div class="h-2 w-full bg-[#2E2A1F] rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-gold-500 to-gold-600 gold-glow transition-all duration-1000" style="width: 15%"></div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
+                        <div class="p-6 rounded-2xl bg-[#0D0D0D] border border-gold-500/10">
+                            <span class="block text-3xl font-serif gold-gradient-text mb-1">4 / 10</span>
+                            <span class="text-[10px] text-gold-500/40 uppercase font-bold tracking-widest leading-none">Vidéos de Formation</span>
+                        </div>
+                        <div class="p-6 rounded-2xl bg-[#0D0D0D] border border-gold-500/10">
+                            <span class="block text-3xl font-serif gold-gradient-text mb-1">2</span>
+                            <span class="text-[10px] text-gold-500/40 uppercase font-bold tracking-widest leading-none">Sessions de Service</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CTA -->
+                <button class="w-full btn-gold py-6 rounded-3xl transform shadow-2xl" data-i18n="btn.request">
+                    Faire une demande de progression
+                </button>
+            </div>
+
+            <!-- Right Column: Notifications & Events -->
+            <div class="col-span-12 lg:col-span-4 space-y-10">
+                <!-- Notifications -->
+                <div class="bg-[#1A1A1A] border border-[#2E2A1F] p-8 rounded-3xl space-y-8 min-h-[300px]">
+                    <div class="flex items-center justify-between border-b border-gold-500/10 pb-6">
+                        <h3 class="font-serif text-xl gold-gradient-text">Notifications</h3>
+                        <div class="h-2 w-2 rounded-full bg-gold-500 gold-glow"></div>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="flex space-x-4 items-start group">
+                            <div class="w-1.5 h-1.5 mt-2 rounded-full bg-gold-500 shadow-[0_0_10px_#D4AF37]"></div>
+                            <div class="space-y-1 flex-1">
+                                <p class="text-sm italic text-[#F5F0E8] group-hover:text-gold-500 transition-colors">Bienvenue sur la plateforme EJP !</p>
+                                <span class="text-[9px] text-[#A89B7A] uppercase tracking-widest">Aujourd'hui • 10:45</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Events Shortcut -->
+                <div class="bg-[#222222] border border-gold-500/30 p-8 rounded-3xl space-y-6">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-gold-500 font-bold" data-i18n="nav.events">Événements</h3>
+                    <div class="space-y-4">
+                        <div class="bg-[#0D0D0D] p-4 rounded-xl border border-gold-500/10 flex items-center space-x-4">
+                            <div class="text-center min-w-[50px] border-r border-gold-500/10 pr-4">
+                                <span class="block text-xl font-bold font-serif leading-none">12</span>
+                                <span class="text-[9px] uppercase tracking-tighter opacity-50 text-gold-500">Juil</span>
+                            </div>
+                            <div class="overflow-hidden">
+                                <h4 class="text-sm font-bold truncate">Grande Pâques</h4>
+                                <p class="text-[10px] text-[#A89B7A] uppercase tracking-widest">Temple Central</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="mt-12 p-8 border-t border-gold-100 text-center text-xs opacity-50">
+        <p>© 2026 EJP - Église des Jeunes Prodiges. <span data-i18n="footer.rights">Tous droits réservés</span>.</p>
+    </footer>
+
+    <script src="assets/js/theme.js"></script>
+    <script type="module" src="assets/i18n/i18n.js"></script>
+</body>
+</html>

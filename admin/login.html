@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | EJP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'selector',
+            theme: {
+                extend: {
+                    colors: { gold: { 50: '#F7F3E9', 100: '#E8D9A0', 400: '#C9A84C', 500: '#D4AF37', 600: '#F5E27A' } },
+                    fontFamily: { serif: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-black flex flex-col justify-center items-center grain-texture relative overflow-hidden">
+    
+    <div class="absolute inset-0 z-0 opacity-40">
+        <div class="absolute top-[20%] left-[15%] w-64 h-64 bg-gold-500/20 blur-[120px] animate-pulse"></div>
+    </div>
+
+    <div class="w-full max-w-sm px-6 z-10">
+        <div class="text-center mb-10">
+            <h1 class="text-3xl font-serif gold-gradient-text italic tracking-wider mb-2">Administration EJP</h1>
+            <p class="text-[10px] font-bold text-gold-500 uppercase tracking-[0.3em] opacity-80">Back-Office Spirituel</p>
+        </div>
+
+        <div class="glass p-8 rounded-2xl border border-gold-500/30 shadow-[0_0_50px_rgba(212,175,55,0.1)] space-y-6">
+            <div>
+                <label class="block text-[10px] font-bold uppercase tracking-widest text-gold-500/70 mb-3 ml-1">Identifiant Admin</label>
+                <div class="relative">
+                    <input type="text" class="w-full bg-white/5 border border-gold-500/20 rounded-xl py-4 px-5 text-sm focus:outline-none focus:border-gold-500 transition-all text-white placeholder:text-zinc-600" placeholder="admin@ejp.org">
+                </div>
+            </div>
+            <div>
+                <label class="block text-[10px] font-bold uppercase tracking-widest text-gold-500/70 mb-3 ml-1">Clé d'Accès</label>
+                <div class="relative">
+                    <input type="password" class="w-full bg-white/5 border border-gold-500/20 rounded-xl py-4 px-5 text-sm focus:outline-none focus:border-gold-500 transition-all text-white placeholder:text-zinc-600" placeholder="••••••••">
+                </div>
+            </div>
+
+            <button onclick="window.location.href='/admin/dashboard.html'" class="w-full bg-gold-500 text-black font-bold py-4 rounded-xl shimmer shadow-lg shadow-gold-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all transform tracking-widest text-xs">
+                ACCÉDER AU DASHBOARD
+            </button>
+        </div>
+        
+        <div class="mt-8 flex justify-center space-x-6">
+             <button onclick="toggleTheme()" class="text-xs text-gold-500/50 hover:text-gold-500 transition-colors uppercase tracking-widest flex items-center space-x-2">
+                <span id="theme-icon">🌙</span>
+                <span data-i18n="theme.toggle">Mode</span>
+             </button>
+             <a href="/frontend/login.html" class="text-xs text-gold-500/50 hover:text-gold-500 transition-colors uppercase tracking-widest">Retour Portail</a>
+        </div>
+    </div>
+
+    <script src="assets/js/theme.js"></script>
+    <script type="module" src="assets/i18n/i18n.js"></script>
+</body>
+</html>

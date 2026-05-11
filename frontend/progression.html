@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progression | EJP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'selector',
+            theme: {
+                extend: {
+                    colors: { gold: { 50: '#F7F3E9', 100: '#E8D9A0', 400: '#C9A84C', 500: '#D4AF37', 600: '#F5E27A' } },
+                    fontFamily: { serif: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen">
+    <nav class="sticky top-0 bg-white dark:bg-[#1A1A1A] border-b border-gold-100 dark:border-[#2E2A1F] z-50 px-8 h-20 flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+            <a href="/frontend/dashboard.html" class="text-2xl font-serif gold-gradient-text tracking-widest uppercase">EJP</a>
+            <div class="hidden lg:flex space-x-8 ml-8">
+                <a href="/frontend/dashboard.html" class="nav-link" data-i18n="nav.dashboard">Dashboard</a>
+                <a href="/frontend/formations.html" class="nav-link" data-i18n="nav.formations">Formations</a>
+                <a href="/frontend/progression.html" class="nav-link text-gold-500 border-b border-gold-500 pb-1" data-i18n="nav.progression">Progression</a>
+                <a href="/frontend/evenements.html" class="nav-link" data-i18n="nav.events">Événements</a>
+            </div>
+        </div>
+        <button onclick="toggleTheme()" class="w-10 h-10 border border-gold-100 dark:border-[#2E2A1F] rounded-full flex items-center justify-center hover:bg-gold-50 dark:hover:bg-white/5 transition-all"><span id="theme-icon">🌙</span></button>
+    </nav>
+
+    <main class="max-w-4xl mx-auto p-10 space-y-16 animate-in fade-in duration-700">
+        <header class="text-center">
+            <h1 class="text-5xl font-serif gold-gradient-text">Votre Élévation</h1>
+            <p class="text-sm text-[#A89B7A] tracking-[0.2em] uppercase mt-4">Suivez votre parcours spirituel au sein de l'EJP</p>
+        </header>
+
+        <!-- Stepper -->
+        <div class="relative py-12 px-4 md:px-0">
+            <div class="absolute top-1/2 left-0 w-full h-[1px] bg-[#2E2A1F] -translate-y-1/2 z-0 hidden md:block"></div>
+            <div class="flex flex-col md:flex-row justify-between items-center relative z-10 space-y-12 md:space-y-0">
+                <!-- Step 1 -->
+                <div class="flex flex-col items-center">
+                    <div class="h-14 w-14 rounded-full bg-gold-500 text-black flex items-center justify-center font-bold shadow-[0_0_20px_rgba(212,175,55,0.4)]">✓</div>
+                    <span class="mt-6 text-[10px] font-bold uppercase tracking-[0.3em] text-gold-500" data-i18n="status.new">Nouveau</span>
+                </div>
+                <!-- Step 2 -->
+                <div class="flex flex-col items-center">
+                    <div class="h-20 w-20 rounded-full bg-[#1A1A1A] border-2 border-gold-500 flex items-center justify-center text-4xl shadow-[0_0_30px_rgba(212,175,55,0.2)] scale-110">⭐</div>
+                    <span class="mt-6 text-[10px] font-bold uppercase tracking-[0.3em] text-gold-500" data-i18n="status.star">Star</span>
+                </div>
+                <!-- Step 3 -->
+                <div class="flex flex-col items-center opacity-30">
+                    <div class="h-14 w-14 rounded-full bg-[#0D0D0D] border border-white/10 flex items-center justify-center text-zinc-600">🔒</div>
+                    <span class="mt-6 text-[10px] font-bold uppercase tracking-[0.3em]" data-i18n="status.pilot">Pilote</span>
+                </div>
+                <!-- Step 4 -->
+                <div class="flex flex-col items-center opacity-30">
+                    <div class="h-14 w-14 rounded-full bg-[#0D0D0D] border border-white/10 flex items-center justify-center text-zinc-600">🔒</div>
+                    <span class="mt-6 text-[10px] font-bold uppercase tracking-[0.3em]" data-i18n="status.pillar">Pilier</span>
+                </div>
+                <!-- Step 5 -->
+                <div class="flex flex-col items-center opacity-30">
+                    <div class="h-14 w-14 rounded-full bg-[#0D0D0D] border border-white/10 flex items-center justify-center text-zinc-600">🔒</div>
+                    <span class="mt-6 text-[10px] font-bold uppercase tracking-[0.3em]" data-i18n="status.missionary">Missionnaire</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="bg-[#1A1A1A] p-10 rounded-[2rem] border border-gold-500/20 space-y-8 shadow-2xl">
+                <h3 class="text-2xl font-serif text-[#F5F0E8]">Conditions pour devenir <span class="text-gold-500">Star ⭐</span></h3>
+                <ul class="space-y-6">
+                    <li class="flex items-center space-x-4 text-sm">
+                        <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                        <span class="text-[#F5F0E8]">Compléter le module "Fondements"</span>
+                    </li>
+                    <li class="flex items-center space-x-4 text-sm opacity-40">
+                        <div class="w-1.5 h-1.5 rounded-full bg-gold-500"></div>
+                        <span class="text-[#A89B7A]">Participer à 5 cultes (Actuel: 2)</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="flex flex-col justify-center space-y-8">
+                <div class="p-10 bg-[#222222] border border-dashed border-gold-500/30 rounded-[2rem] text-center space-y-6">
+                    <p class="text-sm italic text-[#A89B7A]">"Votre engagement est la clé de votre croissance spirituelle."</p>
+                    <button class="w-full opacity-30 cursor-not-allowed bg-zinc-800 text-zinc-500 py-5 rounded-2xl font-bold uppercase tracking-[0.3em] text-[10px]" title="Conditions non remplies">
+                        Demande Verrouillée
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/theme.js"></script>
+    <script type="module" src="assets/i18n/i18n.js"></script>
+</body>
+</html>

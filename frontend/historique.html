@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historique | EJP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'selector',
+            theme: {
+                extend: {
+                    colors: { gold: { 50: '#F7F3E9', 100: '#E8D9A0', 400: '#C9A84C', 500: '#D4AF37', 600: '#F5E27A' } },
+                    fontFamily: { serif: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen">
+    <nav class="sticky top-0 bg-white dark:bg-[#1A1A1A] border-b border-gold-100 dark:border-[#2E2A1F] z-50 px-8 h-20 flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+            <a href="/frontend/dashboard.html" class="text-2xl font-serif gold-gradient-text tracking-widest uppercase">EJP</a>
+            <div class="hidden lg:flex space-x-8 ml-8">
+                <a href="/frontend/dashboard.html" class="nav-link" data-i18n="nav.dashboard">Dashboard</a>
+                <a href="/frontend/formations.html" class="nav-link" data-i18n="nav.formations">Formations</a>
+                <a href="/frontend/progression.html" class="nav-link" data-i18n="nav.progression">Progression</a>
+                <a href="/frontend/evenements.html" class="nav-link" data-i18n="nav.events">Événements</a>
+                <a href="/frontend/historique.html" class="nav-link text-gold-500 border-b border-gold-500 pb-1" data-i18n="nav.history">Historique</a>
+            </div>
+        </div>
+        <button onclick="toggleTheme()" class="w-10 h-10 border border-gold-100 dark:border-[#2E2A1F] rounded-full flex items-center justify-center hover:bg-gold-50 dark:hover:bg-white/5 transition-all"><span id="theme-icon">🌙</span></button>
+    </nav>
+
+    <main class="max-w-4xl mx-auto p-10 space-y-16 animate-in fade-in duration-700">
+        <header class="text-center">
+            <h1 class="text-5xl font-serif gold-gradient-text" data-i18n="nav.history">Mon Historique</h1>
+            <p class="text-sm text-[#A89B7A] tracking-[0.2em] uppercase mt-4">Revivez les moments clés de votre engagement</p>
+        </header>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="bg-[#1A1A1A] p-8 rounded-[2rem] border border-gold-500/10 text-center space-y-2">
+                <span class="block text-3xl font-serif text-gold-500">4</span>
+                <span class="text-[9px] uppercase font-bold text-[#A89B7A] tracking-widest">Formations</span>
+            </div>
+            <div class="bg-[#1A1A1A] p-8 rounded-[2rem] border border-gold-500/10 text-center space-y-2">
+                <span class="block text-3xl font-serif text-gold-500">12</span>
+                <span class="text-[9px] uppercase font-bold text-[#A89B7A] tracking-widest">Cultes</span>
+            </div>
+            <div class="bg-[#1A1A1A] p-8 rounded-[2rem] border border-gold-500/10 text-center space-y-2">
+                <span class="block text-3xl font-serif text-gold-500">3</span>
+                <span class="text-[9px] uppercase font-bold text-[#A89B7A] tracking-widest">Mois</span>
+            </div>
+            <div class="bg-[#1A1A1A] p-8 rounded-[2rem] border border-gold-500/10 text-center space-y-2">
+                <span class="block text-3xl font-serif text-emerald-500">Star</span>
+                <span class="text-[9px] uppercase font-bold text-[#A89B7A] tracking-widest">Palier</span>
+            </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="relative pl-12 space-y-16 before:content-[''] before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[1px] before:bg-[#2E2A1F]">
+            <!-- Item 1 -->
+            <div class="relative group">
+                <div class="absolute left-[-39px] top-1.5 h-7 w-7 rounded-full bg-gold-500 border-[6px] border-[#0D0D0D] shadow-[0_0_15px_rgba(212,175,55,0.4)]"></div>
+                <div class="bg-[#1A1A1A]/50 p-8 rounded-3xl border border-gold-500/5 group-hover:border-gold-500/20 transition-all">
+                    <span class="text-[10px] font-bold text-gold-500 uppercase tracking-widest block mb-4">9 Mai 2026</span>
+                    <h3 class="text-xl font-serif text-[#F5F0E8] mb-2">Aujourd'hui</h3>
+                    <p class="text-sm text-[#A89B7A] leading-relaxed italic">"Vous continuez votre ascension spirituelle avec ferveur..."</p>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="relative group opacity-60">
+                <div class="absolute left-[-39px] top-1.5 h-7 w-7 rounded-full bg-[#2E2A1F] border-[6px] border-[#0D0D0D]"></div>
+                <div class="p-8 rounded-3xl border border-white/5">
+                    <span class="text-[10px] font-bold text-[#A89B7A] uppercase tracking-widest block mb-4">15 Avril 2026</span>
+                    <h3 class="text-xl font-serif text-[#F5F0E8] mb-2">Module 1 Validé</h3>
+                    <p class="text-sm text-[#A89B7A]">Achèvement des Fondements de la Foi.</p>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="relative group opacity-40">
+                <div class="absolute left-[-39px] top-1.5 h-7 w-7 rounded-full bg-[#2E2A1F] border-[6px] border-[#0D0D0D]"></div>
+                <div class="p-8 rounded-3xl border border-white/5">
+                    <span class="text-[10px] font-bold text-[#A89B7A] uppercase tracking-widest block mb-4">15 Janvier 2026</span>
+                    <h3 class="text-xl font-serif text-[#F5F0E8] mb-2">Bienvenue à l'EJP</h3>
+                    <p class="text-sm text-[#A89B7A]">Premiers pas dans la communauté Prodigue.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    </main>
+
+    <script src="assets/js/theme.js"></script>
+    <script type="module" src="assets/i18n/i18n.js"></script>
+</body>
+</html>
