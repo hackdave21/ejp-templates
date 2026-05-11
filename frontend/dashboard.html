@@ -31,12 +31,15 @@
     </script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
-<body class="min-h-screen ">
-        <!-- Navbar -->
-    <nav class="sticky top-0 bg-[var(--surface-elevated)] border-b border-gold-100 dark:border-[#2E2A1F] z-50 px-8 h-20 flex items-center justify-between transition-colors">
+<body class="min-h-screen">
+    
+    <!-- Navbar -->
+    <nav class="sticky top-0 bg-[var(--surface-elevated)] border-b border-[var(--border-gold)] z-50 px-8 h-20 flex items-center justify-between transition-colors">
         <!-- Gauche: Logo -->
         <div class="w-1/3 flex items-center">
-            <a href="/frontend/dashboard.html" class="text-2xl font-serif gold-gradient-text tracking-widest uppercase">EJP</a>
+            <a href="/frontend/dashboard.html" class="text-2xl font-serif gold-gradient-text tracking-widest uppercase flex items-center gap-2">
+                <i class="ph ph-church text-gold-500"></i> EJP
+            </a>
         </div>
 
         <!-- Centre: Navigation -->
@@ -44,7 +47,7 @@
             <a href="/frontend/dashboard.html" class="nav-link active" data-i18n="nav.dashboard">Dashboard</a>
             <a href="/frontend/formations.html" class="nav-link " data-i18n="nav.formations">Formations</a>
             <a href="/frontend/progression.html" class="nav-link " data-i18n="nav.progression">Progression</a>
-            <a href="/frontend/evenements.html" class="nav-link " data-i18n="nav.events">�v�nements</a>
+            <a href="/frontend/evenements.html" class="nav-link " data-i18n="nav.events">Événements</a>
         </div>
 
         <!-- Droite: Actions -->
@@ -54,118 +57,253 @@
                 <span class="opacity-20 text-gold-500">|</span>
                 <span class="cursor-pointer opacity-50 hover:opacity-100 transition-opacity">EN</span>
             </div>
+            
+            <!-- Notifications Bell -->
+            <button class="relative p-2 text-gold-500/70 hover:text-gold-500 transition-colors">
+                <i class="ph ph-bell text-xl"></i>
+                <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+            </button>
+
+            <!-- Theme Toggle -->
             <button onclick="toggleTheme()" class="w-10 h-10 border border-gold-100 dark:border-[#2E2A1F] rounded-full flex items-center justify-center hover:bg-gold-50 dark:hover:bg-white/5 transition-all text-gold-500">
                 <span id="theme-icon"><i class="ph ph-moon text-lg"></i></span>
             </button>
+
+            <!-- User Profile -->
             <div class="flex items-center space-x-3 pl-6 border-l border-gold-100 dark:border-[#2E2A1F]">
                 <div class="text-right hidden sm:block">
-                    <p class="text-xs font-bold leading-none">Jean-Baptiste</p>
-                    <p class="text-[10px] text-[#A89B7A] uppercase tracking-widest">Nouveau Membre</p>
+                    <p class="text-xs font-bold leading-none text-[var(--text-primary)]">Jean-Baptiste</p>
+                    <p class="text-[10px] text-gold-500 uppercase tracking-widest font-bold">Star</p>
                 </div>
-                <div class="w-10 h-10 rounded-full border border-gold-500 p-0.5 overflow-hidden">
+                <div class="w-10 h-10 rounded-full border border-gold-500 p-0.5 overflow-hidden bg-[var(--surface)]">
                     <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=JB" alt="User" class="w-full h-full rounded-full">
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto p-8 space-y-10 animate-in fade-in duration-700">
-        <!-- Hero Greeting -->
-        <section class="relative h-64 flex flex-col justify-center rounded-[2.5rem] p-12 bg-gradient-to-r from-[#1A1A1A] to-[#0D0D0D] dark:from-[#1A1A1A] dark:to-[#0D0D0D] border border-gold-500/20 shadow-2xl overflow-hidden glass">
-            <div class="relative z-10">
-                <h2 class="text-5xl font-serif gold-gradient-text mb-3">
-                    <span data-i18n="dashboard.welcome">Bienvenue</span>, Jean-Baptiste 👑
-                </h2>
-                <p class="text-[#A89B7A] tracking-[0.2em] uppercase text-xs font-medium">Que votre service aujourd'hui soit une bénédiction.</p>
+    <main class="max-w-7xl mx-auto p-8 space-y-8 animate-in fade-in duration-700">
+        
+        <!-- Welcome Banner -->
+        <section class="relative flex items-center justify-between rounded-3xl p-10 bg-[var(--surface-elevated)] border border-gold-500/20 shadow-2xl overflow-hidden glass">
+            <!-- Background Glow -->
+            <div class="absolute -right-20 -top-20 w-64 h-64 bg-gold-500/10 blur-[80px] rounded-full pointer-events-none"></div>
+            
+            <div class="relative z-10 flex items-center gap-8">
+                <div class="w-24 h-24 flex-shrink-0 bg-gradient-to-br from-gold-400 to-gold-600 rounded-2xl flex items-center justify-center shadow-lg shadow-gold-500/30 transform rotate-3">
+                    <i class="ph ph-star text-5xl text-black"></i>
+                </div>
+                <div>
+                    <h2 class="text-4xl font-serif text-[var(--text-primary)] mb-2 flex items-center gap-3">
+                        Bonjour Jean-Baptiste <i class="ph ph-hand-waving text-gold-500"></i>
+                    </h2>
+                    <p class="text-[var(--text-secondary)] text-sm tracking-wide">
+                        Votre niveau actuel est <span class="font-bold text-gold-500 uppercase tracking-widest text-xs ml-1 border border-gold-500/30 px-2 py-1 rounded-md bg-gold-500/10">Star</span>. Que votre service aujourd'hui soit une bénédiction.
+                    </p>
+                </div>
             </div>
-            <!-- Decorative icon -->
-            <div class="absolute top-0 right-0 p-16 opacity-[0.03] text-gold-500">
-                <span class="text-[15rem] font-serif leading-none">✦</span>
+            
+            <!-- Quick Actions -->
+            <div class="hidden lg:flex relative z-10">
+                <button class="flex items-center gap-2 px-6 py-3 border border-gold-500 text-gold-500 hover:bg-gold-500 hover:text-[var(--surface-elevated)] rounded-xl text-xs font-bold uppercase tracking-widest transition-all shadow-lg shadow-gold-500/10">
+                    <i class="ph ph-calendar-plus text-lg"></i>
+                    Nouvelle Session
+                </button>
             </div>
         </section>
 
-        <div class="grid grid-cols-12 gap-10">
-            <!-- Left Column: Status & Progress -->
-            <div class="col-span-12 lg:col-span-8 space-y-10">
-                <!-- Status Card -->
-                <div class="bg-[#1A1A1A] border-l-4 border-l-gold-500 border border-gold-500/20 shadow-2xl p-8 rounded-3xl flex items-center space-x-10 hover:shadow-gold-500/5 transition-all">
-                    <div class="h-24 w-24 flex-shrink-0 bg-gold-400/10 rounded-full border border-gold-500/30 flex items-center justify-center text-4xl shadow-[0_0_30px_rgba(212,175,55,0.1)]">
-                        🆕
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Left Content (Col Span 2) -->
+            <div class="lg:col-span-2 space-y-8">
+                
+                <!-- Progress Stepper Card -->
+                <div class="bg-[var(--surface-elevated)] border border-[var(--border-gold)] rounded-3xl p-8 shadow-xl">
+                    <div class="flex items-center justify-between mb-10">
+                        <h3 class="text-xl font-serif text-[var(--text-primary)] flex items-center gap-2">
+                            <i class="ph ph-chart-line-up text-gold-500"></i> Ma Progression
+                        </h3>
+                        <a href="#" class="text-xs text-gold-500 uppercase tracking-widest font-bold hover:underline">Détails</a>
                     </div>
-                    <div>
-                        <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-gold-500/60 mb-2 block" data-i18n="dashboard.status">Statut Actuel</span>
-                        <h3 class="text-3xl font-serif text-[#F5F0E8] mb-2" data-i18n="status.new">Nouveau Membre</h3>
-                        <p class="text-sm text-[#A89B7A] max-w-md" data-i18n="level.description.new">Bienvenue dans la famille ! Commencez votre parcours pour servir le Seigneur.</p>
+                    
+                    <!-- Stepper Visual -->
+                    <div class="relative flex justify-between items-center w-full px-4">
+                        <!-- Connecting Line -->
+                        <div class="absolute top-1/2 left-0 w-full h-1 bg-[var(--border-gold)] -translate-y-1/2 rounded-full z-0 opacity-50"></div>
+                        <!-- Active Line -->
+                        <div class="absolute top-1/2 left-0 w-1/4 h-1 bg-gradient-to-r from-gold-400 to-gold-600 -translate-y-1/2 rounded-full z-0 gold-glow"></div>
+                        
+                        <!-- Step 1 (Completed) -->
+                        <div class="relative z-10 flex flex-col items-center gap-3">
+                            <div class="w-12 h-12 rounded-full bg-gold-500 text-[var(--surface-elevated)] flex items-center justify-center shadow-lg shadow-gold-500/40 border-4 border-[var(--surface-elevated)]">
+                                <i class="ph ph-sparkle text-xl"></i>
+                            </div>
+                            <span class="text-[9px] uppercase tracking-widest font-bold text-gold-500">Nouveau</span>
+                        </div>
+                        
+                        <!-- Step 2 (Current) -->
+                        <div class="relative z-10 flex flex-col items-center gap-3">
+                            <div class="w-14 h-14 rounded-full bg-[var(--surface-elevated)] border-2 border-gold-500 text-gold-500 flex items-center justify-center shadow-[0_0_20px_rgba(212,175,55,0.3)] bg-gradient-to-b from-transparent to-gold-500/10">
+                                <i class="ph ph-star text-2xl animate-pulse"></i>
+                            </div>
+                            <span class="text-[10px] uppercase tracking-widest font-bold text-[var(--text-primary)]">Star</span>
+                        </div>
+                        
+                        <!-- Step 3 (Locked) -->
+                        <div class="relative z-10 flex flex-col items-center gap-3 opacity-40 grayscale">
+                            <div class="w-12 h-12 rounded-full bg-[var(--surface)] border border-[var(--border-gold)] text-[var(--text-secondary)] flex items-center justify-center">
+                                <i class="ph ph-paper-plane-tilt text-xl"></i>
+                            </div>
+                            <span class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)]">Pilote</span>
+                        </div>
+                        
+                        <!-- Step 4 (Locked) -->
+                        <div class="relative z-10 flex flex-col items-center gap-3 opacity-40 grayscale">
+                            <div class="w-12 h-12 rounded-full bg-[var(--surface)] border border-[var(--border-gold)] text-[var(--text-secondary)] flex items-center justify-center">
+                                <i class="ph ph-pillars text-xl"></i>
+                            </div>
+                            <span class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)]">Pilier</span>
+                        </div>
+                        
+                        <!-- Step 5 (Locked) -->
+                        <div class="relative z-10 flex flex-col items-center gap-3 opacity-40 grayscale">
+                            <div class="w-12 h-12 rounded-full bg-[var(--surface)] border border-[var(--border-gold)] text-[var(--text-secondary)] flex items-center justify-center">
+                                <i class="ph ph-globe-hemisphere-east text-xl"></i>
+                            </div>
+                            <span class="text-[9px] uppercase tracking-widest font-bold text-[var(--text-secondary)]">Missionnaire</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Progress Section -->
-                <div class="bg-[#1A1A1A] border border-[#2E2A1F] rounded-3xl p-8 space-y-8 shadow-xl">
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-xl font-serif text-[#F5F0E8]" data-i18n="dashboard.progress">Avancement Formations</h3>
-                        <span class="text-gold-500 font-bold tracking-tighter text-lg">15%</span>
-                    </div>
-                    <div class="h-2 w-full bg-[#2E2A1F] rounded-full overflow-hidden">
-                        <div class="h-full bg-gradient-to-r from-gold-500 to-gold-600 gold-glow transition-all duration-1000" style="width: 15%"></div>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
-                        <div class="p-6 rounded-2xl bg-[#0D0D0D] border border-gold-500/10">
-                            <span class="block text-3xl font-serif gold-gradient-text mb-1">4 / 10</span>
-                            <span class="text-[10px] text-gold-500/40 uppercase font-bold tracking-widest leading-none">Vidéos de Formation</span>
+                <!-- 2-Column Sub-grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                    <!-- Formations Card -->
+                    <div class="bg-[var(--surface-elevated)] border border-[var(--border-gold)] rounded-3xl p-8 shadow-xl flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300">
+                        <div>
+                            <div class="w-10 h-10 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center mb-4 border border-blue-500/20">
+                                <i class="ph ph-graduation-cap text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-serif text-[var(--text-primary)] mb-1">Mes Formations</h3>
+                            <p class="text-xs text-[var(--text-secondary)] mb-6">7 vidéos sur 10 complétées</p>
+                            
+                            <!-- Progress Bar -->
+                            <div class="h-2 w-full bg-[var(--surface)] rounded-full overflow-hidden mb-6 border border-[var(--border-gold)]">
+                                <div class="h-full bg-blue-500 rounded-full" style="width: 70%"></div>
+                            </div>
                         </div>
-                        <div class="p-6 rounded-2xl bg-[#0D0D0D] border border-gold-500/10">
-                            <span class="block text-3xl font-serif gold-gradient-text mb-1">2</span>
-                            <span class="text-[10px] text-gold-500/40 uppercase font-bold tracking-widest leading-none">Sessions de Service</span>
+                        <button class="w-full py-3 bg-[var(--surface)] border border-[var(--border-gold)] hover:border-blue-500 text-[var(--text-primary)] rounded-xl text-[10px] font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2">
+                            Continuer <i class="ph ph-arrow-right text-lg"></i>
+                        </button>
+                    </div>
+
+                    <!-- Sessions Card -->
+                    <div class="bg-[var(--surface-elevated)] border border-[var(--border-gold)] rounded-3xl p-8 shadow-xl flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300">
+                        <div>
+                            <div class="w-10 h-10 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-4 border border-emerald-500/20">
+                                <i class="ph ph-calendar-check text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-serif text-[var(--text-primary)] mb-1">Mes Sessions de Service</h3>
+                            <p class="text-xs text-[var(--text-secondary)] mb-4">Ce mois-ci</p>
+                            
+                            <div class="flex items-end gap-2 mb-6">
+                                <span class="text-4xl font-serif text-[var(--text-primary)] leading-none">8</span>
+                                <span class="text-[10px] uppercase font-bold text-[var(--text-secondary)] tracking-widest mb-1">Enregistrées</span>
+                            </div>
+                            
+                            <!-- Mini Calendar visualization -->
+                            <div class="flex gap-1.5 h-10">
+                                <div class="flex-1 bg-emerald-500/20 rounded-md border border-emerald-500/30"></div>
+                                <div class="flex-1 bg-emerald-500/40 rounded-md border border-emerald-500/30"></div>
+                                <div class="flex-1 bg-emerald-500/60 rounded-md border border-emerald-500/30"></div>
+                                <div class="flex-1 bg-emerald-500 rounded-md shadow-sm shadow-emerald-500/50"></div>
+                                <div class="flex-1 border border-dashed border-[var(--border-gold)] rounded-md bg-[var(--surface)]"></div>
+                            </div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Progression CTA Card -->
+                <div class="relative bg-gradient-to-r from-[#1A1A1A] to-[#0D0D0D] border border-gold-500 shadow-[0_0_30px_rgba(212,175,55,0.15)] rounded-3xl p-8 overflow-hidden group">
+                    <div class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHBhdGggZD0iTTAgMGg0MHY0MEgweiIgZmlsbD0ibm9uZSIvPjxjaXJjbGUgY3g9IjIwIiBjeT0iMjAiIHI9IjEiIGZpbGw9IiNENEFGMzciIGZpbGwtb3BhY2l0eT0iMC4yIi8+PC9zdmc+')]"></div>
+                    
+                    <div class="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+                        <div>
+                            <h3 class="text-xl font-serif gold-gradient-text mb-2 flex items-center gap-2">
+                                <i class="ph ph-rocket-launch text-gold-500"></i> Prêt à progresser ?
+                            </h3>
+                            <p class="text-xs text-[#A89B7A] max-w-md">Vous avez complété tous les prérequis pour devenir Pilote. Demandez votre entretien de validation dès aujourd'hui.</p>
+                        </div>
+                        <button class="btn-gold px-8 py-4 rounded-xl text-xs flex items-center gap-2 whitespace-nowrap shadow-lg shadow-gold-500/30">
+                            Faire une demande <i class="ph ph-arrow-up-right text-lg"></i>
+                        </button>
                     </div>
                 </div>
                 
-                <!-- CTA -->
-                <button class="w-full btn-gold py-6 rounded-3xl transform shadow-2xl" data-i18n="btn.request">
-                    Faire une demande de progression
-                </button>
             </div>
 
-            <!-- Right Column: Notifications & Events -->
-            <div class="col-span-12 lg:col-span-4 space-y-10">
-                <!-- Notifications -->
-                <div class="bg-[#1A1A1A] border border-[#2E2A1F] p-8 rounded-3xl space-y-8 min-h-[300px]">
-                    <div class="flex items-center justify-between border-b border-gold-500/10 pb-6">
-                        <h3 class="font-serif text-xl gold-gradient-text">Notifications</h3>
-                        <div class="h-2 w-2 rounded-full bg-gold-500 gold-glow"></div>
+            <!-- Right Column (Notifications) -->
+            <div class="col-span-1 lg:col-span-1">
+                <div class="bg-[var(--surface-elevated)] border border-[var(--border-gold)] rounded-3xl p-6 shadow-xl h-full flex flex-col">
+                    <div class="flex items-center justify-between border-b border-[var(--border-gold)] pb-4 mb-6">
+                        <h3 class="font-serif text-lg text-[var(--text-primary)] flex items-center gap-2">
+                            <i class="ph ph-bell-ringing text-gold-500"></i> Notifications
+                        </h3>
+                        <a href="#" class="text-[10px] uppercase font-bold text-[var(--text-secondary)] hover:text-gold-500 transition-colors">Tout voir</a>
                     </div>
-                    <div class="space-y-6">
-                        <div class="flex space-x-4 items-start group">
-                            <div class="w-1.5 h-1.5 mt-2 rounded-full bg-gold-500 shadow-[0_0_10px_#D4AF37]"></div>
-                            <div class="space-y-1 flex-1">
-                                <p class="text-sm italic text-[#F5F0E8] group-hover:text-gold-500 transition-colors">Bienvenue sur la plateforme EJP !</p>
-                                <span class="text-[9px] text-[#A89B7A] uppercase tracking-widest">Aujourd'hui • 10:45</span>
+                    
+                    <div class="space-y-6 flex-1">
+                        <!-- Notif 1 -->
+                        <div class="flex gap-4 group cursor-pointer p-2 rounded-xl hover:bg-[var(--surface)] transition-colors">
+                            <div class="w-10 h-10 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                                <i class="ph ph-check-circle text-xl"></i>
+                            </div>
+                            <div class="pt-0.5">
+                                <p class="text-sm text-[var(--text-primary)] group-hover:text-emerald-500 transition-colors leading-tight font-medium">Formation "Fondements" validée</p>
+                                <p class="text-[10px] text-[var(--text-secondary)] mt-1.5 uppercase tracking-widest font-bold">Il y a 2h</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Notif 2 -->
+                        <div class="flex gap-4 group cursor-pointer p-2 rounded-xl hover:bg-[var(--surface)] transition-colors">
+                            <div class="w-10 h-10 rounded-full bg-gold-500/10 text-gold-500 border border-gold-500/30 flex items-center justify-center flex-shrink-0 shadow-[0_0_15px_rgba(212,175,55,0.2)]">
+                                <i class="ph ph-star text-xl"></i>
+                            </div>
+                            <div class="pt-0.5">
+                                <p class="text-sm text-[var(--text-primary)] group-hover:text-gold-500 transition-colors leading-tight font-medium">Vous avez atteint le statut Star !</p>
+                                <p class="text-[10px] text-[var(--text-secondary)] mt-1.5 uppercase tracking-widest font-bold">Hier, 14:30</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Notif 3 -->
+                        <div class="flex gap-4 group cursor-pointer p-2 rounded-xl hover:bg-[var(--surface)] transition-colors">
+                            <div class="w-10 h-10 rounded-full bg-blue-500/10 text-blue-500 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
+                                <i class="ph ph-calendar-event text-xl"></i>
+                            </div>
+                            <div class="pt-0.5">
+                                <p class="text-sm text-[var(--text-primary)] group-hover:text-blue-500 transition-colors leading-tight font-medium">Nouveau service planifié ce dimanche</p>
+                                <p class="text-[10px] text-[var(--text-secondary)] mt-1.5 uppercase tracking-widest font-bold">Mercredi</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Notif 4 -->
+                        <div class="flex gap-4 group cursor-pointer p-2 rounded-xl opacity-60 hover:opacity-100 hover:bg-[var(--surface)] transition-all">
+                            <div class="w-10 h-10 rounded-full bg-[var(--surface)] border border-[var(--border-gold)] text-[var(--text-secondary)] flex items-center justify-center flex-shrink-0">
+                                <i class="ph ph-info text-xl"></i>
+                            </div>
+                            <div class="pt-0.5">
+                                <p class="text-sm text-[var(--text-primary)] group-hover:text-gold-500 transition-colors leading-tight font-medium">Bienvenue sur la plateforme EJP</p>
+                                <p class="text-[10px] text-[var(--text-secondary)] mt-1.5 uppercase tracking-widest font-bold">12 Juil</p>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Events Shortcut -->
-                <div class="bg-[#222222] border border-gold-500/30 p-8 rounded-3xl space-y-6">
-                    <h3 class="text-xs uppercase tracking-[0.2em] text-gold-500 font-bold" data-i18n="nav.events">Événements</h3>
-                    <div class="space-y-4">
-                        <div class="bg-[#0D0D0D] p-4 rounded-xl border border-gold-500/10 flex items-center space-x-4">
-                            <div class="text-center min-w-[50px] border-r border-gold-500/10 pr-4">
-                                <span class="block text-xl font-bold font-serif leading-none">12</span>
-                                <span class="text-[9px] uppercase tracking-tighter opacity-50 text-gold-500">Juil</span>
-                            </div>
-                            <div class="overflow-hidden">
-                                <h4 class="text-sm font-bold truncate">Grande Pâques</h4>
-                                <p class="text-[10px] text-[#A89B7A] uppercase tracking-widest">Temple Central</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
+            
         </div>
     </main>
 
-    <footer class="mt-12 p-8 border-t border-gold-100 text-center text-xs opacity-50">
+    <footer class="mt-8 p-8 border-t border-[var(--border-gold)] text-center text-xs text-[var(--text-secondary)] opacity-80">
         <p>© 2026 EJP - Église des Jeunes Prodiges. <span data-i18n="footer.rights">Tous droits réservés</span>.</p>
     </footer>
 
