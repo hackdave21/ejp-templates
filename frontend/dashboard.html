@@ -29,28 +29,33 @@
             }
         }
     </script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
-<body class="min-h-screen bg-transparent">
-    <!-- Navbar -->
-    <nav class="sticky top-0 bg-white dark:bg-[#1A1A1A] border-b border-gold-100 dark:border-[#2E2A1F] z-50 px-8 h-20 flex items-center justify-between transition-colors">
-        <div class="flex items-center space-x-4">
-            <span class="text-2xl font-serif gold-gradient-text tracking-widest uppercase">EJP</span>
-            <div class="hidden lg:flex space-x-8 ml-8">
-                <a href="/frontend/dashboard.html" class="nav-link text-gold-500 border-b border-gold-500 pb-1" data-i18n="nav.dashboard">Dashboard</a>
-                <a href="/frontend/formations.html" class="nav-link" data-i18n="nav.formations">Formations</a>
-                <a href="/frontend/progression.html" class="nav-link" data-i18n="nav.progression">Progression</a>
-                <a href="/frontend/evenements.html" class="nav-link" data-i18n="nav.events">Ã‰vÃ©nements</a>
-            </div>
+<body class="min-h-screen ">
+        <!-- Navbar -->
+    <nav class="sticky top-0 bg-[var(--surface-elevated)] border-b border-gold-100 dark:border-[#2E2A1F] z-50 px-8 h-20 flex items-center justify-between transition-colors">
+        <!-- Gauche: Logo -->
+        <div class="w-1/3 flex items-center">
+            <a href="/frontend/dashboard.html" class="text-2xl font-serif gold-gradient-text tracking-widest uppercase">EJP</a>
         </div>
 
-        <div class="flex items-center space-x-6">
+        <!-- Centre: Navigation -->
+        <div class="w-1/3 flex items-center justify-center space-x-8 hidden lg:flex">
+            <a href="/frontend/dashboard.html" class="nav-link active" data-i18n="nav.dashboard">Dashboard</a>
+            <a href="/frontend/formations.html" class="nav-link " data-i18n="nav.formations">Formations</a>
+            <a href="/frontend/progression.html" class="nav-link " data-i18n="nav.progression">Progression</a>
+            <a href="/frontend/evenements.html" class="nav-link " data-i18n="nav.events">Événements</a>
+        </div>
+
+        <!-- Droite: Actions -->
+        <div class="w-1/3 flex items-center justify-end space-x-6">
             <div class="hidden md:flex items-center space-x-3 text-[10px] uppercase tracking-widest font-bold">
                 <span class="cursor-pointer text-gold-500">FR</span>
                 <span class="opacity-20 text-gold-500">|</span>
                 <span class="cursor-pointer opacity-50 hover:opacity-100 transition-opacity">EN</span>
             </div>
-            <button onclick="toggleTheme()" class="w-10 h-10 border border-gold-100 dark:border-[#2E2A1F] rounded-full flex items-center justify-center hover:bg-gold-50 dark:hover:bg-white/5 transition-all">
-                <span id="theme-icon" class="text-xs">ðŸŒ™</span>
+            <button onclick="toggleTheme()" class="w-10 h-10 border border-gold-100 dark:border-[#2E2A1F] rounded-full flex items-center justify-center hover:bg-gold-50 dark:hover:bg-white/5 transition-all text-gold-500">
+                <span id="theme-icon"><i class="ph ph-moon text-lg"></i></span>
             </button>
             <div class="flex items-center space-x-3 pl-6 border-l border-gold-100 dark:border-[#2E2A1F]">
                 <div class="text-right hidden sm:block">

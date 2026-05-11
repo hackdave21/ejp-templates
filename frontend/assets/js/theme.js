@@ -20,7 +20,7 @@ function toggleTheme() {
 function updateThemeIcon(theme) {
     const icon = document.getElementById('theme-icon');
     if (!icon) return;
-    icon.innerHTML = theme === 'dark' ? '☀️' : '🌙';
+    icon.innerHTML = theme === 'dark' ? '<i class="ph ph-sun text-lg"></i>' : '<i class="ph ph-moon text-lg"></i>';
 }
 
 document.addEventListener('DOMContentLoaded', initTheme);
